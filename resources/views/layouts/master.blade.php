@@ -46,8 +46,8 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="{{'#' == request()->path() ? 'active' : ''}}">
-            <a href="#">
+          <li class="{{'products' == request()->path() ? 'active' : ''}}">
+            <a href="/products">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Produtcs</p>
             </a>

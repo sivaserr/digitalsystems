@@ -40,6 +40,19 @@ Route::get('/home', function () {
 
 
 Route::get('/customer','CustomerController@index');
+
+
+Route::get('/products','ProductController@index');
+Route::post('/products','ProductController@store')->name('Addproduct');
+Route::get('/products','ProductController@show');
+Route::get('/product_edit/{id}','ProductController@edit');
+Route::put('/product_update/{id}','ProductController@update');
+Route::get('/product/{id}','ProductController@destroy');
+
+
+
+
+
 Route::post('/customer','CustomerController@store')->name('Addcustomer');
 Route::get('/customer','CustomerController@show');
 Route::get('/customer_edit/{id}','CustomerController@edit');
