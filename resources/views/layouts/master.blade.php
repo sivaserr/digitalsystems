@@ -46,6 +46,12 @@
               <p>Dashboard</p>
             </a>
           </li>
+          <li class="{{'' == request()->path() ? 'active' : ''}}">
+            <a href="#">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>suppliers</p>
+            </a>
+          </li>
           <li class="{{'products' == request()->path() ? 'active' : ''}}">
             <a href="/products">
               <i class="now-ui-icons design_bullet-list-67"></i>
@@ -58,18 +64,19 @@
               <p>Customers</p>
             </a>
           </li>
+          <li class="{{'bill' == request()->path() ? 'active' : ''}}">
+              <a href="/bill">
+                <i class="now-ui-icons ui-1_bell-53"></i>
+                <p>Billing</p>
+              </a>
+            </li>
           <li class="{{'#' == request()->path() ? 'active' : ''}}">
             <a href="#">
               <i class="now-ui-icons location_map-big"></i>
               <p>Vechical information</p>
             </a>
           </li>
-          <li class="{{'#' == request()->path() ? 'active' : ''}}">
-            <a href="#">
-              <i class="now-ui-icons ui-1_bell-53"></i>
-              <p>Billing</p>
-            </a>
-          </li>
+
           <li class="{{'#' == request()->path() ? 'active' : ''}}">
             <a href="#">
               <i class="now-ui-icons users_single-02"></i>
@@ -227,6 +234,8 @@
   <script src="../assets/js/now-ui-dashboard.min.js?v=1.3.0" type="text/javascript"></script>
   <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
+  <script src="{{ asset('js/custom.js') }}" defer></script>
+
 
   @yield('scripts')
 </body>
