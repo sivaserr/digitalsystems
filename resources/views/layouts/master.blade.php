@@ -52,6 +52,12 @@
               <p>suppliers</p>
             </a>
           </li>
+          <li class="{{'product_group' == request()->path() ? 'active' : ''}}">
+            <a href="/product_group">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Product Group</p>
+            </a>
+          </li>
           <li class="{{'products' == request()->path() ? 'active' : ''}}">
             <a href="/products">
               <i class="now-ui-icons design_bullet-list-67"></i>

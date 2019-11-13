@@ -48,6 +48,16 @@ Route::get('/product_edit/{id}','ProductController@edit');
 Route::put('/product_update/{id}','ProductController@update');
 Route::get('/product/{id}','ProductController@destroy');
 
+//Product Group page
+Route::get('/product_group','ProductGroupController@index');
+Route::post('/product_group','ProductGroupController@store')->name('Addproductgroup');
+Route::get('/product_group','ProductGroupController@show');
+Route::get('/product_group_edit/{id}','ProductGroupController@edit');
+Route::put('/product_group_update/{id}','ProductGroupController@update');
+Route::get('/product_group/{id}','ProductGroupController@destroy');
+
+
+
 //Customer page
 Route::get('/customer','CustomerController@index');
 Route::post('/customer','CustomerController@store')->name('Addcustomer');

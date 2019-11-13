@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Product;
 use App\ProductGroup;
 
-
-class ProductController extends Controller
+class ProductGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('products.product');
+        return view('productgroup.productgroup');
     }
 
     /**
@@ -37,17 +35,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = new Product();
+        $product_group = new ProductGroup();
 
-        $product->product_name = $request->input('productname');
-        $product->price = $request->input('price');
-        $product->weight = $request->input('weight');
-        $product->net_weight = $request->input('netweight');
-        $product->product_group = $request->input('productgroupid');
+        $product_group->product_group = $request->input('productgroup');
 
-        $product->save();
+        $product_group->save();
 
-        return redirect('/products')->with('product' ,$product);
+        return redirect('/product_group')->with('product_group',$product_group);
+
     }
 
     /**
@@ -58,9 +53,9 @@ class ProductController extends Controller
      */
     public function show()
     {
-        $products = Product::all();
+        $product_groups = ProductGroup::all();
 
-        return view('products.product')->with('products',$products);
+        return view('productgroup.productgroup')->with('product_groups',$product_groups);
     }
 
     /**
@@ -71,9 +66,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $products = Product::find($id);
+        $product_group = ProductGroup::find($id);
 
-        return view('products.product_edit')->with('products',$products);
+        return view('productgroup.product_group_edit')->with('product_group',$product_group);
     }
 
     /**
@@ -85,16 +80,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $products = Product::find($id);
+        $product_group = ProductGroup::find($id);
 
-        $products->product_name = $request->input('productname');
-        $products->price = $request->input('price');
-        $products->weight = $request->input('weight');
-        $products->net_weight = $request->input('netweight');
+        $product_group->product_group = $request->input('productgroup');
 
-        $products->save();
+        $product_group->save();
 
-        return redirect('/products')->with('products' ,$products);
+        return redirect('/product_group')->with('product_group',$product_group);
     }
 
     /**
@@ -105,9 +97,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
-        $product->delete();
+        $product_group = ProductGroup::find($id);
 
-        return redirect('products')->with('product',$product);
+        $product_group->delete();
+        
+        return redirect('/product_group')->with('product_group',$product_group);
+
     }
 }

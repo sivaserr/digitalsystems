@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('price');
             $table->string('weight');
             $table->string('net_weight');
+            $table->string('product_group');
             $table->timestamps();
         });
     }
