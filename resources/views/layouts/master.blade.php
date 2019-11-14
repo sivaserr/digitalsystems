@@ -46,8 +46,8 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="{{'' == request()->path() ? 'active' : ''}}">
-            <a href="#">
+          <li class="{{'supplier' == request()->path() ? 'active' : ''}}">
+            <a href="/supplier">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>suppliers</p>
             </a>
@@ -56,6 +56,12 @@
             <a href="/product_group">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Product Group</p>
+            </a>
+          </li>
+          <li class="{{'unit' == request()->path() ? 'active' : ''}}">
+            <a href="/unit">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Unit</p>
             </a>
           </li>
           <li class="{{'products' == request()->path() ? 'active' : ''}}">

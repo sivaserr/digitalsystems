@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('navbar_brand')
-Product Group List
+unit List
 @endsection
 
 @section('content')
@@ -10,17 +10,17 @@ Product Group List
       <div class="card">
         <div class="card-header">
           <div class="customer_title">
-              <h4 class="card-title">Group details</h4>
+              <h4 class="card-title">unit details</h4>
           </div>
 
-        <form  action="/product_group_update/{{ $product_group->id }}" method="POST">
+        <form  action="/unit_update/{{ $unit->id }}" method="POST">
                 {{ csrf_field()}} <!--security token-->
                 {{ method_field('PUT')}}
 
                 <div class="modal-body">
                       <div class="form-group">
-                          <label for="productgroup">Group Name</label>
-                          <input type="text" class="form-control" name="productgroup" value="{{$product_group->product_group}}" id="productgroup" aria-describedby="productgroup" placeholder="Enter Product group" required>
+                          <label for="unit">unit Name</label>
+                          <input type="text" class="form-control" name="unit" value="{{$unit->unit_name}}" id="unit" aria-describedby="unit" placeholder="Enter unit " required>
                         </div>
                   </div>
                   <div class="modal-footer border-top-0 d-flex justify-content-center">

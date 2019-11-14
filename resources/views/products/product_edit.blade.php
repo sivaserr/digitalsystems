@@ -3,7 +3,17 @@
 @section('navbar_brand')
 products
 @endsection
+<?php
+$product_groups = DB::table('product_group')->select('product_group.*')->get();
 
+$units =DB::table('units')->select('units.*')->get();
+//$grp_dec = json_decode($data,true);
+//var_dump($grp_dec);
+
+$user = DB::table('product_group')->select('product_group.*')->get();
+$unitss =DB::table('units')->select('units.*')->get();
+
+?>
 @section('content')
 <div class="row">
     <div class="col-md-12">
@@ -20,6 +30,22 @@ products
                   <div class="form-group">
                       <label for="productname">Product Name</label>
                       <input type="text" class="form-control" name="productname"  value="{{$products->product_name}}" id="product_name" aria-describedby="product_name" placeholder="Enter Product Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productname">Group</label>
+                          <select name="productgroupid" id="company" class="form-control">
+                            @foreach ($product_groups as $product_group)
+                           <option value="{{$product_group->id}}"> {{$product_group->product_group}}</option>
+                            @endforeach
+                          </select> 
+                    </div>
+                  <div class="form-group">
+                        <label for="unitname">Unit</label>
+                          <select name="unitid" id="unit" class="form-control">
+                            @foreach ($units as $unit)
+                          <option value="{{$unit->id}}"> {{$unit->unit_name}}</option>
+                            @endforeach
+                          </select> 
                     </div>
                     <div class="form-group">
                       <label for="price">Price</label>

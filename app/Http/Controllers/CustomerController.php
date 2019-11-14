@@ -48,10 +48,10 @@ class CustomerController extends Controller
         $customer = new Customer();
 
         $customer->name = $request->input('name');
-        $customer->address = $request->input('address');
+        $customer->short_name = $request->input('short_name');
         $customer->city = $request->input('city');
-        $customer->email = $request->input('email');
         $customer->phone = $request->input('phone');
+        $customer->status = $request->input('status');
 
         $customer->save();
 
@@ -97,9 +97,8 @@ class CustomerController extends Controller
         $customerss = Customer::find($id);
 
         $customerss->name = $request->input('name');
-        $customerss->address = $request->input('address');
+        $customerss->short_name = $request->input('short_name');
         $customerss->city = $request->input('city');
-        $customerss->email = $request->input('email');
         $customerss->phone = $request->input('phone');
 
         $customerss->save();
@@ -142,9 +141,8 @@ class CustomerController extends Controller
         $customer = new Customer();
 
         $customer->name = $request->input('name');
-        $customer->address = $request->input('address');
+        $customer->short_name = $request->input('short_name');
         $customer->city = $request->input('city');
-        $customer->email = $request->input('email');
         $customer->phone = $request->input('phone');
 
         $customer->save();
@@ -156,9 +154,8 @@ class CustomerController extends Controller
         $customerss = Customer::find($id);
 
         $customerss->name = $request->input('name');
-        $customerss->address = $request->input('address');
+        $customerss->short_name = $request->input('short_name');
         $customerss->city = $request->input('city');
-        $customerss->email = $request->input('email');
         $customerss->phone = $request->input('phone');
 
         $customerss->save();

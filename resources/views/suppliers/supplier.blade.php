@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-  Dashboard | Digital systems
+    supplier list
 @endsection
 
 <style>
@@ -22,7 +22,7 @@ Customer list page
           <div class="card">
             <div class="card-header">
               <div class="customer_title">
-                  <h4 class="card-title">Customers </h4>
+                  <h4 class="card-title">supplier </h4>
               </div>
               <div class="customer_create">
                   <a href="#" type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#form" ><span class="glyphicon glyphicon-plus"></span> CREATE</a>
@@ -33,22 +33,22 @@ Customer list page
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                   <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="exampleModalLabel">Create new customer</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create new supplier</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                <form action="{{route('Addcustomer')}}" method="POST">
+                <form action="{{route('Addsupplier')}}" method="POST">
                   {{ csrf_field()}} <!--security token-->
 
                   <div class="modal-body">
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" name="name" id="name" aria-describedby="name" placeholder="Enter name" required>
+                            <label for="supplier_name">supplier</label>
+                            <input type="text" class="form-control" name="supplier_name" id="supplier_name" aria-describedby="supplier_name" placeholder="Enter supplier name" required>
                             {{-- <small id="name" class="form-text text-muted">Your information is safe with us.</small> --}}
                           </div>
                           <div class="form-group">
-                              <label for="short_name">short_name</label>
+                              <label for="short_name">short name</label>
                               <input type="text" class="form-control" name="short_name" id="short_name" aria-describedby="short_name" placeholder="Enter short_name" required>
                             </div>
                           <div class="form-group">
@@ -76,52 +76,39 @@ Customer list page
               </div>
             </div>
 
-
             <div class="card-body">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead class=" text-primary">
-                    <th>S.no</th>
-                    <th>Name</th>
-                    <th>Short name</th>
-                    <th>City</th>
-                    <th>Phone</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                  </thead>
-                  <tbody>
-                      <?php $id = 1; ?>
-                    @foreach($customers as $customer)
-                    <tr>
-                      <td>{{ $id }}</td>
-                      <td>{{$customer ->name}}</td>
-                      <td>{{$customer ->short_name}}</td>
-                      <td>{{$customer ->city}}</td>
-                      <td>{{$customer ->phone}}</td>
-                      <td>
-                        @if($customer->status==1)
-                        Enable
-                        @else
-                        Disable
-                        @endif
-                      </td>
-                    <td><a href="/customer_edit/{{$customer ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
-                    <td><a href="/customer/{{$customer ->id}}" class="btn btn-sm btn-danger">Delete</a></td>
-                    <td>
-                     @if($customer->status==1)
-                    <a href="/customer/{{$customer->id}}" class="btn btn-sm btn-success">Enable</a>
-                     @else 
-                     <a href="/customer/{{$customer->id}}" class="btn btn-sm btn-danger">Disable</a>
-                     @endif
-                    </td>  
-                  </tr>
-                    <?php $id++; ?>
-
-                    @endforeach
-                  </tbody>
-                </table>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" text-primary">
+                      <th>S.no</th>
+                      <th>Name</th>
+                      <th>Short name</th>
+                      <th>City</th>
+                      <th>Phone</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
+                    </thead>
+                    <tbody>
+                        <?php $id = 1; ?>
+                      @foreach($suppliers as $supplier)
+                      <tr>
+                        <td>{{ $id }}</td>
+                        <td>{{$supplier ->supplier_name}}</td>
+                        <td>{{$supplier ->short_name}}</td>
+                        <td>{{$supplier ->city}}</td>
+                        <td>{{$supplier ->phone}}</td>
+                      <td><a href="/supplier_edit/{{$supplier ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
+                      <td><a href="/supplier/{{$supplier ->id}}" class="btn btn-sm btn-danger">Delete</a></td>
+                    </tr>
+                      <?php $id++; ?>
+  
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+
+
           </div>
         </div>
       </div>

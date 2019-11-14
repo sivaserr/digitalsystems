@@ -15,13 +15,15 @@ Products
 </style>
 @section('content')
 <?php
-$product_groups = DB::table('product_group')
-            ->select('product_group.*')
-            ->get();
+$product_groups = DB::table('product_group')->select('product_group.*')->get();
+
+$units =DB::table('units')->select('units.*')->get();
 //$grp_dec = json_decode($data,true);
 //var_dump($grp_dec);
 
 $user = DB::table('product_group')->select('product_group.*')->get();
+$unitss =DB::table('units')->select('units.*')->get();
+
 ?>
 <div class="row">
         <div class="col-md-12">
@@ -62,6 +64,14 @@ $user = DB::table('product_group')->select('product_group.*')->get();
                                   </select> 
                             </div>
                           <div class="form-group">
+                                <label for="unitname">Unit</label>
+                                  <select name="unitid" id="unit" class="form-control">
+                                    @foreach ($units as $unit)
+                                  <option value="{{$unit->id}}"> {{$unit->unit_name}}</option>
+                                    @endforeach
+                                  </select> 
+                            </div>
+                          <div class="form-group">
                             <label for="price">Price</label>
                             <input type="number" class="form-control" name="price" id="Price" aria-describedby="Price" placeholder="Enter Price" required>
                           </div>
@@ -93,6 +103,7 @@ $user = DB::table('product_group')->select('product_group.*')->get();
                     <th>S.no</th>
                     <th>Name</th>
                     <th>Group</th>
+                    <th>Unit</th>
                     <th>Price</th>
                     <th>Weight</th>
                     <th>Net weight</th>
@@ -111,6 +122,12 @@ $user = DB::table('product_group')->select('product_group.*')->get();
                         <td>{{$grp->product_group}}</td>
                       @endif
                       @endforeach
+                      @foreach($units as $uts)
+                      @if($uts->id === $product->unit_name)
+                        <td>{{$uts->unit_name}}</td>
+                        @endif
+                      @endforeach
+
                       <td>{{ $product->price }}</td>
                       <td>{{ $product->weight }}</td>
                       <td>{{ $product->net_weight }}</td>

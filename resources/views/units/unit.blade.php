@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('navbar_brand')
-    Product Group List
+    Unit List
 @endsection
 <style>
         .product_title {
@@ -18,7 +18,7 @@
           <div class="card">
             <div class="card-header">
               <div class="product_title">
-                  <h4 class="card-title">Group list </h4>
+                  <h4 class="card-title">Unit list </h4>
               </div>
               <div class="product_create">
                   <a href="#" type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#form" ><span class="glyphicon glyphicon-plus"></span> CREATE</a>
@@ -29,18 +29,18 @@
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                   <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="exampleModalLabel">Create new product group</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create new unit</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                <form  action="{{route('Addproductgroup')}}" method="POST">
+                <form  action="{{route('Addunit')}}" method="POST">
                   {{ csrf_field()}} <!--security token-->
 
                   <div class="modal-body">
                         <div class="form-group">
-                            <label for="productgroup">Product Group</label>
-                            <input type="text" class="form-control" name="productgroup" id="productgroup" aria-describedby="productgroup" placeholder="Enter Product group" required>
+                            <label for="unit">Product Group</label>
+                            <input type="text" class="form-control" name="unit" id="unit" aria-describedby="unit" placeholder="Enter unit" required>
                           </div>
                     </div>
                     <div class="modal-footer border-top-0 d-flex justify-content-center">
@@ -63,12 +63,12 @@
                         </thead>
                         <tbody>
                             <?php $id = 1; ?>
-                          @foreach($product_groups as $product_group)
+                          @foreach($units as $unit)
                           <tr>
                             <td>{{ $id }}</td>
-                            <td>{{ $product_group->product_group }}</td>
-                          <td><a href="product_group_edit/{{$product_group ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
-                          <td><a href="product_group/{{$product_group ->id}}" class="btn btn-sm btn-danger">Delete</a></td>
+                            <td>{{ $unit->unit_name }}</td>
+                          <td><a href="unit_edit/{{$unit ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
+                          <td><a href="unit/{{$unit ->id}}" class="btn btn-sm btn-danger">Delete</a></td>
                           </tr>
                           <?php $id++; ?>
       
@@ -77,7 +77,6 @@
                       </table>
                     </div>
                   </div>
-
           </div>
         </div>
       </div>
