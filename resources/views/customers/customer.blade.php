@@ -88,6 +88,7 @@ Customer list page
                     <th>Phone</th>
                     <th>Edit</th>
                     <th>Delete</th>
+                    <th>Status</th>
                   </thead>
                   <tbody>
                       <?php $id = 1; ?>
@@ -98,20 +99,14 @@ Customer list page
                       <td>{{$customer ->short_name}}</td>
                       <td>{{$customer ->city}}</td>
                       <td>{{$customer ->phone}}</td>
-                      <td>
-                        @if($customer->status==1)
-                        Enable
-                        @else
-                        Disable
-                        @endif
-                      </td>
+
                     <td><a href="/customer_edit/{{$customer ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
                     <td><a href="/customer/{{$customer ->id}}" class="btn btn-sm btn-danger">Delete</a></td>
                     <td>
                      @if($customer->status==1)
-                    <a href="/customer/{{$customer->id}}" class="btn btn-sm btn-success">Enable</a>
+                    <span class="custome_status_en">Enable</span>
                      @else 
-                     <a href="/customer/{{$customer->id}}" class="btn btn-sm btn-danger">Disable</a>
+                     <span class="custome_status_ds">Disable</span>
                      @endif
                     </td>  
                   </tr>

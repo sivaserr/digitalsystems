@@ -100,6 +100,7 @@ class CustomerController extends Controller
         $customerss->short_name = $request->input('short_name');
         $customerss->city = $request->input('city');
         $customerss->phone = $request->input('phone');
+        $customerss->status = $request->input('status');
 
         $customerss->save();
 

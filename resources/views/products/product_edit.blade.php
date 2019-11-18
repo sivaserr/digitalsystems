@@ -5,13 +5,10 @@ products
 @endsection
 <?php
 $product_groups = DB::table('product_group')->select('product_group.*')->get();
-
 $units =DB::table('units')->select('units.*')->get();
 //$grp_dec = json_decode($data,true);
 //var_dump($grp_dec);
-
 $user = DB::table('product_group')->select('product_group.*')->get();
-$unitss =DB::table('units')->select('units.*')->get();
 
 ?>
 @section('content')
@@ -34,16 +31,20 @@ $unitss =DB::table('units')->select('units.*')->get();
                     <div class="form-group">
                         <label for="productname">Group</label>
                           <select name="productgroupid" id="company" class="form-control">
-                            @foreach ($product_groups as $product_group)
-                           <option value="{{$product_group->id}}"> {{$product_group->product_group}}</option>
+                            @foreach($product_groups as $grp)
+                            @if($grp->id === $products->product_group)
+                            <option value="{{$grp->product_group}}">{{$grp->product_group}}</option>
+                            @endif
                             @endforeach
                           </select> 
                     </div>
-                  <div class="form-group">
+                    <div class="form-group">
                         <label for="unitname">Unit</label>
                           <select name="unitid" id="unit" class="form-control">
                             @foreach ($units as $unit)
-                          <option value="{{$unit->id}}"> {{$unit->unit_name}}</option>
+                            @if($unit->id === $products->unit_id )
+                           <option value="{{$unit->id}}"> {{$unit->unit_name}}</option>
+                            @endif
                             @endforeach
                           </select> 
                     </div>

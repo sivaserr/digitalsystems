@@ -123,9 +123,9 @@ $unitss =DB::table('units')->select('units.*')->get();
                       @endif
                       @endforeach
                       @foreach($units as $uts)
-                      @if($uts->id === $product->unit_name)
+                       @if($uts->id === $product->unit_id)
                         <td>{{$uts->unit_name}}</td>
-                        @endif
+                      @endif
                       @endforeach
 
                       <td>{{ $product->price }}</td>
