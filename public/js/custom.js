@@ -49,3 +49,13 @@ function calc_total()
 	$('#tax_amount').val(tax_sum.toFixed(2));
 	$('#total_amount').val((tax_sum+total).toFixed(2));
 }
+
+
+$(document).ready(function() {
+	$("#datepicker-group").datepicker({
+	  format: "yyyy/mm/dd",
+	  todayHighlight: true,
+	  autoclose: true,
+	  clearBtn: true
+	});
+  });
