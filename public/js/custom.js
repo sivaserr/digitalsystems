@@ -59,3 +59,94 @@ $(document).ready(function() {
 	  clearBtn: true
 	});
   });
+
+
+//billing
+
+
+$(document).ready(function(){
+
+	//iterate through each textboxes and add keyup
+	//handler to trigger sum event
+	$(".box").each(function() {
+
+		$(this).keyup(function(){
+			calculateSum();
+		});
+	});
+
+});
+
+function calculate() {
+	var box = document.getElementById('box').value;	
+	var loosekg = document.getElementById('loosekg').value;
+	var result = document.getElementById('totalweight');	
+	var totalweight = box * loosekg;
+	result.value = totalweight;
+
+	var perkgprice = document.getElementById('perkgprice').value;
+	var result = document.getElementById('actualprice');	
+
+		var actualprice = totalweight*perkgprice;
+		result.value=actualprice
+
+	var discount= document.getElementById('discount').value;
+	var resultss= document.getElementById('discountprice');
+
+
+		var discountprices= actualprice / 100 * discount;
+		resultss.value= discountprices;
+
+       var result= document.getElementById('discountprice');
+
+	   result.value=discountprices;
+	   
+	   var result = document.getElementById('netvalue');
+	   var netvalue = actualprice - discountprices;
+
+	   result.value=netvalue;
+
+}
+
+
+  $(document).ready(function(){
+	// $(document).on('change','.productcategory',function(){
+
+	// 	var cat_id=$(this).val();
+
+	// 	$.ajax({
+	// 		   type:'get',
+	// 		   url:"findproductname",
+	// 		   data:{'id':cat_id},
+	// 		   success:function(data){
+	// 			//    console.log('success');
+	// 			//    console.log(data);
+	// 			//    console.log(data.lenght);
+	// 		   },
+	// 		   error:function(){
+
+	// 		   }
+	// 	});
+	// });
+	$(document).on('change','.productcategory',function(){
+		var prod_id=$(this).val();
+		
+		console.log(prod_id);
+
+		$.ajax({
+			type:'get',
+			url:"findproductprice",
+			data:{'id':prod_id},
+			dataType:'json',
+			success:function(data){
+				console.log('price');
+				console.log(data);
+				$('.prod_price').val(data.price);
+				$('.loosekg').val(data.weight);
+			},
+			error:function(){
+
+			}
+	 });
+    });
+});

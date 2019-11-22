@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
 
 class BillController extends Controller
 {
@@ -80,5 +81,16 @@ class BillController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // public function findproductname(Request $request){
+    //     $data = product::select('product_name','id')->where('id',$request->id)->get();
+
+    //     return response()->json($data);
+    // }
+    public function findproductprice(Request $request){
+        $p = product::select('*')->where('id',$request->id)->first();
+
+        return response()->json($p);
     }
 }

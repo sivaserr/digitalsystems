@@ -87,6 +87,8 @@ Route::get('/supplier/{id}','SuppliersController@destroy');
 
 //Bill page
 Route::get('/bill' ,'BillController@index');
+Route::get('/findproductname' ,'BillController@findproductname');
+Route::get('/findproductprice' ,'BillController@findproductprice');
 
 
 
