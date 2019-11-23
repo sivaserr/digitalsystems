@@ -51,16 +51,6 @@ function calc_total()
 }
 
 
-$(document).ready(function() {
-	$("#datepicker-group").datepicker({
-	  format: "yyyy/mm/dd",
-	  todayHighlight: true,
-	  autoclose: true,
-	  clearBtn: true
-	});
-  });
-
-
 //billing
 
 
@@ -88,7 +78,7 @@ function calculate() {
 	var result = document.getElementById('actualprice');	
 
 		var actualprice = totalweight*perkgprice;
-		result.value=actualprice
+		result.value=actualprice;
 
 	var discount= document.getElementById('discount').value;
 	var resultss= document.getElementById('discountprice');
@@ -106,8 +96,42 @@ function calculate() {
 
 	   result.value=netvalue;
 
+
+	   var result = document.getElementById('totalbox');
+	   var totalbox = box;
+	   result.value = totalbox;
+	   
+       
+	   var result =document.getElementById('overall');
+	   var overall= netvalue;
+	   result.value=overall;
 }
 
+function calculate2(){
+	var icebar=document.getElementById('icebar').value;
+	var pericebar =document.getElementById('pericebar').value;
+	var result= document.getElementById('totalicebar');
+	   var totalicebar = icebar*pericebar;
+	   result.value=totalicebar;
+}
+function total(){
+	var transportcharge = parseInt(document.getElementById('transportcharge').value);
+	var finalicebar = parseInt(document.getElementById('finalicebar').value);
+	var discount = document.getElementById('discount').value;
+	var packingcharge = parseInt(document.getElementById('packingcharge').value);
+	var excess = document.getElementById('excess').value;
+
+	var result =document.getElementById('overall');
+
+	parseInt(document.getElementById('finalicebar')).value = totalicebar;
+
+	var overall= transportcharge + packingcharge + finalicebar;
+	result.value=overall;
+
+
+	calculate2();
+	 
+}
 
   $(document).ready(function(){
 	// $(document).on('change','.productcategory',function(){

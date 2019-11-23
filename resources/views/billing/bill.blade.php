@@ -126,33 +126,67 @@
         </div>
 
 
-        {{-- <div class="row clearfix" style="margin-top:20px">
-          <div class="pull-right col-md-4">
+        <div class="row clearfix" style="margin-top:20px">
+          <div class="col-sm-6">
+              <table class="table table-bordered table-hover" id="tab_logic_total">
+                  <tbody>
+                    <tr>
+                      <th class="text-center">Total Box</th>
+                      <td class="text-center"><input type="text" name='totalbox' id="totalbox" oninput="calculate2()" placeholder='0.00' class="form-control" id="sub_total" /></td>
+                    </tr>
+                    <tr>
+                      <th class="text-center">Ice Bar</th>
+                      <td class="text-center"><input type="text" name='icebar' oninput="calculate2()" placeholder='0.00' class="form-control" id="icebar"/></td>
+                    </tr>
+                    <tr>
+                      <th class="text-center">Per-ice Bar Amount</th>
+                      <td class="text-center"><input type="text" name='pericebar' id="pericebar" oninput="calculate2()"  placeholder='0.00' class="form-control" /></td>
+                    </tr>
+                    <tr>
+                      <th class="text-center">Total Ice Bar Amount</th>
+                      <td class="text-center"><input type="text" name='totalicebar' id="totalicebar" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
+                    </tr>
+                    <tr>
+                      <th class="text-center">Packing Charge</th>
+                      <td class="text-center"><input type="text" name='total_amount' id="total_amount" placeholder='0.00' class="form-control" /></td>
+                    </tr>
+                  </tbody>
+                </table>          </div>
+          <div class="pull-right col-md-6">
             <table class="table table-bordered table-hover" id="tab_logic_total">
               <tbody>
                 <tr>
-                  <th class="text-center">Sub Total</th>
-                  <td class="text-center"><input type="text" name='sub_total' placeholder='0.00' class="form-control" id="sub_total" readonly/></td>
+                  <th class="text-center">Transport Charge</th>
+                  <td class="text-center"><input type="text" name='transportcharge' id="transportcharge" oninput="total()" placeholder='0.00' class="form-control"/></td>
                 </tr>
                 <tr>
-                  <th class="text-center">Tax</th>
-                  <td class="text-center"><div class="input-group mb-2 mb-sm-0">
-                      <input type="text" class="form-control" id="tax" placeholder="0">
-                      <div class="input-group-addon">%</div>
-                    </div></td>
+                  <th class="text-center">Ice Bar</th>
+                  <td class="text-center"><input type="text" name='finalicebar' id="finalicebar" oninput="total()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
-                  <th class="text-center">Tax Amount</th>
-                  <td class="text-center"><input type="text" name='tax_amount' id="tax_amount" placeholder='0.00' class="form-control" readonly/></td>
+                  <th class="text-center">Discount</th>
+                  <td class="text-center"><input type="text" name='discount' id="discount" oninput="total()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
-                  <th class="text-center">Grand Total</th>
-                  <td class="text-center"><input type="text" name='total_amount' id="total_amount" placeholder='0.00' class="form-control" readonly/></td>
+                  <th class="text-center">Packing Charge</th>
+                  <td class="text-center"><input type="text" name='packingcharge' id="packingcharge" oninput="total()" placeholder='0.00' class="form-control" /></td>
+                </tr>
+                <tr>
+                  <th class="text-center">Excess</th>
+                  <td class="text-center"><input type="text" name='excess' id="excess" oninput="total()" placeholder='0.00' class="form-control" /></td>
+                </tr>
+                <tr>
+                  <th class="text-center">previous Balance</th>
+                  <td class="text-center"><input type="text" name='prebalance' id="prebalance" oninput="total()" placeholder='0.00' class="form-control" /></td>
+                </tr>
+                <tr>
+                  <th class="text-center">Overall Balance</th>
+                  <td class="text-center"><input type="text" name='overall' id="overall" oninput="calculate()" placeholder='0.00' class="form-control" /></td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div> --}}
+        </div>
                     <div class="modal-footer border-top-0 d-flex justify-content-center">
                       <button type="submit" class="btn btn-success">Submit</button>
                     </div>
