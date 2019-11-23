@@ -114,6 +114,7 @@ function calculate2(){
 	   var totalicebar = icebar*pericebar;
 	   result.value=totalicebar;
 }
+
 function total(){
 	var transportcharge = parseInt(document.getElementById('transportcharge').value);
 	var finalicebar = parseInt(document.getElementById('finalicebar').value);
@@ -132,6 +133,7 @@ function total(){
 	calculate2();
 	 
 }
+
 
   $(document).ready(function(){
 	// $(document).on('change','.productcategory',function(){

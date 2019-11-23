@@ -153,35 +153,35 @@
                   </tbody>
                 </table>          </div>
           <div class="pull-right col-md-6">
-            <table class="table table-bordered table-hover" id="tab_logic_total">
+            <table class="table table-bordered table-hover" id="tab_logic_total2">
               <tbody>
                 <tr>
                   <th class="text-center">Transport Charge</th>
-                  <td class="text-center"><input type="text" name='transportcharge' id="transportcharge" oninput="total()" placeholder='0.00' class="form-control"/></td>
+                  <td class="text-center"><input type="text"  name='transportcharge' id="transportcharge" oninput="calculate3()" placeholder='0.00' class="form-control"/></td>
                 </tr>
                 <tr>
                   <th class="text-center">Ice Bar</th>
-                  <td class="text-center"><input type="text" name='finalicebar' id="finalicebar" oninput="total()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='finalicebar' id="finalicebar" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Discount</th>
-                  <td class="text-center"><input type="text" name='discount' id="discount" oninput="total()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='discount' id="discount" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Packing Charge</th>
-                  <td class="text-center"><input type="text" name='packingcharge' id="packingcharge" oninput="total()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='packingcharge' id="packingcharge" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Excess</th>
-                  <td class="text-center"><input type="text" name='excess' id="excess" oninput="total()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='excess' id="excess" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">previous Balance</th>
-                  <td class="text-center"><input type="text" name='prebalance' id="prebalance" oninput="total()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text" name='prebalance' id="prebalance" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Overall Balance</th>
-                  <td class="text-center"><input type="text" name='overall' id="overall" oninput="calculate()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='overall' id="overall" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
                 </tr>
               </tbody>
             </table>
