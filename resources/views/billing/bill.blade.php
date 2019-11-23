@@ -28,22 +28,22 @@
       </div>
         <div class="container">
           <div class="billform">
-              <form action="#" method="POST">
+              <form action="{{route('Addbill')}}" method="POST">
                   {{ csrf_field()}} <!--security token-->
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group">
-            <label for="name">Invoice no</label>
-            <input type="text" class="form-control" name="name" id="name" aria-describedby="name" placeholder="Enter invoice no" required>
+            <label for="name">Bill no</label>
+            <input type="text" class="form-control" name="billno" id="billno" aria-describedby="name" placeholder="Enter invoice no" required>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="customer_status">
             <label for="phone">Customer</label>
-           <select name="status" id="status" class="form-control">
+           <select name="billcustomer" id="billcustomer" class="form-control">
               @foreach ($customer as $customers) 
               @if($customers->status === 1)
-              <option value="#">{{$customers->name}} </option>
+              <option value="{{$customers->id}}">{{$customers->name}} </option>
             @endif
              @endforeach
            </select>
@@ -52,7 +52,7 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label for="name">Date</label>
-            <input type="text" class="form-control" name="name" id="name" aria-describedby="name" placeholder="Enter date" required>
+            <input type="text" class="form-control" name="date" id="date" aria-describedby="date" placeholder="Enter date" required>
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@
                 <tr id='addr0'>
                   <td>1</td>
                   <td>
-                      <select name="status" id="status" class="form-control productcategory">
+                      <select name="billproductname" id="billproductname" class="form-control productcategory">
                           <option value="0" disabled="true" selected="true">Choose</option>
                           @foreach ($products as $product) 
                           <option value="{{$product->id}}">{{$product->product_name}} </option>
@@ -124,7 +124,9 @@
             <button id='delete_row' class="pull-right btn btn-default">Delete Row</button>
           </div>
         </div>
-        <div class="row clearfix" style="margin-top:20px">
+
+
+        {{-- <div class="row clearfix" style="margin-top:20px">
           <div class="pull-right col-md-4">
             <table class="table table-bordered table-hover" id="tab_logic_total">
               <tbody>
@@ -150,7 +152,7 @@
               </tbody>
             </table>
           </div>
-        </div>
+        </div> --}}
                     <div class="modal-footer border-top-0 d-flex justify-content-center">
                       <button type="submit" class="btn btn-success">Submit</button>
                     </div>

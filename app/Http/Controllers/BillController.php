@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Bill;
 use App\Product;
 
 class BillController extends Controller
@@ -35,7 +36,23 @@ class BillController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $bills = new  Bill();
+        $bills->bill_no = $request->input('billno');
+        $bills->customer_id = $request->input('billcustomer');
+        $bills->date = $request->input('date');
+        $bills->product_id = $request->input('billproductname');
+        $bills->box = $request->input('box');
+        $bills->kg = $request->input('loosekg');
+        $bills->net_weight = $request->input('totalweight');
+        $bills->per_kg_price = $request->input('perkgprice');
+        $bills->actual_price = $request->input('actualprice');
+        $bills->discount = $request->input('discount');
+        $bills->discount_price = $request->input('discountprice');
+        $bills->nat_value = $request->input('netvalue');
+
+        $bills->save();
+
+        return redirect('bill')->with('bills',$bills);
     }
 
     /**
