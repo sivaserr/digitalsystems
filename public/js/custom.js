@@ -54,57 +54,55 @@ function calc_total()
 //billing
 
 
-$(document).ready(function(){
 
-	//iterate through each textboxes and add keyup
-	//handler to trigger sum event
-	$(".box").each(function() {
+function calculate(s) {
 
-		$(this).keyup(function(){
-			calculateSum();
-		});
-	});
+	let parentnodes = s.parentNode.parentNode.id;
 
-});
+	let inputs = document.getElementById(parentnodes);
 
-function calculate() {
-	var box = document.getElementById('box').value;	
-	var loosekg = document.getElementById('loosekg').value;
-	var result = document.getElementById('totalweight');	
-	var totalweight = box * loosekg;
-	result.value = totalweight;
+	let box_id =inputs.getElementsByClassName('box')[0].value;
+	let loosekg =inputs.getElementsByClassName('loosekg')[0].value;
+	let totalweight =inputs.getElementsByClassName('totalweight')[0];
 
-	var perkgprice = document.getElementById('perkgprice').value;
-	var result = document.getElementById('actualprice');	
+	var netweight = box_id * loosekg;
+	totalweight.value = netweight;
+	
+	let perkgpricess =inputs.getElementsByClassName('perkgprices')[0].value;
+	let actualprice =inputs.getElementsByClassName('actualprice')[0];	
 
-		var actualprice = totalweight*perkgprice;
-		result.value=actualprice;
+	var actualresult = netweight * perkgpricess;
 
-	var discount= document.getElementById('discount').value;
-	var resultss= document.getElementById('discountprice');
+	actualprice.value=actualresult;
 
+	let discount =inputs.getElementsByClassName('discount')[0].value;
+	let discountprice =inputs.getElementsByClassName('discountprice')[0];	
 
-		var discountprices= actualprice / 100 * discount;
-		resultss.value= discountprices;
+    var discountpriceresult=  actualresult /100 *discount;
+	discountprice.value=discountpriceresult;
 
-       var result= document.getElementById('discountprice');
+	let netvalue =inputs.getElementsByClassName('netvalue')[0];
+	netvalue.value=actualresult-discountpriceresult;
 
-	   result.value=discountprices;
-	   
-	   var result = document.getElementById('netvalue');
-	   var netvalue = actualprice - discountprices;
+    let prod_netvalue = actualresult-discountpriceresult
 
-	   result.value=netvalue;
+// console.log(prod_netvalue);
 
 
-	   var result = document.getElementById('totalbox');
-	   var totalbox = box;
-	   result.value = totalbox;
-	   
-       
-	   var result =document.getElementById('overall');
-	   var overall= netvalue;
-	   result.value=overall;
+var netvalues =document.getElementsByClassName('netvalue');
+var box =document.getElementsByClassName('box');
+var totalnetvalue = 0;
+var totalbox= 0;
+for(var i = 0; i < netvalues.length; i++){
+	 totalnetvalue += parseInt(netvalues[i].value);
+}
+for (var i= 0; i<box.length; i++){
+	totalbox +=parseInt(box[i].value);
+}
+$("#totalbox").val(totalbox);
+$("#overall").val(totalnetvalue);
+
+console.log(bb);
 }
 
 function calculate2(){
@@ -154,25 +152,68 @@ function total(){
 	// 		   }
 	// 	});
 	// });
-	$(document).on('change','.productcategory',function(){
-		var prod_id=$(this).val();
+	// $(document).on('change','.productcategory',function(){
+	// 	var prod_id=$(this).val();
 		
-		console.log(prod_id);
+	// 	console.log(prod_id);
 
-		$.ajax({
+	// 	$.ajax({
+	// 		type:'get',
+	// 		url:"findproductprice",
+	// 		data:{'id':prod_id},
+	// 		dataType:'json',
+	// 		success:function(data){
+	// 			console.log('price');
+	// 			console.log(data);
+	// 			$('.prod_price').val(data.price);
+	// 			$('.loosekg').val(data.weight);
+	// 		},
+	// 		error:function(){
+
+	// 		}
+	//  });
+    // });
+});
+
+
+function changeprice(sel){
+
+	let parentnodes = sel.parentNode.parentNode.id;
+	let inputs      = document.getElementById(parentnodes);
+
+	var prod_id = inputs.getElementsByClassName("productcategory")[0];
+
+	let idpro = prod_id.options[prod_id.selectedIndex].value;
+
+	let perkgprice = inputs.getElementsByClassName("prod_price")[0];
+	let loosekg = inputs.getElementsByClassName("loosekg")[0];
+
+
+			$.ajax({
 			type:'get',
 			url:"findproductprice",
-			data:{'id':prod_id},
+			data:{'id':idpro},
 			dataType:'json',
 			success:function(data){
-				console.log('price');
-				console.log(data);
-				$('.prod_price').val(data.price);
-				$('.loosekg').val(data.weight);
+	   
+				perkgprice.value= data.price
+				loosekg.value= data.weight
 			},
 			error:function(){
 
 			}
 	 });
-    });
-});
+
+}
+
+// function calc(s){
+// 	let parentnodes = s.parentNode.parentNode.id;
+
+// 	let inputs = document.getElementById(parentnodes);
+
+// 	let box_id =inputs.getElementsByClassName('box')[0];
+
+// 	var demo = box_id.value;
+
+// 	console.log(box);
+// }

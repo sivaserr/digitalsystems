@@ -81,7 +81,7 @@
                 <tr id='addr0'>
                   <td>1</td>
                   <td>
-                      <select name="billproductname" id="billproductname" class="form-control productcategory">
+                      <select name="billproductname" id="billproductname" class="form-control productcategory" onchange="changeprice(this)">
                           <option value="0" disabled="true" selected="true">Choose</option>
                           @foreach ($products as $product) 
                           <option value="{{$product->id}}">{{$product->product_name}} </option>
@@ -89,28 +89,29 @@
                       </select>
                     </td>
                   <td>
-                    <input type="text"   class="form-control" name="box" id="box" oninput="calculate()"  aria-describedby="box" placeholder="0" required>
+                        <input type="text"   class="form-control box" name="box" id="box" onchange="calculate(this)"  aria-describedby="box" placeholder="0" required>
+                    </div>
                   </td>
                   <td>
-                    <input type="text"   class="form-control loosekg" name="loosekg" oninput="calculate()" id="loosekg" aria-describedby="loosekg" placeholder="0 " required>
+                    <input type="text"   class="form-control loosekg" name="loosekg" onchange="calculate(this)" id="loosekg" aria-describedby="loosekg" placeholder="0 " required>
                   </td>
                   <td>
-                    <input type="text"   class="form-control" name="totalweight" id="totalweight" oninput="calculate()" aria-describedby="" placeholder="0 " required>
+                    <input type="text"   class="form-control totalweight" name="totalweight" id="totalweight" oninput="calculate(this)" aria-describedby="" placeholder="0 " required>
                   </td>
                   <td>
-                      <input type="text"   class="form-control prod_price" name="perkgprice" oninput="calculate()" id="perkgprice" aria-describedby="" placeholder="0 " required>
+                      <input type="text"   class="form-control prod_price perkgprices" name="perkgprice" oninput="calculate(this)" id="perkgprice" aria-describedby="" placeholder="0 " required>
                     </td>
                   <td>
-                    <input type="text"   class="form-control" name="actualprice" id="actualprice" oninput="calculate()"aria-describedby="" placeholder="0 " required>
+                    <input type="text"   class="form-control actualprice" name="actualprice" id="actualprice" oninput="calculate(this)"aria-describedby="" placeholder="0 " required>
                   </td>
                   <td>
-                    <input type="text"   class="form-control" name="discount" id="discount" oninput="calculate()" aria-describedby="" placeholder="0 " required>
+                    <input type="text"   class="form-control discount" name="discount" id="discount" oninput="calculate(this)" aria-describedby="" placeholder="0 " required>
                   </td>
                   <td>
-                    <input type="text"   class="form-control" name="discountprice" id="discountprice" oninput="calculate()" aria-describedby="" placeholder="0 " required>
+                    <input type="text"   class="form-control discountprice" name="discountprice" id="discountprice" oninput="calculate(this)" aria-describedby="" placeholder="0 " required>
                   </td>
                   <td>
-                    <input type="text"   class="form-control" name="netvalue" id="netvalue" oninput="calculate()" aria-describedby="" placeholder="0 " required>
+                    <input type="text"   class="form-control netvalue" name="netvalue" id="netvalue" oninput="calculate(this)" aria-describedby="" placeholder="0 " required>
                   </td>
                 </tr>
                 <tr id='addr1'></tr>
@@ -157,7 +158,7 @@
               <tbody>
                 <tr>
                   <th class="text-center">Transport Charge</th>
-                  <td class="text-center"><input type="text"  name='transportcharge' id="transportcharge" oninput="calculate3()" placeholder='0.00' class="form-control"/></td>
+                  <td class="text-center"><input type="text"  name='transportcharge' id="transportcharge" oninput="calculate()" placeholder='0.00' class="form-control"/></td>
                 </tr>
                 <tr>
                   <th class="text-center">Ice Bar</th>
@@ -181,7 +182,7 @@
                 </tr>
                 <tr>
                   <th class="text-center">Overall Balance</th>
-                  <td class="text-center"><input type="text"  name='overall' id="overall" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='overall' id="overall" oninput="calculate(this)" placeholder='0.00' class="form-control overall" /></td>
                 </tr>
               </tbody>
             </table>
