@@ -81,11 +81,7 @@
                 <tr id='addr0'>
                   <td>1</td>
                   <td>
-<<<<<<< HEAD
-                      <select name="billproductname" id="billproductname" class="form-control productcategory" onchange="changePrice(this)">
-=======
                       <select name="billproductname" id="billproductname" class="form-control productcategory" onchange="changeprice(this)">
->>>>>>> 8b7aaecd847f787244dae880d8240e5e33617bac
                           <option value="0" disabled="true" selected="true">Choose</option>
                           @foreach ($products as $product) 
                           <option value="{{$product->id}}">{{$product->product_name}} </option>
@@ -141,7 +137,7 @@
                     </tr>
                     <tr>
                       <th class="text-center">Ice Bar</th>
-                      <td class="text-center"><input type="text" name='icebar' oninput="calculate2()" placeholder='0.00' class="form-control" id="icebar"/></td>
+                      <td class="text-center"><input type="text" name='icebar' oninput="calculate2()" placeholder='0.00' class="form-control icebar" id="icebar"/></td>
                     </tr>
                     <tr>
                       <th class="text-center">Per-ice Bar Amount</th>
@@ -153,7 +149,7 @@
                     </tr>
                     <tr>
                       <th class="text-center">Packing Charge</th>
-                      <td class="text-center"><input type="text" name='total_amount' id="total_amount" placeholder='0.00' class="form-control" /></td>
+                      <td class="text-center"><input type="text" name='packing_amount' id="packing_amount" placeholder='0.00' class="form-control packing_amount" oninput="calculate2()" /></td>
                     </tr>
                   </tbody>
                 </table>          </div>
@@ -162,19 +158,19 @@
               <tbody>
                 <tr>
                   <th class="text-center">Transport Charge</th>
-                  <td class="text-center"><input type="text"  name='transportcharge' id="transportcharge" oninput="calculate()" placeholder='0.00' class="form-control"/></td>
+                  <td class="text-center"><input type="text"  name='transportcharge' id="transportcharge" oninput="calculate2()" placeholder='0.00' class="form-control transportcharge"/></td>
                 </tr>
                 <tr>
                   <th class="text-center">Ice Bar</th>
-                  <td class="text-center"><input type="text"  name='finalicebar' id="finalicebar" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='finalicebar' id="finalicebar" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Discount</th>
-                  <td class="text-center"><input type="text"  name='discount' id="discount" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='discount' id="discount" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Packing Charge</th>
-                  <td class="text-center"><input type="text"  name='packingcharge' id="packingcharge" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='packingcharge' id="packingcharge" oninput="calculate2()" placeholder='0.00' class="form-control packingcharge" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Excess</th>
