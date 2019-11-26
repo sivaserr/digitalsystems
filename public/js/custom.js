@@ -1,9 +1,12 @@
 $(document).ready(function(){
     var i=1;
-    $("#add_row").click(function(){b=i-1;
+    $("#add_row").click(function(){
+		b=i-1;
       	$('#addr'+i).html($('#addr'+b).html()).find('td:first-child').html(i+1);
-      	$('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-      	i++; 
+		$('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');				
+		i++; 
+		$('.prod_price').addClass(i);  
+		  
   	});
     $("#delete_row").click(function(){
     	if(i>1){
@@ -67,7 +70,7 @@ $(document).ready(function(){
 
 });
 
-function calculate() {
+function calculate(d) {
 	var box = document.getElementById('box').value;	
 	var loosekg = document.getElementById('loosekg').value;
 	var result = document.getElementById('totalweight');	
@@ -154,25 +157,55 @@ function total(){
 	// 		   }
 	// 	});
 	// });
-	$(document).on('change','.productcategory',function(){
-		var prod_id=$(this).val();
+	// $(document).on('change','.productcategory',function(){
+	// // 	var prod_id=$(this).val();
 		
-		console.log(prod_id);
+	// // 	//console.log(prod_id,'data');
+	// // 	$.ajax({
+	// // 		type:'get',
+	// // 		url:"findproductprice",
+	// // 		data:{'id':prod_id},
+	// // 		dataType:'json',
+	// // 		success:function(data){
+				
+	// // 			console.log(data,'data');
+	// // 			$('.prod_price').val(data.price);
+	// // 			$('.loosekg').val(data.weight);
+	// // 			console.log(data.price,'price')
+	// // 		},
+	// // 		error:function(){
+
+	// // 		}
+	// //  });
+	// });
+
+	
+	
+});
+
+function changePrice(sel){	
+	let parentnodes = sel.parentNode.parentNode.id;
+	
+	let inputs = document.getElementById(parentnodes);
+	var prod_id=inputs.getElementsByClassName("productcategory")[0];
+	let idPro = prod_id.options[prod_id.selectedIndex].value;	
+	console.log(prod_id,'idPro')
+	let perkgprice = inputs.getElementsByClassName("prod_price")[0];
+	let loosekg = inputs.getElementsByClassName("loosekg")[0];
 
 		$.ajax({
 			type:'get',
 			url:"findproductprice",
-			data:{'id':prod_id},
+			data:{'id':idPro},
 			dataType:'json',
 			success:function(data){
-				console.log('price');
-				console.log(data);
-				$('.prod_price').val(data.price);
-				$('.loosekg').val(data.weight);
+				
+				perkgprice.value = data.price
+				loosekg.value = data.weight
+
 			},
 			error:function(){
-
+				console.log("eror")
 			}
-	 });
-    });
-});
+	});
+}

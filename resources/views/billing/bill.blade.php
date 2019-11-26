@@ -81,7 +81,7 @@
                 <tr id='addr0'>
                   <td>1</td>
                   <td>
-                      <select name="billproductname" id="billproductname" class="form-control productcategory">
+                      <select name="billproductname" id="billproductname" class="form-control productcategory" onchange="changePrice(this)">
                           <option value="0" disabled="true" selected="true">Choose</option>
                           @foreach ($products as $product) 
                           <option value="{{$product->id}}">{{$product->product_name}} </option>
