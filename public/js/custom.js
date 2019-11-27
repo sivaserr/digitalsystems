@@ -160,7 +160,24 @@ $("#totalbox").val(totalbox);
 $("#icebar").val(ice);
 
   // IF has value in 
-  let totalboxss= document.getElementById('totalicebar').value;
+
+  $('#transportcharge').add($('#finalicebar')).add($('#less')).add($('#packingcharge')).add($('#excess'))
+  .on('change',function(e){
+  e.preventDefault();
+  $('#overall').val(
+   Number($('#transportcharge').val())
+  +Number($('#finalicebar').val())
+  -Number($('#less').val())
+  +Number($('#packingcharge').val())
+  +Number($('#excess').val())
+  +Number(totalnetvalue)
+  ).change();
+  
+  });
+
+    let overallss = document.getElementById("overall");
+ console.log(overallss);
+
 $("#overall").val(totalnetvalue);
 
 //   overall.value += transportcharge;

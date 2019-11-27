@@ -166,7 +166,7 @@
                 </tr>
                 <tr>
                   <th class="text-center">Discount</th>
-                  <td class="text-center"><input type="text"  name='discount' id="discount" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='discount' id="less" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Packing Charge</th>
