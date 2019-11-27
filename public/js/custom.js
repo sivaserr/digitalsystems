@@ -95,15 +95,26 @@ var totalnetvalue = 0;
 var totalbox= 0;
 for(var i = 0; i < netvalues.length; i++){
 	 totalnetvalue += parseInt(netvalues[i].value);
+	 if(i>netvalues.length){
+		totalnetvalue -= parseInt(netvalues[i].value);
+	}
 }
 for (var i= 0; i<box.length; i++){
 	totalbox +=parseInt(box[i].value);
+
 }
 $("#totalbox").val(totalbox);
 $("#overall").val(totalnetvalue);
 
-console.log(bb);
 }
+
+
+function deletevalue(del){
+
+}
+
+
+
 
 function calculate2(){
 	var icebar=document.getElementById('icebar').value;
@@ -111,71 +122,27 @@ function calculate2(){
 	var result= document.getElementById('totalicebar');
 	   var totalicebar = icebar*pericebar;
 	   result.value=totalicebar;
+
 }
 
-function total(){
-	var transportcharge = parseInt(document.getElementById('transportcharge').value);
-	var finalicebar = parseInt(document.getElementById('finalicebar').value);
-	var discount = document.getElementById('discount').value;
-	var packingcharge = parseInt(document.getElementById('packingcharge').value);
-	var excess = document.getElementById('excess').value;
+// function total(){
+// 	var transportcharge = parseInt(document.getElementById('transportcharge').value);
+// 	var finalicebar = parseInt(document.getElementById('finalicebar').value);
+// 	var discount = document.getElementById('discount').value;
+// 	var packingcharge = parseInt(document.getElementById('packingcharge').value);
+// 	var excess = document.getElementById('excess').value;
 
-	var result =document.getElementById('overall');
+// 	var result =document.getElementById('overall');
 
-	parseInt(document.getElementById('finalicebar')).value = totalicebar;
+// 	parseInt(document.getElementById('finalicebar')).value = totalicebar;
 
-	var overall= transportcharge + packingcharge + finalicebar;
-	result.value=overall;
+// 	var overall= transportcharge + packingcharge + finalicebar;
+// 	result.value=overall;
 
 
-	calculate2();
+// 	calculate2();
 	 
-}
-
-
-  $(document).ready(function(){
-	// $(document).on('change','.productcategory',function(){
-
-	// 	var cat_id=$(this).val();
-
-	// 	$.ajax({
-	// 		   type:'get',
-	// 		   url:"findproductname",
-	// 		   data:{'id':cat_id},
-	// 		   success:function(data){
-	// 			//    console.log('success');
-	// 			//    console.log(data);
-	// 			//    console.log(data.lenght);
-	// 		   },
-	// 		   error:function(){
-
-	// 		   }
-	// 	});
-	// });
-	// $(document).on('change','.productcategory',function(){
-	// 	var prod_id=$(this).val();
-		
-	// 	console.log(prod_id);
-
-	// 	$.ajax({
-	// 		type:'get',
-	// 		url:"findproductprice",
-	// 		data:{'id':prod_id},
-	// 		dataType:'json',
-	// 		success:function(data){
-	// 			console.log('price');
-	// 			console.log(data);
-	// 			$('.prod_price').val(data.price);
-	// 			$('.loosekg').val(data.weight);
-	// 		},
-	// 		error:function(){
-
-	// 		}
-	//  });
-    // });
-});
-
-
+// }
 function changeprice(sel){
 
 	let parentnodes = sel.parentNode.parentNode.id;
@@ -205,15 +172,3 @@ function changeprice(sel){
 	 });
 
 }
-
-// function calc(s){
-// 	let parentnodes = s.parentNode.parentNode.id;
-
-// 	let inputs = document.getElementById(parentnodes);
-
-// 	let box_id =inputs.getElementsByClassName('box')[0];
-
-// 	var demo = box_id.value;
-
-// 	console.log(box);
-// }

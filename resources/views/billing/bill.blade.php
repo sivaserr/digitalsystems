@@ -122,7 +122,7 @@
         <div class="row clearfix">
           <div class="col-md-12">
             <button id="add_row" class="btn btn-default pull-left">Add Row</button>
-            <button id='delete_row' class="pull-right btn btn-default">Delete Row</button>
+            <button id='delete_row' onchange="deletevalue(this)" class="pull-right btn btn-default">Delete Row</button>
           </div>
         </div>
 
@@ -143,10 +143,10 @@
                       <th class="text-center">Per-ice Bar Amount</th>
                       <td class="text-center"><input type="text" name='pericebar' id="pericebar" oninput="calculate2()"  placeholder='0.00' class="form-control" /></td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                       <th class="text-center">Total Ice Bar Amount</th>
                       <td class="text-center"><input type="text" name='totalicebar' id="totalicebar" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                       <th class="text-center">Packing Charge</th>
                       <td class="text-center"><input type="text" name='total_amount' id="total_amount" placeholder='0.00' class="form-control" /></td>
@@ -161,9 +161,9 @@
                   <td class="text-center"><input type="text"  name='transportcharge' id="transportcharge" oninput="calculate()" placeholder='0.00' class="form-control"/></td>
                 </tr>
                 <tr>
-                  <th class="text-center">Ice Bar</th>
-                  <td class="text-center"><input type="text"  name='finalicebar' id="finalicebar" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
-                </tr>
+                    <th class="text-center">Total Ice Bar Amount</th>
+                    <td class="text-center"><input type="text" name='totalicebar' id="totalicebar" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
+                  </tr>
                 <tr>
                   <th class="text-center">Discount</th>
                   <td class="text-center"><input type="text"  name='discount' id="discount" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
