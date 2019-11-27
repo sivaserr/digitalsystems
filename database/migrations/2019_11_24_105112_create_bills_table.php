@@ -15,7 +15,6 @@ class CreateBillsTable extends Migration
     {
         Schema::create('bills', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('id');
             $table->string('bill_no');
             $table->string('customer_id');
             $table->string('date');
@@ -28,6 +27,18 @@ class CreateBillsTable extends Migration
             $table->string('discount');
             $table->string('discount_price');
             $table->string('nat_value');
+            $table->string('total_box');
+            $table->string('ice_bar');
+            $table->string('per_ice_bar');
+            $table->string('total_ice_bar');
+            $table->string('per_packing_price');
+            $table->string('transport_charge');
+            $table->string('total_icebar');
+            $table->string('less');
+            $table->string('packing_charge');
+            $table->string('excess');
+            $table->string('previous_balance');
+            $table->string('overall');
             $table->timestamps();
         });
     }

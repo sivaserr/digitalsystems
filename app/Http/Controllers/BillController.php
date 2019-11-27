@@ -48,7 +48,19 @@ class BillController extends Controller
         $bills->actual_price = $request->input('actualprice');
         $bills->discount = $request->input('discount');
         $bills->discount_price = $request->input('discountprice');
-        $bills->nat_value = $request->input('netvalue');
+        $bills->net_value = $request->input('netvalue');
+        $bills->total_box = $request->input('total_box');
+        $bills->ice_bar = $request->input('ice_bar');
+        $bills->per_ice_bar = $request->input('per_ice_bar');
+        $bills->total_ice_bar = $request->input('total_ice_bar');
+        $bills->per_packing_price = $request->input('per_packing_price');
+        $bills->transport_charge = $request->input('transport_charge');
+        $bills->total_icebar = $request->input('total_icebar');
+        $bills->less = $request->input('less');
+        $bills->packing_charge = $request->input('packing_charge');
+        $bills->excess = $request->input('excess');
+        $bills->previous_balance = $request->input('previous_balance');
+        $bills->overall = $request->input('overall');
 
         $bills->save();
 
