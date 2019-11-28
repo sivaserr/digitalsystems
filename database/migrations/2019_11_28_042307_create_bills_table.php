@@ -39,6 +39,7 @@ class CreateBillsTable extends Migration
             $table->string('excess');
             $table->string('previous_balance');
             $table->string('overall');
+            $table->string('customer_pending');
             $table->timestamps();
         });
     }

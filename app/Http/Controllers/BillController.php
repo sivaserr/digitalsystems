@@ -36,6 +36,7 @@ class BillController extends Controller
      */
     public function store(Request $request)
     {
+        
         $bills = new  Bill();
         $bills->bill_no = $request->input('billno');
         $bills->customer_id = $request->input('billcustomer');
@@ -61,10 +62,12 @@ class BillController extends Controller
         $bills->excess = $request->input('excess');
         $bills->previous_balance = $request->input('previous_balance');
         $bills->overall = $request->input('overall');
-
+        $bills->customer_pending = $request->input('overall');
+        
         $bills->save();
 
-        return redirect('bill')->with('bills',$bills);
+        // return redirect('bill')->with('bills',$bills);
+        return response()->json($bills);
     }
 
     /**
@@ -122,4 +125,11 @@ class BillController extends Controller
 
         return response()->json($p);
     }
+
+    // public function inserprice(Request $request){
+
+    //     Bill::create($request->all());
+    //     return json_encode(array("statuscode" =>200));
+        
+    // }
 }

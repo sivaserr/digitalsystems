@@ -10,8 +10,10 @@ class Bill extends Model
     protected $fillable = [
     'bill_no',
     'customer_id',
-    'date','product_id',
-    'box','kg',
+    'date',
+    'product_id',
+    'box',
+    'kg',
     'net_weight',
     'per_kg_price',
     'actual_price',
@@ -31,6 +33,9 @@ class Bill extends Model
     'previous_balance',
     'overall'
 ];
+
+
+
 
 
 }

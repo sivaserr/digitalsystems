@@ -28,8 +28,8 @@
       </div>
         <div class="container">
           <div class="billform">
-              <form action="{{route('Addbill')}}" method="POST">
-                  {{ csrf_field()}} <!--security token-->
+              <form id="billdataform" method="post">
+                {{ csrf_field() }}
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group">
@@ -77,11 +77,11 @@
                   <th class="text-center"> N-val </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="dynamic_product_rows">
                 <tr id='addr0'>
                   <td>1</td>
                   <td>
-                      <select name="billproductname" id="billproductname" class="form-control productcategory" onchange="changeprice(this)">
+                      <select name="billproductname" id="billproductname" class="form-control productcategory billproductname" onchange="changeprice(this)">
                           <option value="0" disabled="true" selected="true">Choose</option>
                           @foreach ($products as $product) 
                           <option value="{{$product->id}}">{{$product->product_name}} </option>
@@ -111,7 +111,7 @@
                     <input type="text"   class="form-control discountprice" name="discountprice" id="discountprice" oninput="calculate(this)" aria-describedby="" placeholder="0 " required>
                   </td>
                   <td>
-                    <input type="text"   class="form-control netvalue" name="netvalue" id="netvalue" oninput="calculate(this)" aria-describedby="" placeholder="0 " required>
+                    <input type="text"   class="form-control netvalue" name="netvalue" id="netvalue" oninput="calculate(this)" aria-describedby="" placeholder="0 ">
                   </td>
                 </tr>
                 <tr id='addr1'></tr>
@@ -207,8 +207,7 @@
 
 
 </div>
-
-@endsection
 <script type="text/javascript">
 
 </script>
+@endsection

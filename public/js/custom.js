@@ -75,7 +75,6 @@ function changeprice(sel){
 
 	let parentnodes = sel.parentNode.parentNode.id;
 	let inputs      = document.getElementById(parentnodes);
-
 	var prod_id = inputs.getElementsByClassName("productcategory")[0];
 
 	let idpro = prod_id.options[prod_id.selectedIndex].value;
@@ -175,18 +174,13 @@ $("#icebar").val(ice);
   
   });
 
-    let overallss = document.getElementById("overall");
- console.log(overallss);
+
 
 $("#overall").val(totalnetvalue);
 
 //   overall.value += transportcharge;
 //  console.log(overall.value);
-let transportcharge = document.getElementById('transportcharge').value;
-let totoalovarlallbal = transportcharge + totalnetvalue;
-console.log(transportcharge);
 
-calculate2();
 }
 
 
@@ -294,5 +288,122 @@ function calculate2(){
 
 
 
+// $('#billdataform').on('submit',function(e){
+// 	e.preventDefault();
+	
+// 	$.ajaxSetup({
+// 		headers: {
+// 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+// 		}
+// 	});
+//     let allRows = $('#tab_logic').find('tr');
+
+// 	let formData = {
+// 		'billno': $('#billno').val(),
+// 		'billcustomer': $('#billcustomer').val(),
+// 		'date': $('#date').val(),
+// 		'billproductname': $('#billproductname').val(),
+// 		'box': $('#box').val(),
+// 		'loosekg': $('#loosekg').val(),
+// 		'totalweight': $('#totalweight').val(),
+// 		'perkgprice': $('#perkgprice').val(),
+// 		'actualprice': $('#actualprice').val(),
+// 		'discount': $('#discount').val(),
+// 		'discountprice': $('#discountprice').val(),
+// 		'netvalue': $('#netvalue').val(),
+// 		'totalbox': $('#totalbox').val(),
+// 		'icebar': $('#icebar').val(),
+// 		'pericebar': $('#pericebar').val(),
+// 		'totalicebar': $('#totalicebar').val(),
+// 		'packing_amount': $('#packing_amount').val(),
+// 		'transportcharge': $('#transportcharge').val(),
+// 		'finalicebar': $('#finalicebar').val(),
+// 		'less': $('#less').val(),
+// 		'packingcharge': $('#packingcharge').val(),
+// 		'excess': $('#excess').val(),
+// 		'prebalance': $('#prebalance').val(),
+// 		'overall': $('#overall').val(),
+// 	}
+
+      
+//     $.ajax({
+// 			method:'post',
+// 			url:"/store",
+// 			data:formData,
+// 			dataType:'json',
+// 			success:function(data){
+	   
+//              console.log(data);
+// 			},
+// 			error:function(){
+//               alert('Not insert');
+// 			}
+// 	 });
+    
+//   });
+
+$('#billdataform').on('submit',function(e){
+ e.preventDefault();
+ let allRows = [];
+// Get Data's from all Row
+$("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
+    allRows.push({ 
+		"billproductname": $(this).find('.billproductname').val(),
+		"box": $(this).find('.box').val(),
+		"loosekg": $(this).find('.loosekg').val(),
+		"totalweight": $(this).find('.totalweight').val(),
+		"perkgprices": $(this).find('.perkgprices').val(),
+		"actualprice": $(this).find('.actualprice').val(),
+		"discount": $(this).find('.discount').val(),
+		"discountprice": $(this).find('.discountprice').val(),
+		"netvalue": $(this).find('.netvalue').val(),
+    });
+});
+// F
+ 	let formData = {
+		'billno': $('#billno').val(),
+		'billcustomer': $('#billcustomer').val(),
+		'date': $('#date').val(),
+		'totalbox': $('#totalbox').val(),
+		'icebar': $('#icebar').val(),
+		'pericebar': $('#pericebar').val(),
+		'totalicebar': $('#totalicebar').val(),
+		'packing_amount': $('#packing_amount').val(),
+		'transportcharge': $('#transportcharge').val(),
+		'finalicebar': $('#finalicebar').val(),
+		'less': $('#less').val(),
+		'packingcharge': $('#packingcharge').val(),
+		'excess': $('#excess').val(),
+		'prebalance': $('#prebalance').val(),
+		'overall': $('#overall').val(),
+		'allproduct_datas':allRows
+	}
+
+	console.log(formData);
+	return false;
+
+ $.ajax({
+	 type:"POST",
+	 url:"/bill",
+	 data:formData,
+	 success:function(response){
+		 console.log(response)
+		 alert("Data Saved");
+	 },
+	 error:function(error){
+		 console.log(error)
+		 alert("Data Not Saved");
+	 }
+ });
 
 
+
+
+
+
+ var billdate = [];
+
+
+
+console.log(studentnum_array);
+});
