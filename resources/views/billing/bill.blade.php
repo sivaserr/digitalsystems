@@ -28,7 +28,7 @@
       </div>
         <div class="container">
           <div class="billform">
-              <form id="billdataform" method="post">
+              <form id="billdataform" action="{{route('Addbill')}}" method="POST">
                 {{ csrf_field() }}
       <div class="row">
         <div class="col-sm-3">

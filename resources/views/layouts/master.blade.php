@@ -6,6 +6,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>
      @yield('title')
 </title>
@@ -91,8 +92,8 @@
             </a>
           </li>
 
-          <li class="{{'#' == request()->path() ? 'active' : ''}}">
-            <a href="#">
+          <li class="{{'report' == request()->path() ? 'active' : ''}}">
+            <a href="/report">
               <i class="now-ui-icons users_single-02"></i>
               <p>Report</p>
             </a>

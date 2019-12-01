@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     var i=1;
     $("#add_row").click(function(){b=i-1;
       	$('#addr'+i).html($('#addr'+b).html()).find('td:first-child').html(i+1);
@@ -341,9 +342,14 @@ function calculate2(){
 // 	 });
     
 //   });
-
+// $.ajaxSetup({
+//     headers: {
+//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//     }
+// });
 $('#billdataform').on('submit',function(e){
  e.preventDefault();
+
  let allRows = [];
 // Get Data's from all Row
 $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
@@ -376,19 +382,30 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 		'excess': $('#excess').val(),
 		'prebalance': $('#prebalance').val(),
 		'overall': $('#overall').val(),
-		'allproduct_datas':allRows
+		'allproduct_datas':allRows  // ALL BILL DATA ARRAY
 	}
 
 	console.log(formData);
-	return false;
-
+	// return false;
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
  $.ajax({
-	 type:"POST",
+	 type:"post",
 	 url:"/bill",
 	 data:formData,
 	 success:function(response){
-		 console.log(response)
-		 alert("Data Saved");
+	 	response = JSON.parse(response);
+	 	console.log(response);
+		 //if saved
+		 if(response.status == 'success'){
+		 	alert(response.message);
+		 	window.location.replace("http://ars.com/bill");
+		 }else{
+		 	alert(response.message);
+		 }
 	 },
 	 error:function(error){
 		 console.log(error)
@@ -401,9 +418,7 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 
 
 
- var billdate = [];
 
 
 
-console.log(studentnum_array);
 });

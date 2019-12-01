@@ -87,11 +87,12 @@ Route::get('/supplier/{id}','SuppliersController@destroy');
 
 //Bill page
 Route::get('/bill' ,'BillController@index');
-Route::post('/bill' ,'BillController@store');
-// Route::post('/bill' ,'BillDataController@store');
+Route::post('/bill' ,'BillController@store')->name('Addbill');
+// Route::post('/bill' ,'BillDataController@store')->name('Addbill');
 Route::get('/findproductname' ,'BillController@findproductname');
 Route::get('/findproductprice' ,'BillController@findproductprice');
 // Route::get('/bill' ,'BillController@inserprice');
 
-
+//Report
+Route::get('report','ReportController@index');
 
