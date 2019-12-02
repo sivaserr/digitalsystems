@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\BillData;
 use Illuminate\Http\Request;
+use App\Demo;
 
-class BillDataController extends Controller
+class DemoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class BillDataController extends Controller
      */
     public function index()
     {
-        //
+        return view('students.demo');
     }
 
     /**
@@ -35,30 +35,22 @@ class BillDataController extends Controller
      */
     public function store(Request $request)
     {
-        $billdata = new BillData();
+        $demos = new Demo;
 
-        $billdata->product_id=$request->input('billproductname');
-        $billdata->box=$request->input('box');
-        $billdata->weight=$request->input('loosekg');
-        $billdata->net_weight=$request->input('totalweight');
-        $billdata->per_kg_price=$request->input('perkgprice');
-        $billdata->actual_price=$request->input('actualprice');
-        $billdata->discount=$request->input('discount');
-        $billdata->discount_price=$request->input('discountprice');
-        $billdata->net_value=$request->input('netvalue');
+        $demos->name = $request->input('fname');
+        $demos->email = $request->input('email');
+        $demos->body = $request->input('body');
 
-        $billdata->save();
-
-        return redirect('bill')->with('billdata',$billdata);
+        $demos->save;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\BillData  $billData
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(BillData $billData)
+    public function show($id)
     {
         //
     }
@@ -66,10 +58,10 @@ class BillDataController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\BillData  $billData
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(BillData $billData)
+    public function edit($id)
     {
         //
     }
@@ -78,10 +70,10 @@ class BillDataController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\BillData  $billData
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BillData $billData)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -89,10 +81,10 @@ class BillDataController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\BillData  $billData
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BillData $billData)
+    public function destroy($id)
     {
         //
     }

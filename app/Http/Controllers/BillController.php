@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Bill;
+use App\BillData;
 use App\Product;
 
 class BillController extends Controller
@@ -37,10 +38,25 @@ class BillController extends Controller
     public function store(Request $request)
     {
         
-        $bills = new  Bill();
-        $bills->bill_no = $request->input('billno');
-        $bills->customer_id = $request->input('billcustomer');
-        $bills->date = $request->input('date');
+        $bills = new  BillData();
+        // $bills->bill_no = $request->input('billno');
+        // $bills->customer_id = $request->input('billcustomer');
+        // $bills->date = $request->input('date');
+        // $bills->total_box = $request->input('total_box');
+        // $bills->ice_bar = $request->input('ice_bar');
+        // $bills->per_ice_bar = $request->input('per_ice_bar');
+        // $bills->total_ice_bar = $request->input('total_ice_bar');
+        // $bills->per_packing_price = $request->input('per_packing_price');
+        // $bills->transport_charge = $request->input('transport_charge');
+        // $bills->total_icebar = $request->input('total_icebar');
+        // $bills->less = $request->input('less');
+        // $bills->packing_charge = $request->input('packing_charge');
+        // $bills->excess = $request->input('excess');
+        // $bills->previous_balance = $request->input('previous_balance');
+        // $bills->overall = $request->input('overall');
+        // $bills->customer_pending = $request->input('overall');
+        
+    
         $bills->product_id = $request->input('billproductname');
         $bills->box = $request->input('box');
         $bills->kg = $request->input('loosekg');
@@ -50,24 +66,12 @@ class BillController extends Controller
         $bills->discount = $request->input('discount');
         $bills->discount_price = $request->input('discountprice');
         $bills->net_value = $request->input('netvalue');
-        $bills->total_box = $request->input('total_box');
-        $bills->ice_bar = $request->input('ice_bar');
-        $bills->per_ice_bar = $request->input('per_ice_bar');
-        $bills->total_ice_bar = $request->input('total_ice_bar');
-        $bills->per_packing_price = $request->input('per_packing_price');
-        $bills->transport_charge = $request->input('transport_charge');
-        $bills->total_icebar = $request->input('total_icebar');
-        $bills->less = $request->input('less');
-        $bills->packing_charge = $request->input('packing_charge');
-        $bills->excess = $request->input('excess');
-        $bills->previous_balance = $request->input('previous_balance');
-        $bills->overall = $request->input('overall');
-        $bills->customer_pending = $request->input('overall');
-        
+
         $bills->save();
 
-        // return redirect('bill')->with('bills',$bills);
-        return response()->json($bills);
+
+        return redirect('bill')->with('bills',$bills);
+        // return response()->json($bills);
     }
 
     /**

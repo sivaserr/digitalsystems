@@ -379,19 +379,16 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 		'allproduct_datas':allRows
 	}
 
-	console.log(formData);
-	return false;
-
+console.log(formData);
  $.ajax({
-	 type:"POST",
+	 type:"post",
 	 url:"/bill",
-	 data:formData,
-	 success:function(response){
-		 console.log(response)
-		 alert("Data Saved");
-	 },
+	 data:$('#billdataform').serialize(allRows),
+	 success:function(data){
+        alert("Data saved")
+	},
 	 error:function(error){
-		 console.log(error)
+		//  console.log(error)
 		 alert("Data Not Saved");
 	 }
  });
@@ -399,11 +396,24 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 
 
 
-
-
- var billdate = [];
-
-
-
-console.log(studentnum_array);
 });
+
+
+// $('#addform').on('submit',function(e){
+// 	e.preventDefault();
+
+// 	$.ajax({
+// 		type:"POST",
+// 		url:"/Adddemo",
+// 		data:$('#addform').serialize(),
+// 		success:function(reponse){
+// 			console.log(reponse)
+// 			$('#exampleModal').model('hide')
+// 		   alert("Data saved")
+// 	   },
+// 		error:function(error){
+// 		    console.log(error)
+// 			alert("Data Not Saved");
+// 		}
+// 	});
+// });
