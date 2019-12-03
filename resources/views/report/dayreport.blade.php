@@ -16,8 +16,10 @@ Day Report
 @section('content')
     <?php 
     $customer = DB::table('customer')->select('customer.*')->get();
-    $products = DB::table('products')->select('products.*')->get();
+    $bills = DB::table('bills')->select('bills.id')->get();
     
+
+    // var_dump($bills);
     ?>
           <div class="card">
             <div class="card-header">
@@ -48,12 +50,12 @@ Day Report
         	<div class="col-sm-4">
           <div class="form-group">
             <label for="name">Date</label>
-            <input type="text" class="form-control" name="date" id="date" aria-describedby="date" placeholder="Enter date" required>
+            <input type="date" class="form-control" name="date" id="date" aria-describedby="date" placeholder="Enter date" required>
           </div>
         	</div>
         	<div class="col-sm-4">
         		<div class="button">
-        			    <button type="submit" class="btn btn-success">Submit</button>
+        			    <button type="submit" id="submit" class="btn btn-success">Submit</button>
         		</div>
         	</div>
 
@@ -62,8 +64,10 @@ Day Report
     </div>
 
 <div class="report_body">
-	
+
+
 </div>
-        </div>
+        
+</div>
 
 @endsection

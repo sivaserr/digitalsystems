@@ -422,3 +422,12 @@ $.ajaxSetup({
 
 
 });
+
+
+
+$('#submit').on('click',function(){
+
+      var  customer = $('#billcustomer').val();
+      var  date = $('#date').val();
+
+});

@@ -52,7 +52,7 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label for="name">Date</label>
-            <input type="text" class="form-control" name="date" id="date" aria-describedby="date" placeholder="Enter date" required>
+            <input type="date" class="form-control" name="date" id="date" aria-describedby="date" placeholder="Enter date" required>
           </div>
         </div>
       </div>
