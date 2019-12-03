@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Bill;
 use App\BillData;
 use App\Product;
-
+use DB;
 class BillController extends Controller
 {
     /**
@@ -38,42 +38,74 @@ class BillController extends Controller
     public function store(Request $request)
     {
         
-        $bills = new  BillData();
-        // $bills->bill_no = $request->input('billno');
-        // $bills->customer_id = $request->input('billcustomer');
-        // $bills->date = $request->input('date');
-        // $bills->total_box = $request->input('total_box');
-        // $bills->ice_bar = $request->input('ice_bar');
-        // $bills->per_ice_bar = $request->input('per_ice_bar');
-        // $bills->total_ice_bar = $request->input('total_ice_bar');
-        // $bills->per_packing_price = $request->input('per_packing_price');
-        // $bills->transport_charge = $request->input('transport_charge');
-        // $bills->total_icebar = $request->input('total_icebar');
-        // $bills->less = $request->input('less');
-        // $bills->packing_charge = $request->input('packing_charge');
-        // $bills->excess = $request->input('excess');
-        // $bills->previous_balance = $request->input('previous_balance');
-        // $bills->overall = $request->input('overall');
-        // $bills->customer_pending = $request->input('overall');
+
+        $bills = new  Bill();
+        $bills->bill_no = $request->input('billno');
+        $bills->customer_id = $request->input('billcustomer');
+        $bills->date = $request->input('date');
+        $bills->total_box = $request->input('totalbox');
+        $bills->ice_bar = $request->input('icebar');
+        $bills->per_ice_bar = $request->input('pericebar');
+        $bills->total_ice_bar = $request->input('totalicebar');
+        $bills->per_packing_price = $request->input('packing_amount');
+        $bills->transport_charge = $request->input('transportcharge');
+        $bills->total_icebar = $request->input('finalicebar');
+        $bills->less = $request->input('less');
+        $bills->packing_charge = $request->input('packingcharge');
+        $bills->excess = $request->input('excess');
+        $bills->previous_balance = $request->input('prebalance');
+        $bills->overall = $request->input('overall');
+        $bills->customer_pending = $request->input('overall');
+
+
+        $allproduct_datas = $request->input('allproduct_datas');    
         
-    
-        $bills->product_id = $request->input('billproductname');
-        $bills->box = $request->input('box');
-        $bills->kg = $request->input('loosekg');
-        $bills->net_weight = $request->input('totalweight');
-        $bills->per_kg_price = $request->input('perkgprice');
-        $bills->actual_price = $request->input('actualprice');
-        $bills->discount = $request->input('discount');
-        $bills->discount_price = $request->input('discountprice');
-        $bills->net_value = $request->input('netvalue');
-
-        $bills->save();
-
-
-        return redirect('bill')->with('bills',$bills);
-        // return response()->json($bills);
+            if($bills->save())  // IF BILL SAVED TRUE
+            {
+                foreach ($allproduct_datas as $product_data) {
+                    $billdata = new BillData(); // NEW BILLDATA.
+                    $billdata->bill_id = $bills->id;
+                    $billdata->product_id = $product_data['billproductname']; 
+                    $billdata->customer_id = $request->input('billcustomer'); 
+                    $billdata->box = $product_data['box'];
+                    $billdata->weight = $product_data['loosekg'];
+                    $billdata->net_weight = $product_data['totalweight'];
+                    $billdata->per_kg_price = $product_data['perkgprices'];
+                    $billdata->actual_price = $product_data['actualprice'];
+                    $billdata->discount = $product_data['discount'];
+                    $billdata->discount_price = $product_data['discountprice'];
+                    $billdata->net_value = $product_data['netvalue'];
+                    $billdata->save();
+                } 
+                echo json_encode(['status'=>'success','message'=>'Bill Saved Successfully.']);
+            }else{
+                echo json_encode(['status'=>'failed','message'=>'Something went wrong Try Later!.']);
+            }
+            
+        
     }
 
+    public function filtered_list(Request $request){
+        // var_dump($request->billcustomer);var_dump($request->data);exit;
+        // $data['data'] = [1,2,3,4,5];
+        $Bills = Bill::where([ ['date','=',date('d/m/Y',strtotime($request->data))]  ])->get();
+        // foreach($Bills as $Bill){
+        //     $Bill->BillDatas = BillData::where([
+        //         ['bill_id','=',$Bill->id],
+        //     ])->get();
+        // }
+        $data['Bills'] = $Bills;
+
+        return view('report.dayreport',$data);
+    }
+   public function billview($id){
+       
+    $Bills = Bill::find($id);
+    
+// var_dump($Bills);
+    return view('report.reportview')->with('Bills',$Bills);
+
+   }
     /**
      * Display the specified resource.
      *

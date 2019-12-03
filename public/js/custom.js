@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     var i=1;
     $("#add_row").click(function(){b=i-1;
       	$('#addr'+i).html($('#addr'+b).html()).find('td:first-child').html(i+1);
@@ -341,9 +342,14 @@ function calculate2(){
 // 	 });
     
 //   });
-
+// $.ajaxSetup({
+//     headers: {
+//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//     }
+// });
 $('#billdataform').on('submit',function(e){
  e.preventDefault();
+
  let allRows = [];
 // Get Data's from all Row
 $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
@@ -376,17 +382,31 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 		'excess': $('#excess').val(),
 		'prebalance': $('#prebalance').val(),
 		'overall': $('#overall').val(),
-		'allproduct_datas':allRows
+		'allproduct_datas':allRows  // ALL BILL DATA ARRAY
 	}
 
-console.log(formData);
+	console.log(formData);
+	// return false;
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
  $.ajax({
 	 type:"post",
 	 url:"/bill",
-	 data:$('#billdataform').serialize(allRows),
-	 success:function(data){
-        alert("Data saved")
-	},
+	 data:formData,
+	 success:function(response){
+	 	response = JSON.parse(response);
+	 	console.log(response);
+		 //if saved
+		 if(response.status == 'success'){
+		 	alert(response.message);
+		 	window.location.replace("http://digitalsystem.com//bill");
+		 }else{
+		 	alert(response.message);
+		 }
+	 },
 	 error:function(error){
 		//  console.log(error)
 		 alert("Data Not Saved");
@@ -399,21 +419,10 @@ console.log(formData);
 });
 
 
-// $('#addform').on('submit',function(e){
-// 	e.preventDefault();
 
-// 	$.ajax({
-// 		type:"POST",
-// 		url:"/Adddemo",
-// 		data:$('#addform').serialize(),
-// 		success:function(reponse){
-// 			console.log(reponse)
-// 			$('#exampleModal').model('hide')
-// 		   alert("Data saved")
-// 	   },
-// 		error:function(error){
-// 		    console.log(error)
-// 			alert("Data Not Saved");
-// 		}
-// 	});
+// $('#submit').on('click',function(e){
+// 	var value= $('#billcustomer').val();
+// 	var date= $('#Date').val();
+
 // });
+

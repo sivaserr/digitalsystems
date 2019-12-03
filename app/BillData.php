@@ -8,15 +8,15 @@ class BillData extends Model
 {
     protected $table = 'bill_data';
     protected $fillable = [
-    'billdata_id',
-    'bill_id',
-    'product_id',
+    'customer_id',
+    'billproductname',
     'box',
-    'net_weight',
-    'per_kg_price',
-    'actual_price',
+    'loosekg',
+    'totalweight',
+    'perkgprices',
+    'actualprice',
     'discount',
-    'discount_price',
-    'net_value'
+    'discountprice',
+    'netvalue'
     ];
 }
