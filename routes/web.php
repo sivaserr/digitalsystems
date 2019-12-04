@@ -102,3 +102,4 @@ Route::get('report','ReportController@index');
 
 Route::post('/report','BillController@filtered_list')->name('filtered_list');
 Route::get('/billviewedit/{id}','BillController@billview');
+Route::get('/pendingamount','BillController@pendingamount');

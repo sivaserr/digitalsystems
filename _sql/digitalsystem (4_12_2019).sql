@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 22, 2019 at 01:04 PM
+-- Generation Time: Dec 04, 2019 at 10:33 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.1.22
 
@@ -31,10 +31,103 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `bills`;
 CREATE TABLE IF NOT EXISTS `bills` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `bill_no` int(191) NOT NULL,
+  `customer_id` int(191) NOT NULL,
+  `date` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total_box` int(191) NOT NULL,
+  `ice_bar` int(191) NOT NULL,
+  `per_ice_bar` int(191) NOT NULL,
+  `total_ice_bar` int(191) NOT NULL,
+  `per_packing_price` int(191) NOT NULL,
+  `transport_charge` int(191) NOT NULL,
+  `total_icebar` int(191) NOT NULL,
+  `less` int(191) NOT NULL,
+  `packing_charge` int(191) NOT NULL,
+  `excess` int(191) NOT NULL,
+  `previous_balance` int(191) NOT NULL,
+  `overall` int(191) NOT NULL,
+  `customer_pending` int(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bills`
+--
+
+INSERT INTO `bills` (`id`, `bill_no`, `customer_id`, `date`, `total_box`, `ice_bar`, `per_ice_bar`, `total_ice_bar`, `per_packing_price`, `transport_charge`, `total_icebar`, `less`, `packing_charge`, `excess`, `previous_balance`, `overall`, `customer_pending`, `created_at`, `updated_at`) VALUES
+(3, 2, 23, '20/11/2019', 20, 7, 10, 67, 2, 10, 67, 163, 40, 100, 0, 116428, 116428, '2019-11-27 23:22:22', '2019-11-27 23:22:22'),
+(2, 1, 22, '23/11/2019', 10, 3, 10, 33, 2, 10, 33, 163, 20, 600, 0, 67000, 67000, '2019-11-27 23:20:46', '2019-11-27 23:20:46'),
+(4, 1, 26, '20/11/2019', 20, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 116375, 116375, '2019-11-27 23:25:24', '2019-11-27 23:25:24'),
+(17, 88, 26, '23/11/2019', 10, 7, 10, 67, 2, 10, 67, 163, 20, 100, 0, 99783, 99783, '2019-12-01 22:33:43', '2019-12-01 22:33:43'),
+(16, 88, 26, '23/11/2019', 10, 7, 10, 67, 2, 10, 67, 163, 20, 100, 0, 99783, 99783, '2019-12-01 22:31:57', '2019-12-01 22:31:57'),
+(15, 88, 26, '23/11/2019', 10, 3, 10, 33, 2, 10, 33, 163, 20, 100, 0, 66500, 66500, '2019-11-29 03:51:12', '2019-11-29 03:51:12'),
+(14, 8890, 22, '23/11/2019', 10, 3, 10, 33, 10, 10, 33, 163, 100, 100, 0, 66580, 66580, '2019-11-29 02:10:45', '2019-11-29 02:10:45'),
+(13, 889, 26, '23/11/2019', 10, 3, 10, 33, 2, 10, 33, 163, 20, 100, 0, 66500, 66500, '2019-11-29 02:09:53', '2019-11-29 02:09:53'),
+(12, 889, 26, '23/11/2019', 10, 3, 10, 33, 2, 10, 33, 163, 20, 100, 0, 66500, 66500, '2019-11-29 02:08:51', '2019-11-29 02:08:51'),
+(18, 88, 26, '23/11/2019', 10, 7, 10, 67, 2, 10, 67, 163, 20, 100, 0, 99783, 99783, '2019-12-01 22:34:59', '2019-12-01 22:34:59'),
+(19, 88, 26, '23/11/2019', 10, 7, 10, 67, 2, 10, 67, 163, 20, 100, 0, 99783, 99783, '2019-12-01 22:35:19', '2019-12-01 22:35:19'),
+(20, 88, 26, '23/11/2019', 10, 7, 10, 67, 2, 10, 67, 163, 20, 100, 0, 99783, 99783, '2019-12-01 22:35:38', '2019-12-01 22:35:38'),
+(21, 88, 26, '23/11/2019', 10, 7, 10, 67, 2, 10, 67, 163, 20, 100, 0, 99783, 99783, '2019-12-01 22:37:05', '2019-12-01 22:37:05'),
+(22, 889, 26, '23/11/2019', 10, 7, 10, 67, 2, 10, 67, 1, 20, 100, 0, 140196, 140196, '2019-12-01 23:25:44', '2019-12-01 23:25:44'),
+(23, 889, 26, '23/11/2019', 10, 7, 10, 67, 2, 10, 67, 163, 40, 100, 0, 52553, 52553, '2019-12-01 23:29:16', '2019-12-01 23:29:16'),
+(24, 5, 26, '23/11/2019', 10, 3, 10, 33, 2, 10, 33, 163, 20, 100, 0, 52500, 52500, '2019-12-02 02:50:15', '2019-12-02 02:50:15'),
+(25, 6, 26, '04/12/2019', 20, 7, 10, 67, 2, 10, 67, 163, 40, 100, 0, 116428, 116428, '2019-12-03 21:58:43', '2019-12-03 21:58:43'),
+(26, 7, 26, '30/11/2019', 20, 7, 10, 67, 2, 10, 67, 163, 40, 100, 0, 140053, 140053, '2019-12-03 21:59:41', '2019-12-03 21:59:41'),
+(27, 8, 27, '04-12-2019', 40, 13, 10, 133, 2, 10, 133, 163, 80, 100, 0, 189562, 189562, '2019-12-04 01:24:44', '2019-12-04 01:24:44'),
+(28, 9, 22, '2019-12-04', 10, 3, 10, 33, 10, 10, 33, 0, 100, 357, 0, 53000, 53000, '2019-12-04 01:37:54', '2019-12-04 01:37:54'),
+(29, 9, 26, '04/12/2019', 10, 3, 10, 33, 2, 10, 33, 163, 20, 100, 0, 37450, 37450, '2019-12-04 01:57:02', '2019-12-04 01:57:02'),
+(30, 10, 26, '2019-12-04', 20, 7, 10, 67, 10, 10, 67, 1, 200, 49, 0, 120200, 120200, '2019-12-04 04:19:44', '2019-12-04 04:19:44'),
+(31, 11, 26, '04-12-2019', 10, 3, 10, 33, 2, 0, 33, 0, 20, 100, 0, 52653, 52653, '2019-12-04 04:23:24', '2019-12-04 04:23:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bill_data`
+--
+
+DROP TABLE IF EXISTS `bill_data`;
+CREATE TABLE IF NOT EXISTS `bill_data` (
+  `billdata_id` int(11) NOT NULL AUTO_INCREMENT,
+  `bill_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `box` int(11) NOT NULL,
+  `weight` decimal(10,0) NOT NULL,
+  `net_weight` int(11) NOT NULL,
+  `per_kg_price` decimal(10,0) NOT NULL,
+  `actual_price` decimal(10,0) NOT NULL,
+  `discount` int(11) DEFAULT '0',
+  `discount_price` decimal(10,0) DEFAULT '0',
+  `net_value` decimal(10,0) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`billdata_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bill_data`
+--
+
+INSERT INTO `bill_data` (`billdata_id`, `bill_id`, `customer_id`, `product_id`, `box`, `weight`, `net_weight`, `per_kg_price`, `actual_price`, `discount`, `discount_price`, `net_value`, `created_at`, `updated_at`) VALUES
+(1, 21, 26, 7, 10, '35', 350, '150', '52500', 5, '2625', '49875', '2019-12-01 22:37:05', '2019-12-01 22:37:05'),
+(2, 22, 26, 4, 10, '35', 350, '200', '70000', 0, '0', '70000', '2019-12-01 23:25:44', '2019-12-01 23:25:44'),
+(3, 23, 26, 7, 10, '35', 350, '150', '52500', 0, '0', '52500', '2019-12-01 23:29:16', '2019-12-01 23:29:16'),
+(4, 24, 26, 7, 10, '35', 350, '150', '52500', 0, '0', '52500', '2019-12-02 02:50:15', '2019-12-02 02:50:15'),
+(5, 25, 26, 4, 10, '35', 350, '200', '70000', 5, '3500', '66500', '2019-12-03 21:58:43', '2019-12-03 21:58:43'),
+(6, 25, 26, 7, 10, '35', 350, '150', '52500', 5, '2625', '49875', '2019-12-03 21:58:43', '2019-12-03 21:58:43'),
+(7, 26, 26, 4, 10, '35', 350, '200', '70000', 0, '0', '70000', '2019-12-03 21:59:41', '2019-12-03 21:59:41'),
+(8, 26, 26, 4, 10, '35', 350, '200', '70000', 0, '0', '70000', '2019-12-03 21:59:41', '2019-12-03 21:59:41'),
+(9, 27, 27, 4, 10, '35', 350, '200', '70000', 5, '3500', '66500', '2019-12-04 01:24:45', '2019-12-04 01:24:45'),
+(10, 27, 27, 7, 10, '35', 350, '150', '52500', 5, '2625', '49875', '2019-12-04 01:24:45', '2019-12-04 01:24:45'),
+(11, 27, 27, 10, 10, '35', 350, '107', '37450', 0, '0', '37450', '2019-12-04 01:24:45', '2019-12-04 01:24:45'),
+(12, 27, 27, 11, 10, '35', 350, '107', '37450', 5, '1873', '35578', '2019-12-04 01:24:45', '2019-12-04 01:24:45'),
+(13, 28, 22, 7, 10, '35', 350, '150', '52500', 0, '0', '52500', '2019-12-04 01:37:54', '2019-12-04 01:37:54'),
+(14, 29, 26, 10, 10, '35', 350, '107', '37450', 0, '0', '37450', '2019-12-04 01:57:03', '2019-12-04 01:57:03'),
+(15, 30, 26, 4, 10, '35', 350, '200', '70000', 0, '0', '70000', '2019-12-04 04:19:45', '2019-12-04 04:19:45'),
+(16, 30, 26, 7, 10, '35', 350, '150', '52500', 5, '2625', '49875', '2019-12-04 04:19:45', '2019-12-04 04:19:45'),
+(17, 31, 26, 7, 10, '35', 350, '150', '52500', 0, '0', '52500', '2019-12-04 04:23:24', '2019-12-04 04:23:24');
 
 -- --------------------------------------------------------
 
@@ -53,17 +146,36 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `customer`
 --
 
 INSERT INTO `customer` (`id`, `name`, `short_name`, `city`, `phone`, `status`, `created_at`, `updated_at`) VALUES
-(22, 'siva', 'sk', 'salem', '1236547890', 1, '2019-11-14 01:38:55', '2019-11-18 01:14:03'),
-(23, 'Admin', 'ad', 'Tiruchengode', '1236547890', 0, '2019-11-14 02:05:23', '2019-11-18 23:16:57'),
-(24, 'siva', 'sk', 'Tiruchengode', '1236547890', 0, '2019-11-14 02:44:07', '2019-11-14 02:44:07'),
-(25, 'test', 'ts', 'Tiruchengode', '1236547890', 0, '2019-11-18 01:10:38', '2019-11-19 01:23:31');
+(26, 'Demo', 'DM', 'erode', '123-65-478', 1, '2019-11-23 00:59:23', '2019-11-24 22:23:45'),
+(22, 'Siva', 'sk', 'salem', '1236547890', 1, '2019-11-14 01:38:55', '2019-11-24 22:24:08'),
+(23, 'Admin', 'ad', 'Tiruchengode', '1236547890', 1, '2019-11-14 02:05:23', '2019-11-23 00:57:44'),
+(24, 'Siva', 'sk', 'Tiruchengode', '1236547890', 0, '2019-11-14 02:44:07', '2019-11-24 22:24:17'),
+(25, 'Test', 'ts', 'Tiruchengode', '1236547890', 0, '2019-11-18 01:10:38', '2019-11-24 22:23:56'),
+(27, 'kumar', 'sk', 'salem', '1236547890', 1, '2019-12-03 01:38:59', '2019-12-03 01:38:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `demos`
+--
+
+DROP TABLE IF EXISTS `demos`;
+CREATE TABLE IF NOT EXISTS `demos` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -77,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -98,7 +210,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (12, '2019_11_13_034211_create_product_group_table', 9),
 (13, '2019_11_14_034251_create_unit_table', 10),
 (14, '2019_11_14_053028_create_units_table', 11),
-(15, '2019_11_14_091653_create_suppliers_table', 12);
+(15, '2019_11_14_091653_create_suppliers_table', 12),
+(16, '2019_11_23_062545_create_bills_table', 13),
+(17, '2019_11_28_042307_create_bills_table', 14),
+(18, '2019_11_29_060653_create_demos_table', 15);
 
 -- --------------------------------------------------------
 

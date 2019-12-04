@@ -101,6 +101,26 @@ function changeprice(sel){
 
 }
 
+function pendingamount(){
+	let billcustomer =document.getElementById("billcustomer");
+
+	let selbillcustomer = billcustomer.options[billcustomer.selectedIndex];
+	 let sel = selbillcustomer.value;
+	 console.log(sel);
+	$.ajax({
+		type:'get',
+		url:"pendingamount",
+		data:{'id':sel},
+		dataType:'json',
+		success:function(data){
+
+			prebalance.value=data.customer_pending;
+		},
+		error:function(){
+
+		}
+ });
+}
 
 //billing
 
@@ -426,3 +446,10 @@ $.ajaxSetup({
 
 // });
 
+function myFunction(el) {
+	var restorepage = document.body.innerHTML;
+	var printpage = document.getElementById(el).innerHTML;
+	document.body.innerHTML = printpage;
+	window.print();
+	document.body.innerHTML = restorepage;
+  }

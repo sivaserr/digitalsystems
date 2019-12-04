@@ -42,7 +42,7 @@ class BillController extends Controller
         $bills = new  Bill();
         $bills->bill_no = $request->input('billno');
         $bills->customer_id = $request->input('billcustomer');
-        $bills->date = $request->input('date');
+        $bills->date = date('d-m-Y',strtotime($request->input('date')));
         $bills->total_box = $request->input('totalbox');
         $bills->ice_bar = $request->input('icebar');
         $bills->per_ice_bar = $request->input('pericebar');
@@ -88,21 +88,22 @@ class BillController extends Controller
     public function filtered_list(Request $request){
         // var_dump($request->billcustomer);var_dump($request->data);exit;
         // $data['data'] = [1,2,3,4,5];
-        $Bills = Bill::where([ ['date','=',date('d/m/Y',strtotime($request->data))]  ])->get();
+        $Bills = Bill::where([ ['date','=',date('d-m-Y',strtotime($request->data))]  ])->get();
         // foreach($Bills as $Bill){
         //     $Bill->BillDatas = BillData::where([
         //         ['bill_id','=',$Bill->id],
         //     ])->get();
         // }
         $data['Bills'] = $Bills;
-
+        // echo '<pre>';print_r($Bills);exit;
         return view('report.dayreport',$data);
     }
    public function billview($id){
        
     $Bills = Bill::find($id);
+
+        
     
-// var_dump($Bills);
     return view('report.reportview')->with('Bills',$Bills);
 
    }
@@ -168,4 +169,10 @@ class BillController extends Controller
     //     return json_encode(array("statuscode" =>200));
         
     // }
+    public function pendingamount(Request $request){
+        $balance = Bill::select('*')->where('id',$request->id)->first();
+
+        return response()->json($balance);
+
+    }
 }

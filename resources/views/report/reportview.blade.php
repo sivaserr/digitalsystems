@@ -12,7 +12,16 @@ Day Report
     font-weight: bold!important;
     font-size: 14px!important;
 }
+.printbtn {
+    text-align: center;
+}
 </style>
+    <?php 
+    $bill_datas = DB::table('bill_data')->select('bill_data.*')->get();
+    $products = DB::table('products')->select('products.*')->get();
+    
+    // var_dump($bill_datas);
+    ?>
 @section('content')
 <div class="card">
         <?php 
@@ -21,10 +30,11 @@ Day Report
         // var_dump($bills);
         ?>
 <div class="container">
+  <div class="printcontent" id="printcontent">
       <div class="card-header">
-        Bill no:
-      <strong>{{$Bills->bill_no}}</strong> 
+        Bill no:<strong>{{$Bills->bill_no}}</strong> 
         <span class="float-right"> <strong>Date:</strong> {{$Bills->date}}</span>
+        <div class="trip">Trip :</div>
       </div>
       <div class="card-body">
       <div class="row mb-4">
@@ -42,7 +52,7 @@ Day Report
       <div class="col-sm-6">
       <h6 class="mb-3">To:</h6>
       <div>
-      <strong>Bob Mart</strong>
+      <strong>ARS</strong>
       </div>
       <div>Attn: Daniel Marek</div>
       <div>43-190 Mikolow, Poland</div>
@@ -54,105 +64,13 @@ Day Report
       
       </div>
       
-      {{-- <div class="table-responsive-sm">
-      <table class="table table-striped">
-      <thead>
-      <tr>
-      <th class="center">#</th>
-      <th>Item</th>
-      <th>Description</th>
-      
-      <th class="right">Unit Cost</th>
-        <th class="center">Qty</th>
-      <th class="right">Total</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-      <td class="center">1</td>
-      <td class="left strong">Origin License</td>
-      <td class="left">Extended License</td>
-      
-      <td class="right">$999,00</td>
-        <td class="center">1</td>
-      <td class="right">$999,00</td>
-      </tr>
-      <tr>
-      <td class="center">2</td>
-      <td class="left">Custom Services</td>
-      <td class="left">Instalation and Customization (cost per hour)</td>
-      
-      <td class="right">$150,00</td>
-        <td class="center">20</td>
-      <td class="right">$3.000,00</td>
-      </tr>
-      <tr>
-      <td class="center">3</td>
-      <td class="left">Hosting</td>
-      <td class="left">1 year subcription</td>
-      
-      <td class="right">$499,00</td>
-        <td class="center">1</td>
-      <td class="right">$499,00</td>
-      </tr>
-      <tr>
-      <td class="center">4</td>
-      <td class="left">Platinum Support</td>
-      <td class="left">1 year subcription 24/7</td>
-      
-      <td class="right">$3.999,00</td>
-        <td class="center">1</td>
-      <td class="right">$3.999,00</td>
-      </tr>
-      </tbody>
-      </table>
-      </div> --}}
-      {{-- <div class="row">
-      <div class="col-lg-4 col-sm-5">
-      
-      </div>
-      
-      <div class="col-lg-4 col-sm-5 ml-auto">
-      <table class="table table-clear">
-      <tbody>
-      <tr>
-      <td class="left">
-      <strong>Subtotal</strong>
-      </td>
-      <td class="right">$8.497,00</td>
-      </tr>
-      <tr>
-      <td class="left">
-      <strong>Discount (20%)</strong>
-      </td>
-      <td class="right">$1,699,40</td>
-      </tr>
-      <tr>
-      <td class="left">
-       <strong>VAT (10%)</strong>
-      </td>
-      <td class="right">$679,76</td>
-      </tr>
-      <tr>
-      <td class="left">
-      <strong>Total</strong>
-      </td>
-      <td class="right">
-      <strong>$7.477,36</strong>
-      </td>
-      </tr>
-      </tbody>
-      </table>
-      
-      </div>
-      
-      </div> --}}
       <div class="billviewproduct">
             <table class="table table-striped">
                     <thead>
                       <tr>
                         <th scope="col">Sno</th>
                         <th scope="col">Product</th>
+                        <th scope="col">Box</th>
                         <th scope="col">KG</th>
                         <th scope="col">N-wgt</th>
                         <th scope="col">per(kg)-Rs</th>
@@ -163,19 +81,31 @@ Day Report
                       </tr>
                     </thead>
                     <tbody>
-                        <?php $id=1; ?>
+                        <?php $id=1;?>
+
                       <tr>
+                          @foreach($bill_datas as $bill_data)
+                          @if($Bills->id === $bill_data->bill_id)
                       <th scope="row">{{$id}}</th>
-                        <td>{{Mark}}</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
+                        @foreach($products as $product)
+                        @if($bill_data->product_id === $product->id)
+                        <td>{{$product->product_name}}</td>
+                        @endif
+                        @endforeach
+                        <td>{{$bill_data->box}}</td>
+                        <td>{{$bill_data->weight}}</td>
+                        <td>{{$bill_data->net_weight}}</td>
+                        <td>{{$bill_data->per_kg_price}}</td>
+                        <td>{{$bill_data->actual_price}}</td>
+                        <td>{{$bill_data->discount}}</td>
+                        <td>{{$bill_data->discount_price}}</td>
+                        <td>{{$bill_data->net_value}}</td>
                       </tr>
-                       <?php $id++; ?>
+                      <?php $id++ ?>
+
+                      @endif
+                      @endforeach
+
                     </tbody>
                   </table>
       </div>
@@ -246,6 +176,10 @@ Day Report
 
 
       </div>
+      </div>
+      </div>
+      <div class="printbtn">
+          <a href="#" class="btn btn-sm btn-info" onclick="myFunction('printcontent')" >Print</a>
       </div>
       </div>
 @endsection

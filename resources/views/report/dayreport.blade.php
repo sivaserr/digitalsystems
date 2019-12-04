@@ -112,24 +112,7 @@ Day Report
 
     
     <div class="output">
-     <table>
-       <thead>
-         {{-- <th>customer</th>
-         <th>date</th> --}}
-       </thead>
-       <tbody>
-         @foreach($Bills as $Bill)
-          <tr>
-           
-            <td>
-              <?php DB::table('customer')->select('name')->where('id','=',$Bill->customer_id)->first()->name; ?>
-            </td>
-            <td>
-              </td> 
-          </tr>
-         @endforeach
-       </tbody>
-     </table>
+
 
 <div class="title">
 

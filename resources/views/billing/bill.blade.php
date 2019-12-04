@@ -40,7 +40,7 @@
         <div class="col-sm-6">
           <div class="customer_status">
             <label for="phone">Customer</label>
-           <select name="billcustomer" id="billcustomer" class="form-control">
+           <select name="billcustomer" id="billcustomer" class="form-control billcustomer" onchange="pendingamount()">
               @foreach ($customer as $customers) 
               @if($customers->status === 1)
               <option value="{{$customers->id}}">{{$customers->name}} </option>
@@ -52,7 +52,7 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label for="name">Date</label>
-            <input type="text" class="form-control" name="date" id="date" aria-describedby="date" placeholder="Enter date" required>
+            <input type="date" class="form-control" name="date" id="date" aria-describedby="date" placeholder="Enter date" required>
           </div>
         </div>
       </div>
