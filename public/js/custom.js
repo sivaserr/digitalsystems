@@ -92,7 +92,10 @@ function changeprice(sel){
 			success:function(data){
 	   
 				perkgprice.value= data.price
-				loosekg.value= data.weight
+				// if(data.unit_id === units.id){
+				// 	console.log(data.unit_name)
+				// }
+				// loosekg.value= data.unit_id
 			},
 			error:function(){
 
@@ -104,22 +107,20 @@ function changeprice(sel){
 function pendingamount(){
 	let billcustomer =document.getElementById("billcustomer");
 
-	let selbillcustomer = billcustomer.options[billcustomer.selectedIndex];
-	 let sel = selbillcustomer.value;
-	 console.log(sel);
-	$.ajax({
-		type:'get',
-		url:"pendingamount",
-		data:{'id':sel},
-		dataType:'json',
-		success:function(data){
+	let selbillcustomer = billcustomer.options[billcustomer.selectedIndex].value;
+	let sel = selbillcustomer;
+// 	$.ajax({
+// 		type:'get',
+// 		url:"pendingamount",
+// 		data:{'id':sel},
+// 		dataType:'json',
+// 		success:function(data){
+// 			console.log(data.customer_id);
+// 		},
+// 		error:function(){
 
-			prebalance.value=data.customer_pending;
-		},
-		error:function(){
-
-		}
- });
+// 		}
+//  });
 }
 
 //billing
@@ -163,6 +164,8 @@ function calculate(s) {
 var netvalues =document.getElementsByClassName('netvalue');
 var box =document.getElementsByClassName('box');
 var overall = document.getElementById('overall');
+var totalrowbox =document.getElementById('totalrowbox').value;
+
 var totalnetvalue = 0;
 var totalbox= 0;
 for(var i = 0; i < netvalues.length; i++){
@@ -177,7 +180,9 @@ for (var i= 0; i<box.length; i++){
      let ice=ices.toFixed(2);
      
 $("#totalbox").val(totalbox);
+$("#totalrowbox").val(totalbox);
 $("#icebar").val(ice);
+totalrowbox.value=totalbox;
 
   // IF has value in 
 
@@ -237,7 +242,6 @@ function calculate2(){
 
 	  finalicebar.value=totalicebar ;
 	  packingcharge.value = ToTalBoxCharge;
-
 
 
 
@@ -388,7 +392,7 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 // F
  	let formData = {
 		'billno': $('#billno').val(),
-		'billcustomer': $('#billcustomer').val(),
+		'billsupplier': $('#billsupplier').val(),
 		'date': $('#date').val(),
 		'totalbox': $('#totalbox').val(),
 		'icebar': $('#icebar').val(),

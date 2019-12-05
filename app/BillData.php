@@ -8,7 +8,7 @@ class BillData extends Model
 {
     protected $table = 'bill_data';
     protected $fillable = [
-    'customer_id',
+    'supplier_id',
     'billproductname',
     'box',
     'loosekg',

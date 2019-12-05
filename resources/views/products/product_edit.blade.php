@@ -52,14 +52,14 @@ $user = DB::table('product_group')->select('product_group.*')->get();
                       <label for="price">Price</label>
                       <input type="number" class="form-control" name="price"  value="{{$products->price}}" id="Price" aria-describedby="Price" placeholder="Enter Price" required>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                       <label for="weight">Weight</label>
                       <input type="number" class="form-control" name="weight" value="{{$products->weight}}" id="weight" aria-describedby="weight" placeholder="Enter Weight" required>
                     </div>
                     <div class="form-group">
                       <label for="netweight">Net Weight</label>
                       <input type="number" class="form-control" name="netweight"  value="{{$products->net_weight}}" id="net_weight" aria-describedby="net_weight" placeholder="Enter Net Weight" required>
-                    </div>
+                    </div> --}}
               </div>
               <div class="modal-footer border-top-0 d-flex justify-content-center">
                 <button type="submit" class="btn btn-success">Save</button>

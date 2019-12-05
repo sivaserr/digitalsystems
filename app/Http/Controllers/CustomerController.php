@@ -51,6 +51,8 @@ class CustomerController extends Controller
         $customer->short_name = $request->input('short_name');
         $customer->city = $request->input('city');
         $customer->phone = $request->input('phone');
+        $customer->opening_balance = $request->input('opening_balance');
+        $customer->opening_box = $request->input('opening_box');
         $customer->status = $request->input('status');
 
         $customer->save();
@@ -100,6 +102,8 @@ class CustomerController extends Controller
         $customerss->short_name = $request->input('short_name');
         $customerss->city = $request->input('city');
         $customerss->phone = $request->input('phone');
+        $customerss->opening_balance = $request->input('opening_balance');
+        $customerss->opening_box = $request->input('opening_box');
         $customerss->status = $request->input('status');
 
         $customerss->save();

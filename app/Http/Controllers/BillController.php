@@ -41,7 +41,7 @@ class BillController extends Controller
 
         $bills = new  Bill();
         $bills->bill_no = $request->input('billno');
-        $bills->customer_id = $request->input('billcustomer');
+        $bills->supplier_id = $request->input('billsupplier');
         $bills->date = date('d-m-Y',strtotime($request->input('date')));
         $bills->total_box = $request->input('totalbox');
         $bills->ice_bar = $request->input('icebar');
@@ -66,7 +66,7 @@ class BillController extends Controller
                     $billdata = new BillData(); // NEW BILLDATA.
                     $billdata->bill_id = $bills->id;
                     $billdata->product_id = $product_data['billproductname']; 
-                    $billdata->customer_id = $request->input('billcustomer'); 
+                    $billdata->supplier_id = $request->input('billsupplier'); 
                     $billdata->box = $product_data['box'];
                     $billdata->weight = $product_data['loosekg'];
                     $billdata->net_weight = $product_data['totalweight'];
@@ -170,7 +170,7 @@ class BillController extends Controller
         
     // }
     public function pendingamount(Request $request){
-        $balance = Bill::select('*')->where('id',$request->id)->first();
+        $balance = Bill::select('*')->where('customer_id',$request->id)->first();
 
         return response()->json($balance);
 

@@ -41,6 +41,8 @@ class SuppliersController extends Controller
         $supplier->short_name =$request->input('short_name');
         $supplier->city =$request->input('city');
         $supplier->phone =$request->input('phone');
+        $supplier->status = $request->input('status');
+
 
         $supplier->save();
 
@@ -89,6 +91,9 @@ class SuppliersController extends Controller
         $supplier->short_name =$request->input('short_name');
         $supplier->city =$request->input('city');
         $supplier->phone =$request->input('phone');
+        $supplier->status = $request->input('status');
+
+        
 
         $supplier->save();
 

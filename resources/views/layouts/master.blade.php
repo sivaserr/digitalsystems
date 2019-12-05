@@ -55,6 +55,12 @@
               <p>suppliers</p>
             </a>
           </li>
+          <li class="{{'customer' == request()->path() ? 'active' : ''}}">
+            <a href="/customer">
+              <i class="now-ui-icons education_atom"></i>
+              <p>Customers</p>
+            </a>
+          </li>
           <li class="{{'product_group' == request()->path() ? 'active' : ''}}">
             <a href="/product_group">
               <i class="now-ui-icons design_bullet-list-67"></i>
@@ -71,12 +77,6 @@
             <a href="/products">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Produtcs</p>
-            </a>
-          </li>
-          <li class="{{'customer' == request()->path() ? 'active' : ''}}">
-            <a href="/customer">
-              <i class="now-ui-icons education_atom"></i>
-              <p>Customers</p>
             </a>
           </li>
           <li class="{{'bill' == request()->path() ? 'active' : ''}}">

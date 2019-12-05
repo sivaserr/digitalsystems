@@ -17,13 +17,12 @@
 @section('content')
 <div class="card">
     <?php 
-    $customer = DB::table('customer')->select('customer.*')->get();
+    $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
     $products = DB::table('products')->select('products.*')->get();
-    
     ?>
     <div class="card-header">
         <div class="billing_title">
-            <h4 class="card-title">ARS </h4>
+            <h4 class="card-title">ARS <div>[Purchase entry]</div>  </h4>
         </div>
       </div>
         <div class="container">
@@ -39,11 +38,12 @@
         </div>
         <div class="col-sm-6">
           <div class="customer_status">
-            <label for="phone">Customer</label>
-           <select name="billcustomer" id="billcustomer" class="form-control billcustomer" onchange="pendingamount()">
-              @foreach ($customer as $customers) 
-              @if($customers->status === 1)
-              <option value="{{$customers->id}}">{{$customers->name}} </option>
+            <label for="phone">Supplier</label>
+           <select name="billsupplier" id="billsupplier" class="form-control billsupplier" onchange="pendingamount()">
+              @foreach ($suppliers as $supplier) 
+              @if($supplier->status === 1)
+              <option>Choose</option>
+              <option value="{{$supplier->id}}">{{$supplier->supplier_name}} </option>
             @endif
              @endforeach
            </select>
@@ -65,7 +65,7 @@
             <table class="table table-bordered table-hover" id="tab_logic">
               <thead>
                 <tr class="headtext">
-                  <th class="text-center"> # </th>
+                  <th class="text-center"> S.No </th>
                   <th class="text-center"> Product </th>
                   <th class="text-center"> Box </th>
                   <th class="text-center"> KG </th>
@@ -116,6 +116,20 @@
                 </tr>
                 <tr id='addr1'></tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td class="text-center" id="totalrowbox">0</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="text-center" id="totalnetvalue">0</td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>
@@ -164,18 +178,18 @@
                   <th class="text-center">Ice Bar</th>
                   <td class="text-center"><input type="text"  name='total_icebar' id="finalicebar" oninput="calculate2()" placeholder='0.00' class="form-control" value=""/></td>
                 </tr>
-                <tr>
                   <th class="text-center">Discount</th>
                   <td class="text-center"><input type="text"  name='less' id="less" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
-                </tr>
-                <tr>
-                  <th class="text-center">Packing Charge</th>
-                  <td class="text-center"><input type="text"  name='packing_charge' id="packingcharge" oninput="calculate2()" placeholder='0.00' class="form-control packingcharge" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Excess</th>
                   <td class="text-center"><input type="text"  name='excess' id="excess" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
                 </tr>
+                <tr>
+                 <tr>
+                  <th class="text-center">Packing Charge</th>
+                  <td class="text-center"><input type="text"  name='packing_charge' id="packingcharge" oninput="calculate2()" placeholder='0.00' class="form-control packingcharge" /></td>
+                 </tr>
                 <tr>
                   <th class="text-center">previous Balance</th>
                   <td class="text-center"><input type="text" name='previous_balance' id="prebalance" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
