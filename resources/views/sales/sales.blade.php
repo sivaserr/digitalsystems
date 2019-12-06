@@ -1,8 +1,21 @@
 @extends('layouts.master')
 @section('navbar_brand')
-    Bill
+    Sales Entry
 @endsection
 <style>
+    .sales_log img {
+    height: 150px;
+    width: 240px;
+}
+.company_address p {
+    /* padding: 0; */
+    margin-bottom: 5px;
+}
+.col-sm-6.caddress .company_address {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
 .billing_title {
     text-align: center;
     color: #4CAF50;
@@ -23,12 +36,31 @@
     ?>
     <div class="card-header">
         <div class="billing_title">
-            <h4 class="card-title">ARS <div>[Purchase entry]</div>  </h4>
+            <h4 class="card-title">ARS <div>[Sales entry]</div>  </h4>
         </div>
       </div>
         <div class="container">
           <div class="billform">
-              <form id="billdataform" action="{{route('Addbill')}}" method="POST">
+              <div class="sales_header">
+                  <div class="row">
+                      <div class="col-sm-6 slogo">
+                            <div class="sales_log">
+                                    <img src="{{ asset('assets/images/ARS.jpg') }}">
+                              </div>
+                      </div>
+                      <div class="col-sm-6 caddress">
+                            <div class="company_address">
+                                    <p><b>Address:</b> 129,Global theatre road,sathyamangalam,erode(D.t)-638402</p>
+                                    <p><b>Mobile:</b> 63822 86665,88075 34363</p>
+                                    <p><b>Email:</b> arstraderssathy@gmail.com</p>
+                                </div>
+                      </div>
+                  </div>
+
+
+              </div>
+
+              <form id="billdataform" action="" method="POST">
                 {{ csrf_field() }}
       <div class="row">
         <div class="col-sm-3">
@@ -41,12 +73,8 @@
           <div class="customer_status">
             <label for="phone">Supplier</label>
            <select name="billsupplier" id="billsupplier" class="form-control billsupplier" onchange="pendingamount()">
-              @foreach ($suppliers as $supplier) 
-              @if($supplier->status === 1)
               <option>Choose</option>
-              <option value="{{$supplier->id}}">{{$supplier->supplier_name}} </option>
-            @endif
-             @endforeach
+              <option value=""></option>
            </select>
          </div>
         </div>
@@ -60,10 +88,8 @@
             <div class="customer_status">
                 <label for="phone">Trip</label>
                <select name="billsupplier" id="billsupplier" class="form-control billsupplier" onchange="pendingamount()">
-                  @foreach ($trips as $trip) 
                   <option>Choose</option>
-                  <option value="{{$trip->id}}">{{$trip->trip_name}} </option>
-                 @endforeach
+                  <option value=""> </option>
                </select>
              </div>
         </div>
@@ -92,14 +118,12 @@
                   <td>
                       <select name="billproductname" id="billproductname" class="form-control productcategory billproductname" onchange="changeprice(this)">
                           <option value="0" disabled="true" selected="true">Choose</option>
-                          @foreach ($products as $product) 
-                          <option value="{{$product->id}}">{{$product->product_name}} </option>
-                         @endforeach
+                          <option value=""> </option>
+                         
                       </select>
                     </td>
                   <td>
                         <input type="text"   class="form-control box" name="box" id="box" onchange="calculate(this)"  aria-describedby="box" placeholder="0" required>
-                    </div>
                   </td>
                   <td>
                     <input type="text"   class="form-control loosekg" name="loosekg" onchange="calculate(this)" id="loosekg" aria-describedby="loosekg" placeholder="0 " required>
@@ -159,50 +183,28 @@
                       <td class="text-center"><input type="text" name='total_box' id="totalbox" oninput="calculate2()" placeholder='0.00' class="form-control" id="sub_total" /></td>
                     </tr>
                     <tr>
-                      <th class="text-center">Ice Bar</th>
+                      <th class="text-center">Loose box</th>
                       <td class="text-center"><input type="text" name='ice_bar' oninput="calculate2()" placeholder='0.00' class="form-control icebar" id="icebar"/></td>
                     </tr>
                     <tr>
-                      <th class="text-center">Per-ice Bar Amount</th>
+                      <th class="text-center">Overall box</th>
                       <td class="text-center"><input type="text" name='per_ice_bar' id="pericebar" oninput="calculate2()"  placeholder='0.00' class="form-control" /></td>
-                    </tr>
-                    <tr>
-                      <th class="text-center">Total Ice Bar Amount</th>
-                      <td class="text-center"><input type="text" name='total_ice_bar' id="totalicebar" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
-                    </tr>
-                    <tr>
-                      <th class="text-center">Packing Charge</th>
-                      <td class="text-center"><input type="text" name='per_packing_price' id="packing_amount" placeholder='0.00' class="form-control packing_amount" oninput="calculate2()" /></td>
                     </tr>
                   </tbody>
                 </table>          </div>
           <div class="pull-right col-md-6">
             <table class="table table-bordered table-hover" id="tab_logic_total2">
               <tbody>
-                <tr>
-                  <th class="text-center">Transport Charge</th>
-                  <td class="text-center"><input type="text"  name='transport_charge' id="transportcharge" oninput="calculate2()" placeholder='0.00' class="form-control transportcharge"/></td>
-                </tr>
-                <tr>
-                  <th class="text-center">Ice Bar</th>
-                  <td class="text-center"><input type="text"  name='total_icebar' id="finalicebar" oninput="calculate2()" placeholder='0.00' class="form-control" value=""/></td>
-                </tr>
-                  <th class="text-center">Discount</th>
+
+
+                  <th class="text-center">Total Price</th>
                   <td class="text-center"><input type="text"  name='less' id="less" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
-                  <th class="text-center">Excess</th>
+                  <th class="text-center">Previous balances</th>
                   <td class="text-center"><input type="text"  name='excess' id="excess" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
-                 <tr>
-                  <th class="text-center">Packing Charge</th>
-                  <td class="text-center"><input type="text"  name='packing_charge' id="packingcharge" oninput="calculate2()" placeholder='0.00' class="form-control packingcharge" /></td>
-                 </tr>
-                <tr>
-                  <th class="text-center">previous Balance</th>
-                  <td class="text-center"><input type="text" name='previous_balance' id="prebalance" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
-                </tr>
                 <tr>
                   <th class="text-center">Overall Balance</th>
                   <td class="text-center"><input type="text"  name='overall' id="overall" oninput="calculate(this)" placeholder='0.00' class="form-control overall" /></td>

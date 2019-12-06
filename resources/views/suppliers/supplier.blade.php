@@ -110,7 +110,7 @@ Customer list page
                        </td> 
                     </tr>
                       <?php $id++; ?>
-  
+
                       @endforeach
                     </tbody>
                   </table>

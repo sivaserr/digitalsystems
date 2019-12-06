@@ -164,7 +164,7 @@ function calculate(s) {
 var netvalues =document.getElementsByClassName('netvalue');
 var box =document.getElementsByClassName('box');
 var overall = document.getElementById('overall');
-var totalrowbox =document.getElementById('totalrowbox').value;
+var totalrowbox =document.getElementById('totalrowbox');
 
 var totalnetvalue = 0;
 var totalbox= 0;
@@ -180,10 +180,10 @@ for (var i= 0; i<box.length; i++){
      let ice=ices.toFixed(2);
      
 $("#totalbox").val(totalbox);
-$("#totalrowbox").val(totalbox);
 $("#icebar").val(ice);
-totalrowbox.value=totalbox;
 
+totalrowbox.value=totalbox;
+console.log(totalrowbox);
   // IF has value in 
 
   $('#transportcharge').add($('#finalicebar')).add($('#less')).add($('#packingcharge')).add($('#excess'))

@@ -1,9 +1,23 @@
 .title h1 {
     color: #00BCD4;
 }
-
-
-
+/*menu style*/
+#subproduct ul,#subbilling ul,#subtrip ul {
+    padding: 0;
+}
+.sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
+    margin: 10px 0px 0!important;
+    border-radius: 0px!important;
+}
+#subproduct a ,#subbilling a,#subtrip a{
+    margin-top: 0!important;
+}
+/* .proarrow {
+    position: absolute;
+    top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+} */
 /*Login style*/
 
 *,:after,:before{box-sizing:border-box}

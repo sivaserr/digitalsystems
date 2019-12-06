@@ -20,6 +20,7 @@
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
   <link href="{{ URL::asset('css/style.css') }}" rel="stylesheet" />
+  <link href="{{ URL::asset('css/all.min.css') }}" rel="stylesheet" />
   <link href="{{ URL::asset('css/datepicker.min.css') }}" rel="stylesheet" />
 </head>
 <style>
@@ -38,7 +39,7 @@
           DS
         </a>
         <a href="#" class="simple-text logo-normal">
-          Digital system
+          ARS
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
@@ -62,28 +63,77 @@
             </a>
           </li>
           <li class="{{'product_group' == request()->path() ? 'active' : ''}}">
-            <a href="/product_group">
-              <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Product Group</p>
-            </a>
-          </li>
-          <li class="{{'unit' == request()->path() ? 'active' : ''}}">
-            <a href="/unit">
-              <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Unit</p>
-            </a>
+
           </li>
           <li class="{{'products' == request()->path() ? 'active' : ''}}">
-            <a href="/products">
+            <a href="/products" data-toggle="collapse" data-target="#subproduct">
               <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Produtcs</p>
+              <p>Create products</p>
+              {{-- <div class="proarrow">
+                  <i class="fas fa-chevron-left"></i>
+              </div> --}}
             </a>
+            <div id="subproduct" class="collapse">
+              <ul>
+              <li>
+              <a href="/product_group">
+                <i class="now-ui-icons design_bullet-list-67"></i>
+                <p>Product Group</p>
+              </a>
+            </li>
+            <li>
+                <a href="/unit">
+                  <i class="now-ui-icons design_bullet-list-67"></i>
+                  <p>Unit</p>
+                </a>
+              </li>
+              </ul>
+
+            </div>
           </li>
-          <li class="{{'bill' == request()->path() ? 'active' : ''}}">
-              <a href="/bill">
-                <i class="now-ui-icons ui-1_bell-53"></i>
+          <li>
+              <a href="/trips" data-toggle="collapse" data-target="#subtrip">
+                <i class="fas fa-truck-loading"></i>
+                <p>Create Trip</p>
+              </a>
+            <div id="subtrip" class="collapse">
+              <ul>
+                <li>
+                    <a href="/trips">
+                      <i class="fas fa-truck-moving"></i>
+                      <p>Narmal Trip</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-truck"></i>
+                        <p>Mini Trip</p>
+                    </a>
+                </li>
+              </ul>
+            </div>
+            </li>
+          <li>
+              <a href="/bill" data-toggle="collapse" data-target="#subbilling">
+                <i class="fas fa-money-check"></i>
                 <p>Billing</p>
               </a>
+              <div id="subbilling" class="collapse">
+          <ul>
+            <li>
+                <a href="/bill">
+                  <i class="fas fa-receipt"></i>
+                  <p>Purchase Entry</p>
+                </a>
+            </li>
+            <li>
+                <a href="/sales">
+                  <i class="fas fa-receipt"></i>                  
+                  <p>Sales Entry</p>
+                </a>
+            </li>
+          </ul>
+              </div>
             </li>
           <li class="{{'#' == request()->path() ? 'active' : ''}}">
             <a href="#">
