@@ -28,6 +28,8 @@ $(document).ready(function(){
     		overall.value -= stored_net;
     		totalbox.value -=stored_box;
 
+			 $("#totalrowbox").val(totalbox.value);
+			 $("#totalrownetvalue").val(overall.value);
 			$("#addr"+(i-1)).html('');
 			i--;
 		}
@@ -92,10 +94,7 @@ function changeprice(sel){
 			success:function(data){
 	   
 				perkgprice.value= data.price
-				// if(data.unit_id === units.id){
-				// 	console.log(data.unit_name)
-				// }
-				// loosekg.value= data.unit_id
+				loosekg.value= data.unit_id
 			},
 			error:function(){
 
@@ -165,6 +164,7 @@ var netvalues =document.getElementsByClassName('netvalue');
 var box =document.getElementsByClassName('box');
 var overall = document.getElementById('overall');
 var totalrowbox =document.getElementById('totalrowbox');
+var totalrownetvalue =document.getElementById('totalrownetvalue');
 
 var totalnetvalue = 0;
 var totalbox= 0;
@@ -183,7 +183,7 @@ $("#totalbox").val(totalbox);
 $("#icebar").val(ice);
 
 totalrowbox.value=totalbox;
-console.log(totalrowbox);
+totalrownetvalue.value=totalnetvalue;
   // IF has value in 
 
   $('#transportcharge').add($('#finalicebar')).add($('#less')).add($('#packingcharge')).add($('#excess'))
@@ -394,6 +394,7 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 		'billno': $('#billno').val(),
 		'billsupplier': $('#billsupplier').val(),
 		'date': $('#date').val(),
+		'billtrip': $('#billtrip').val(),
 		'totalbox': $('#totalbox').val(),
 		'icebar': $('#icebar').val(),
 		'pericebar': $('#pericebar').val(),

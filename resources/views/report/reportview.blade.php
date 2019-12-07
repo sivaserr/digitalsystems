@@ -19,6 +19,7 @@ Day Report
     <?php 
     $bill_datas = DB::table('bill_data')->select('bill_data.*')->get();
     $products = DB::table('products')->select('products.*')->get();
+    $trips = DB::table('trips')->select('trips.*')->get();
     
     // var_dump($bill_datas);
     ?>
@@ -34,7 +35,11 @@ Day Report
       <div class="card-header">
         Bill no:<strong>{{$Bills->bill_no}}</strong> 
         <span class="float-right"> <strong>Date:</strong> {{$Bills->date}}</span>
-        <div class="trip">Trip :</div>
+        @foreach($trips as $trip)
+        @if($Bills->trip_id === $trip->id)
+        <div class="trip">Trip :{{$trip->trip_name}}</div>
+        @endif
+        @endforeach
       </div>
       <div class="card-body">
       <div class="row mb-4">
@@ -107,6 +112,20 @@ Day Report
                       @endforeach
 
                     </tbody>
+                    <tfoot>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td class="text-center totalrowbox" ><span>T-Box</span><input type="text" id="totalrowbox" placeholder="0" readonly /></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td class="text-center totalrownetvalue"><span>T-val</span><input type="text" id="totalrownetvalue" placeholder="0" readonly /></td>
+                        </tr>
+                      </tfoot>
                   </table>
       </div>
 

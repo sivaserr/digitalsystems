@@ -63,28 +63,28 @@
               <form id="billdataform" action="" method="POST">
                 {{ csrf_field() }}
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="form-group">
-            <label for="name">Bill no</label>
+            <label for="name">Bill No</label>
             <input type="text" class="form-control" name="billno" id="billno" aria-describedby="name" placeholder="Enter invoice no" required>
           </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="customer_status">
-            <label for="phone">Supplier</label>
+            <label for="phone">Customer</label>
            <select name="billsupplier" id="billsupplier" class="form-control billsupplier" onchange="pendingamount()">
               <option>Choose</option>
               <option value=""></option>
            </select>
          </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="form-group">
             <label for="name">Date</label>
             <input type="date" class="form-control" name="date" id="date" aria-describedby="date" placeholder="Enter date" required>
           </div>
         </div>
-        <div class="col-sm-3">
+        {{-- <div class="col-sm-3">
             <div class="customer_status">
                 <label for="phone">Trip</label>
                <select name="billsupplier" id="billsupplier" class="form-control billsupplier" onchange="pendingamount()">
@@ -92,7 +92,7 @@
                   <option value=""> </option>
                </select>
              </div>
-        </div>
+        </div> --}}
       </div>
 
       <div class="row clearfix">
@@ -105,11 +105,11 @@
                   <th class="text-center"> Box </th>
                   <th class="text-center"> KG </th>
                   <th class="text-center"> N-wgt </th>
-                  <th class="text-center"> per(kg)-Rs </th>
-                  <th class="text-center"> Actual Rs </th>
-                  <th class="text-center"> Dis% </th>
-                  <th class="text-center"> Dis price </th>
-                  <th class="text-center"> N-val </th>
+                  <th class="text-center"> Loose box </th>
+                  <th class="text-center"> Loose kg</th>
+                  <th class="text-center"> Total weight </th>
+                  <th class="text-center"> Price </th>
+                  <th class="text-center"> T-price </th>
                 </tr>
               </thead>
               <tbody id="dynamic_product_rows">

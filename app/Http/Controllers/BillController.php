@@ -43,6 +43,7 @@ class BillController extends Controller
         $bills->bill_no = $request->input('billno');
         $bills->supplier_id = $request->input('billsupplier');
         $bills->date = date('d-m-Y',strtotime($request->input('date')));
+        $bills->trip_id = $request->input('billtrip');
         $bills->total_box = $request->input('totalbox');
         $bills->ice_bar = $request->input('icebar');
         $bills->per_ice_bar = $request->input('pericebar');

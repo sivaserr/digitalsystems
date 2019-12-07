@@ -35,12 +35,14 @@
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
-        <a href="#" class="simple-text logo-mini">
+        {{-- <a href="#" class="simple-text logo-mini">
           DS
         </a>
         <a href="#" class="simple-text logo-normal">
           ARS
-        </a>
+        </a> --}}
+        <img src="{{ asset('assets/images/ARS1.png') }}">
+
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
@@ -52,21 +54,21 @@
           </li>
           <li class="{{'supplier' == request()->path() ? 'active' : ''}}">
             <a href="/supplier">
-              <i class="now-ui-icons design_bullet-list-67"></i>
+              <i class="fas fa-user"></i>
               <p>suppliers</p>
             </a>
           </li>
           <li class="{{'customer' == request()->path() ? 'active' : ''}}">
             <a href="/customer">
-              <i class="now-ui-icons education_atom"></i>
+              <i class="fas fa-users"></i>
               <p>Customers</p>
             </a>
           </li>
           <li class="{{'product_group' == request()->path() ? 'active' : ''}}">
 
           </li>
-          <li class="{{'products' == request()->path() ? 'active' : ''}}">
-            <a href="/products" data-toggle="collapse" data-target="#subproduct">
+          <li>
+            <a href="#" data-toggle="collapse" data-target="#subproduct">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Create products</p>
               {{-- <div class="proarrow">
@@ -83,10 +85,16 @@
             </li>
             <li>
                 <a href="/unit">
-                  <i class="now-ui-icons design_bullet-list-67"></i>
+                  <i class="fab fa-buffer"></i>
                   <p>Unit</p>
                 </a>
               </li>
+              <li>
+                  <a href="/products">
+                    <i class="now-ui-icons design_bullet-list-67"></i>
+                    <p>Add Product</p>
+                  </a>
+                </li>
               </ul>
 
             </div>
@@ -137,14 +145,14 @@
             </li>
           <li class="{{'#' == request()->path() ? 'active' : ''}}">
             <a href="#">
-              <i class="now-ui-icons location_map-big"></i>
+              <i class="fas fa-truck-moving"></i>
               <p>Vechical information</p>
             </a>
           </li>
 
           <li class="{{'report' == request()->path() ? 'active' : ''}}">
             <a href="/report">
-              <i class="now-ui-icons users_single-02"></i>
+              <i class="fas fa-file-alt"></i>
               <p>Report</p>
             </a>
           </li>

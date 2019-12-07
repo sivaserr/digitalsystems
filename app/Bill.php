@@ -11,6 +11,7 @@ class Bill extends Model
     'bill_no',
     'supplier_id',
     'date',
+    'trip_id',
     // 'product_id',
     // 'box',
     // 'kg',

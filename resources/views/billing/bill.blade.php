@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('navbar_brand')
-    Bill
+    Purchase
 @endsection
 <style>
 .billing_title {
@@ -12,6 +12,18 @@
     color: #000;
     font-weight: bold!important;
 }
+#totalrowbox,#totalrownetvalue {
+  border: none;
+    text-align: center;
+    width: 100%;
+}
+.totalrowbox,.totalrownetvalue {
+    /* display: inline-flex; */
+    border: none!important;
+}
+#billsupplier,#billtrip {
+    padding: 9px;
+}
 </style>
 
 @section('content')
@@ -20,6 +32,7 @@
     $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
     $products = DB::table('products')->select('products.*')->get();
     $trips = DB::table('trips')->select('trips.*')->get();
+    $bills = DB::table('bills')->latest('id')->first();
     ?>
     <div class="card-header">
         <div class="billing_title">
@@ -34,7 +47,7 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label for="name">Bill no</label>
-            <input type="text" class="form-control" name="billno" id="billno" aria-describedby="name" placeholder="Enter invoice no" required>
+          <input type="text" class="form-control" name="billno" id="billno" aria-describedby="name" placeholder="Enter invoice no" value="{{$bills->id+1}}" readonly>
           </div>
         </div>
         <div class="col-sm-3">
@@ -58,8 +71,8 @@
         </div>
         <div class="col-sm-3">
             <div class="customer_status">
-                <label for="phone">Trip</label>
-               <select name="billsupplier" id="billsupplier" class="form-control billsupplier" onchange="pendingamount()">
+                <label for="trip">Trip</label>
+               <select name="billtrip" id="billtrip" class="form-control billtrip">
                   @foreach ($trips as $trip) 
                   <option>Choose</option>
                   <option value="{{$trip->id}}">{{$trip->trip_name}} </option>
@@ -129,14 +142,14 @@
                 <tr>
                   <td></td>
                   <td></td>
-                  <td class="text-center" id="totalrowbox">0</td>
+                  <td class="text-center totalrowbox" ><span>T-Box</span><input type="text" id="totalrowbox" placeholder="0" readonly /></td>
                   <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td class="text-center" id="totalnetvalue">0</td>
+                  <td class="text-center totalrownetvalue"><span>T-val</span><input type="text" id="totalrownetvalue" placeholder="0" readonly /></td>
                 </tr>
               </tfoot>
             </table>
