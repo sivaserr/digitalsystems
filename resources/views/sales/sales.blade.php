@@ -30,7 +30,7 @@
 @section('content')
 <div class="card">
     <?php 
-    $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
+    $customers = DB::table('customer')->select('customer.*')->get();
     $products = DB::table('products')->select('products.*')->get();
     $trips = DB::table('trips')->select('trips.*')->get();
     ?>
@@ -60,21 +60,25 @@
 
               </div>
 
-              <form id="billdataform" action="" method="POST">
+              <form id="salesdataform" action="{{ route('Addsales')}} " method="POST">
                 {{ csrf_field() }}
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
             <label for="name">Bill No</label>
-            <input type="text" class="form-control" name="billno" id="billno" aria-describedby="name" placeholder="Enter invoice no" required>
+            <input type="text" class="form-control" name="saleno" id="saleno" aria-describedby="name" placeholder="Enter invoice no">
           </div>
         </div>
         <div class="col-sm-4">
           <div class="customer_status">
             <label for="phone">Customer</label>
-           <select name="billsupplier" id="billsupplier" class="form-control billsupplier" onchange="pendingamount()">
-              <option>Choose</option>
-              <option value=""></option>
+           <select name="salescustomer" id="salescustomer" class="form-control billsupplier" onchange="">
+              <option>Choose</option>  
+            @foreach ($customers as $customer) 
+              @if($customer->status === 1)
+              <option value="{{$customer->id}}">{{$customer->name}} </option>
+              @endif
+             @endforeach
            </select>
          </div>
         </div>
@@ -116,32 +120,33 @@
                 <tr id='addr0'>
                   <td>1</td>
                   <td>
-                      <select name="billproductname" id="billproductname" class="form-control productcategory billproductname" onchange="changeprice(this)">
+                      <select name="salesproductname" id="salesproductname" class="form-control productcategory salesproductname" onchange="changeprice(this)">
                           <option value="0" disabled="true" selected="true">Choose</option>
-                          <option value=""> </option>
-                         
+                          @foreach ($products as $product) 
+                          <option value="{{$product->id}}">{{$product->product_name}} </option>
+                         @endforeach
                       </select>
                     </td>
                   <td>
-                        <input type="text"   class="form-control box" name="box" id="box" onchange="calculate(this)"  aria-describedby="box" placeholder="0" required>
+                        <input type="text"   class="form-control box" name="box" id="box" onchange="salescalculater(this)"  aria-describedby="box" placeholder="0" required>
                   </td>
                   <td>
-                    <input type="text"   class="form-control loosekg" name="loosekg" onchange="calculate(this)" id="loosekg" aria-describedby="loosekg" placeholder="0 " required>
+                    <input type="text"   class="form-control loosekg" name="loosekg" onchange="" id="loosekg" aria-describedby="loosekg" placeholder="0 " required>
                   </td>
                   <td>
-                    <input type="text"   class="form-control totalweight" name="totalweight" id="totalweight" oninput="calculate(this)" aria-describedby="" placeholder="0 " required>
+                    <input type="text"   class="form-control totalweight" name="totalweight" id="totalweight" oninput="salescalculater(this)" aria-describedby="" placeholder="0 " required>
                   </td>
                   <td>
-                      <input type="text"   class="form-control prod_price perkgprices" name="perkgprice" oninput="calculate(this)" id="perkgprice" aria-describedby="" placeholder="0 " required>
+                      <input type="text"   class="form-control  loosebox" name="loosebox" oninput="salescalculater(this)" id="loosebox" aria-describedby="" placeholder="0 " required>
                     </td>
                   <td>
-                    <input type="text"   class="form-control actualprice" name="actualprice" id="actualprice" oninput="calculate(this)"aria-describedby="" placeholder="0 " required>
+                    <input type="text"   class="form-control salesloosekg" name="salesloosekg" id="salesloosekg" oninput="salescalculater(this)"aria-describedby="" placeholder="0 " required>
                   </td>
                   <td>
-                    <input type="text"   class="form-control discount" name="discount" id="discount" oninput="calculate(this)" aria-describedby="" placeholder="0 " required>
+                    <input type="text"   class="form-control overallweight" name="overallweight" id="overallweight" oninput="" aria-describedby="" placeholder="0 " required>
                   </td>
                   <td>
-                    <input type="text"   class="form-control discountprice" name="discountprice" id="discountprice" oninput="calculate(this)" aria-describedby="" placeholder="0 " required>
+                    <input type="text"   class="form-control prod_price saleperkgprice" name="saleperkgprice" id="saleperkgprice" oninput="salescalculater(this)" aria-describedby="" placeholder="0 " required>
                   </td>
                   <td>
                     <input type="text"   class="form-control netvalue" name="netvalue" id="netvalue" oninput="calculate(this)" aria-describedby="" placeholder="0 ">
@@ -180,15 +185,15 @@
                   <tbody>
                     <tr>
                       <th class="text-center">Total Box</th>
-                      <td class="text-center"><input type="text" name='total_box' id="totalbox" oninput="calculate2()" placeholder='0.00' class="form-control" id="sub_total" /></td>
+                      <td class="text-center"><input type="text" name='total_box' id="totalbox" oninput="salescalculater(this)" placeholder='0.00' class="form-control" id="sub_total" /></td>
                     </tr>
                     <tr>
                       <th class="text-center">Loose box</th>
-                      <td class="text-center"><input type="text" name='ice_bar' oninput="calculate2()" placeholder='0.00' class="form-control icebar" id="icebar"/></td>
+                      <td class="text-center"><input type="text" name='totalloosebox' id="totalloosebox" oninput="salescalculater(this)" placeholder='0.00' class="form-control icebar"/></td>
                     </tr>
                     <tr>
                       <th class="text-center">Overall box</th>
-                      <td class="text-center"><input type="text" name='per_ice_bar' id="pericebar" oninput="calculate2()"  placeholder='0.00' class="form-control" /></td>
+                      <td class="text-center"><input type="text" name='overallbox' id="overallbox" oninput="salescalculater(this)"  placeholder='0.00' class="form-control" /></td>
                     </tr>
                   </tbody>
                 </table>          </div>
@@ -198,16 +203,16 @@
 
 
                   <th class="text-center">Total Price</th>
-                  <td class="text-center"><input type="text"  name='less' id="less" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='totalprice' id="totalprice" oninput="salescalculater(this)" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Previous balances</th>
-                  <td class="text-center"><input type="text"  name='excess' id="excess" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
+                  <td class="text-center"><input type="text"  name='prebalance' id="prebalance" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
                 <tr>
                   <th class="text-center">Overall Balance</th>
-                  <td class="text-center"><input type="text"  name='overall' id="overall" oninput="calculate(this)" placeholder='0.00' class="form-control overall" /></td>
+                  <td class="text-center"><input type="text"  name='overall' id="overall" oninput="salescalculater(this)" placeholder='0.00' class="form-control overall" /></td>
                 </tr>
               </tbody>
             </table>

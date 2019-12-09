@@ -58,6 +58,7 @@ $unitss =DB::table('units')->select('units.*')->get();
                           <div class="form-group">
                                 <label for="productname">Group</label>
                                   <select name="productgroupid" id="company" class="form-control">
+                                      <option>Choose</option>
                                     @foreach ($product_groups as $product_group)
                                   <option value="{{$product_group->id}}"> {{$product_group->product_group}}</option>
                                     @endforeach
@@ -66,6 +67,7 @@ $unitss =DB::table('units')->select('units.*')->get();
                           <div class="form-group">
                                 <label for="unitname">Unit</label>
                                   <select name="unitid" id="unit" class="form-control">
+                                      <option>Choose</option>
                                     @foreach ($units as $unit)
                                   <option value="{{$unit->id}}"> {{$unit->unit_name}}</option>
                                     @endforeach

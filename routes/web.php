@@ -122,3 +122,4 @@ Route::get('/pendingamount','BillController@pendingamount');
 //Sales entry 
 
 Route::get('/sales', 'SalesController@index');
+Route::post('/sales', 'SalesController@store')->name('Addsales');

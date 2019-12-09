@@ -54,11 +54,11 @@
           <div class="customer_status">
             <label for="phone">Supplier</label>
            <select name="billsupplier" id="billsupplier" class="form-control billsupplier" onchange="pendingamount()">
-              @foreach ($suppliers as $supplier) 
+              <option>Choose</option>  
+            @foreach ($suppliers as $supplier) 
               @if($supplier->status === 1)
-              <option>Choose</option>
               <option value="{{$supplier->id}}">{{$supplier->supplier_name}} </option>
-            @endif
+              @endif
              @endforeach
            </select>
          </div>
@@ -73,8 +73,8 @@
             <div class="customer_status">
                 <label for="trip">Trip</label>
                <select name="billtrip" id="billtrip" class="form-control billtrip">
-                  @foreach ($trips as $trip) 
                   <option>Choose</option>
+                  @foreach ($trips as $trip) 
                   <option value="{{$trip->id}}">{{$trip->trip_name}} </option>
                  @endforeach
                </select>

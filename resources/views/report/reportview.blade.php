@@ -15,11 +15,19 @@ Day Report
 .printbtn {
     text-align: center;
 }
+.purchase_header {
+    text-align: center;
+    padding-top: 30px;
+}
+.purchase_header h5 b {
+    color: #00adef;
+}
 </style>
     <?php 
     $bill_datas = DB::table('bill_data')->select('bill_data.*')->get();
     $products = DB::table('products')->select('products.*')->get();
     $trips = DB::table('trips')->select('trips.*')->get();
+    $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
     
     // var_dump($bill_datas);
     ?>
@@ -32,12 +40,15 @@ Day Report
         ?>
 <div class="container">
   <div class="printcontent" id="printcontent">
+    <div class="purchase_header">
+      <h5><b>PURCHASE</b></h5>
+    </div>
       <div class="card-header">
-        Bill no:<strong>{{$Bills->bill_no}}</strong> 
-        <span class="float-right"> <strong>Date:</strong> {{$Bills->date}}</span>
+        Bill no : <strong>{{$Bills->bill_no}}</strong> 
+        <span class="float-right"> <strong>Date :</strong> {{$Bills->date}}</span>
         @foreach($trips as $trip)
         @if($Bills->trip_id === $trip->id)
-        <div class="trip">Trip :{{$trip->trip_name}}</div>
+        <div class="trip">Trip : {{$trip->trip_name}}</div>
         @endif
         @endforeach
       </div>
@@ -46,15 +57,19 @@ Day Report
       <div class="col-sm-6">
       <h6 class="mb-3">From:</h6>
       <div>
-      <strong>Webz Poland</strong>
+        @foreach ($suppliers as $supplier)
+        @if($Bills->supplier_id === $supplier->id )
+        <strong>{{$supplier->supplier_name}}</strong>
+        @endif
+        @endforeach
       </div>
-      <div>Madalinskiego 8</div>
+      {{-- <div>Madalinskiego 8</div>
       <div>71-101 Szczecin, Poland</div>
       <div>Email: info@webz.com.pl</div>
-      <div>Phone: +48 444 666 3333</div>
+      <div>Phone: +48 444 666 3333</div> --}}
       </div>
       
-      <div class="col-sm-6">
+      {{-- <div class="col-sm-6">
       <h6 class="mb-3">To:</h6>
       <div>
       <strong>ARS</strong>
@@ -63,7 +78,7 @@ Day Report
       <div>43-190 Mikolow, Poland</div>
       <div>Email: marek@daniel.com</div>
       <div>Phone: +48 123 456 789</div>
-      </div>
+      </div> --}}
       
       
       
@@ -112,7 +127,7 @@ Day Report
                       @endforeach
 
                     </tbody>
-                    <tfoot>
+                    {{-- <tfoot>
                         <tr>
                           <td></td>
                           <td></td>
@@ -125,7 +140,7 @@ Day Report
                           <td></td>
                           <td class="text-center totalrownetvalue"><span>T-val</span><input type="text" id="totalrownetvalue" placeholder="0" readonly /></td>
                         </tr>
-                      </tfoot>
+                      </tfoot> --}}
                   </table>
       </div>
 

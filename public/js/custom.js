@@ -12,24 +12,31 @@ $(document).ready(function(){
     		let doc = document.getElementById("addr"+icalc);
     		let netvalue = doc.getElementsByClassName("netvalue")[0];
     		let boxs = doc.getElementsByClassName("box")[0];
+    		let loosebox = doc.getElementsByClassName("loosebox")[0];
 
     		let value_final = netvalue.value;
     		let boxsvalue_final = boxs.value;
+    		let loosebox_final = loosebox.value;
 
     		localStorage.setItem("netvalue",value_final);
     		localStorage.setItem("boxvalue",boxsvalue_final);
+    		localStorage.setItem("loosebox",loosebox_final);
 
     		let stored_net = localStorage.getItem("netvalue");
     		let stored_box = localStorage.getItem("boxvalue");
+    		let stored_loosebox = localStorage.getItem("loosebox");
 
     		let overall = document.getElementById("overall");
     		let totalbox = document.getElementById("totalbox");
+    		let totalloosebox = document.getElementById("totalloosebox");
 
     		overall.value -= stored_net;
     		totalbox.value -=stored_box;
+    		totalloosebox.value -=stored_loosebox;
 
 			 $("#totalrowbox").val(totalbox.value);
 			 $("#totalrownetvalue").val(overall.value);
+			 $("#totalprice").val(overall.value);
 			$("#addr"+(i-1)).html('');
 			i--;
 		}
@@ -136,28 +143,30 @@ function calculate(s) {
 	let loosekg =inputs.getElementsByClassName('loosekg')[0].value;
 	let totalweight =inputs.getElementsByClassName('totalweight')[0];
 
-	var netweight = box_id * loosekg;
+	let netweight = box_id * loosekg;
 	totalweight.value = netweight;
 	
 	let perkgpricess =inputs.getElementsByClassName('perkgprices')[0].value;
 	let actualprice =inputs.getElementsByClassName('actualprice')[0];	
 
-	var actualresult = netweight * perkgpricess;
+	let actualresult = netweight * perkgpricess;
 
-	actualprice.value=actualresult;
-
+	actualprice.value = actualresult;
+	
 	let discount =inputs.getElementsByClassName('discount')[0].value;
 	let discountprice =inputs.getElementsByClassName('discountprice')[0];	
 
-    var discountpriceresult=  actualresult /100 *discount;
+    let discountpriceresult=  actualresult /100 *discount;
 	discountprice.value=discountpriceresult;
 
 	let netvalue =inputs.getElementsByClassName('netvalue')[0];
 	netvalue.value=actualresult-discountpriceresult;
 
-    let prod_netvalue = actualresult-discountpriceresult
+	let prod_netvalue = actualresult-discountpriceresult
+	
 
-// console.log(prod_netvalue);
+
+
 
 
 var netvalues =document.getElementsByClassName('netvalue');
@@ -209,7 +218,64 @@ $("#overall").val(totalnetvalue);
 
 }
 
+function salescalculater(sales){
+	let parentnodes = sales.parentNode.parentNode.id;
 
+	let inputs = document.getElementById(parentnodes);
+
+	let box_id =inputs.getElementsByClassName('box')[0].value;
+	let loosekg =inputs.getElementsByClassName('loosekg')[0].value;
+	let loosebox =inputs.getElementsByClassName('loosebox')[0].value;
+	let totalweight =inputs.getElementsByClassName('totalweight')[0];
+
+	let netweight = box_id * loosekg;
+	totalweight.value = netweight;
+
+
+	let salesloosekg = inputs.getElementsByClassName('salesloosekg')[0].value;
+	
+	let salloosekg = netweight + parseInt(salesloosekg);
+    
+	let overallweight = inputs.getElementsByClassName('overallweight')[0];
+
+	overallweight.value = salloosekg;
+
+	let saleperkgprice = inputs.getElementsByClassName('saleperkgprice')[0].value;
+	let netvalue = inputs.getElementsByClassName('netvalue')[0];
+
+	netvalue.value = saleperkgprice*salloosekg;
+
+	var box =document.getElementsByClassName('box');
+	var salesloosebox =document.getElementsByClassName('loosebox');
+	var salesnetvalue =document.getElementsByClassName('netvalue');
+
+	let salesbox_id = 0;
+	let totalsalesloosebox = 0;
+	let totalsalesnetvalue = 0;
+
+	for (var i= 0; i<box.length; i++){
+		salesbox_id +=parseInt(box[i].value);
+	}
+	totalbox.value = salesbox_id;
+
+	for (var i= 0; i<salesloosebox.length; i++){
+		totalsalesloosebox +=parseInt(salesloosebox[i].value);
+	}
+	totalloosebox.value = totalsalesloosebox;
+
+	for (var i= 0; i<salesnetvalue.length; i++){
+		totalsalesnetvalue +=parseInt(salesnetvalue[i].value);
+	}
+	overall.value = totalsalesnetvalue;
+	
+	overallbox.value = salesbox_id + totalsalesloosebox;
+	
+
+
+	//total price
+	totalprice.value =totalsalesnetvalue;
+
+}   
 
 
 $('#val1').on('change',function(e){
@@ -443,7 +509,65 @@ $.ajaxSetup({
 
 });
 
+$('#salesdataform').on('submit',function(e){
+	e.preventDefault();
 
+	let salesproduct = [];
+
+
+	$("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
+		salesproduct.push({ 
+			"salesproductname": $(this).find('.salesproductname').val(),
+			"box": $(this).find('.box').val(),
+			"loosekg": $(this).find('.loosekg').val(),
+			"totalweight": $(this).find('.totalweight').val(),
+			"loosebox": $(this).find('.loosebox').val(),
+			"salesloosekg": $(this).find('.salesloosekg').val(),
+			"overallweight": $(this).find('.overallweight').val(),
+			"saleperkgprice": $(this).find('.saleperkgprice').val(),
+			"netvalue": $(this).find('.netvalue').val(),
+		});
+	});
+
+
+	let salesData = {
+		'saleno': $('#saleno').val(),
+		'salescustomer': $('#salescustomer').val(),
+		'date': $('#date').val(),
+		'totalbox': $('#totalbox').val(),
+		'totalloosebox': $('#totalloosebox').val(),
+		'ovarall_box': $('#overallbox').val(),
+		'totalprice': $('#totalprice').val(),
+		'prebalance': $('#prebalance').val(),
+		'overall': $('#overall').val(),
+		'salesproduct_datas':salesproduct  // ALL BILL DATA ARRAY
+	}
+	$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('[name="_token"]').val()
+        }
+});
+	$.ajax({
+		type:"post",
+		url:"/sales",
+		data:salesData,
+		success:function(response){
+			response = JSON.parse(response);
+			console.log(response);
+			//if saved
+			if(response.status == 'success'){
+				alert(response.message);
+				window.location.replace("http://digitalsystem.com//sales");
+			}else{
+				alert(response.message);
+			}
+		},
+		error:function(error){
+		   //  console.log(error)
+			alert("Data Not Saved");
+		}
+	});
+});
 
 // $('#submit').on('click',function(e){
 // 	var value= $('#billcustomer').val();
