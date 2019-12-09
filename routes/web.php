@@ -96,3 +96,14 @@ Route::get('/findproductprice' ,'BillController@findproductprice');
 //Report
 Route::get('report','ReportController@index');
 
+//demo page
+// Route::get('demo' ,'DemoController@index');
+// Route::post('Adddemo' ,'DemoController@store');
+
+Route::post('/report','BillController@filtered_list')->name('filtered_list');
+Route::get('/billviewedit/{id}','BillController@billview');
+
+
+
+//pending price
+Route::get('/pendingprice' ,'BillController@pendingprice');

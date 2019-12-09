@@ -4,7 +4,7 @@
 <?php
 $status = DB::table('customer')->select('customer.status')->get();
 
-var_dump($status);
+// var_dump($status);
 
 ?>
 <div class="row">

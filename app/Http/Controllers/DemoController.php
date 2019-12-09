@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Demo;
 
-class ReportController extends Controller
+class DemoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +14,7 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $data['Bills'] = [];
-        return view('report.dayreport',$data);
+        return view('students.demo');
     }
 
     /**
@@ -35,7 +35,13 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $demos = new Demo;
+
+        $demos->name = $request->input('fname');
+        $demos->email = $request->input('email');
+        $demos->body = $request->input('body');
+
+        $demos->save;
     }
 
     /**
@@ -82,5 +88,4 @@ class ReportController extends Controller
     {
         //
     }
-    
 }

@@ -408,7 +408,7 @@ $.ajaxSetup({
 		 }
 	 },
 	 error:function(error){
-		 console.log(error)
+		//  console.log(error)
 		 alert("Data Not Saved");
 	 }
  });
@@ -416,18 +416,23 @@ $.ajaxSetup({
 
 
 
-
-
-
-
-
 });
 
 
 
-$('#submit').on('click',function(){
+// $('#submit').on('click',function(e){
+// 	var value= $('#billcustomer').val();
+// 	var date= $('#Date').val();
 
-      var  customer = $('#billcustomer').val();
-      var  date = $('#date').val();
+// });
 
-});
+
+
+
+
+// $('#submit').on('click',function(){
+
+//       var  customer = $('#billcustomer').val();
+//       var  date = $('#date').val();
+
+// });

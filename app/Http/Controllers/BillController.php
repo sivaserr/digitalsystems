@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Bill;
 use App\BillData;
 use App\Product;
-
+use DB;
 class BillController extends Controller
 {
     /**
@@ -65,16 +65,16 @@ class BillController extends Controller
                 foreach ($allproduct_datas as $product_data) {
                     $billdata = new BillData(); // NEW BILLDATA.
                     $billdata->bill_id = $bills->id;
-                    $billdata->billproductname = $product_data['billproductname']; 
+                    $billdata->product_id = $product_data['billproductname']; 
                     $billdata->customer_id = $request->input('billcustomer'); 
                     $billdata->box = $product_data['box'];
-                    $billdata->loosekg = $product_data['loosekg'];
-                    $billdata->totalweight = $product_data['totalweight'];
-                    $billdata->perkgprices = $product_data['perkgprices'];
-                    $billdata->actualprice = $product_data['actualprice'];
+                    $billdata->weight = $product_data['loosekg'];
+                    $billdata->net_weight = $product_data['totalweight'];
+                    $billdata->per_kg_price = $product_data['perkgprices'];
+                    $billdata->actual_price = $product_data['actualprice'];
                     $billdata->discount = $product_data['discount'];
-                    $billdata->discountprice = $product_data['discountprice'];
-                    $billdata->netvalue = $product_data['netvalue'];
+                    $billdata->discount_price = $product_data['discountprice'];
+                    $billdata->net_value = $product_data['netvalue'];
                     $billdata->save();
                 } 
                 echo json_encode(['status'=>'success','message'=>'Bill Saved Successfully.']);
@@ -85,8 +85,27 @@ class BillController extends Controller
         
     }
 
+    public function filtered_list(Request $request){
+        // var_dump($request->billcustomer);var_dump($request->data);exit;
+        // $data['data'] = [1,2,3,4,5];
+        $Bills = Bill::where([ ['date','=',date('d/m/Y',strtotime($request->data))]  ])->get();
+        // foreach($Bills as $Bill){
+        //     $Bill->BillDatas = BillData::where([
+        //         ['bill_id','=',$Bill->id],
+        //     ])->get();
+        // }
+        $data['Bills'] = $Bills;
 
+        return view('report.dayreport',$data);
+    }
+   public function billview($id){
+       
+    $Bills = Bill::find($id);
+    
+// var_dump($Bills);
+    return view('report.reportview')->with('Bills',$Bills);
 
+   }
     /**
      * Display the specified resource.
      *
@@ -149,4 +168,8 @@ class BillController extends Controller
     //     return json_encode(array("statuscode" =>200));
         
     // }
+    public function findpendingamount(Request $request){
+        $pendingprice =Bill::select('*')->where('id',$request->id)->first();
+        return response()->json($pendingprice);
+    }
 }
