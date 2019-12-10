@@ -171,7 +171,7 @@ class BillController extends Controller
         
     // }
     public function pendingamount(Request $request){
-        $balance = Bill::select('*')->where('customer_id',$request->id)->first();
+        $balance = Bill::select('previous_balance')->where('supplier_id',$request->id)->get();
 
         return response()->json($balance);
 

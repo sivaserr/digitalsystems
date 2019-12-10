@@ -111,22 +111,26 @@ function changeprice(sel){
 }
 
 function pendingamount(){
-	let billcustomer =document.getElementById("billcustomer");
+	let billcustomer =document.getElementById("billsupplier");
 
-	let selbillcustomer = billcustomer.options[billcustomer.selectedIndex].value;
-	let sel = selbillcustomer;
-// 	$.ajax({
-// 		type:'get',
-// 		url:"pendingamount",
-// 		data:{'id':sel},
-// 		dataType:'json',
-// 		success:function(data){
-// 			console.log(data.customer_id);
-// 		},
-// 		error:function(){
-
-// 		}
-//  });
+	let selbillsupplier = billsupplier.options[billsupplier.selectedIndex].value;
+	let sel = selbillsupplier;
+	$.ajax({
+		type:'get',
+		url:"pendingamount",
+		data:{'id':sel},
+		dataType:'json',
+		success:function(data){
+			var total = 0;
+			for(var i=0; i<data.length; i++){
+				total += parseInt(data[i].previous_balance);
+			}
+			prebalance.value=total;
+			console.log(data);
+		},
+		error:function(){
+		}
+ });
 }
 
 //billing
@@ -437,6 +441,9 @@ function calculate2(){
 //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 //     }
 // });
+
+
+//Purchase Entry function
 $('#billdataform').on('submit',function(e){
  e.preventDefault();
 
@@ -493,7 +500,7 @@ $.ajaxSetup({
 		 //if saved
 		 if(response.status == 'success'){
 		 	alert(response.message);
-		 	window.location.replace("http://digitalsystem.com//bill");
+		 	window.location.replace("http://digitalsystem.com/bill");
 		 }else{
 		 	alert(response.message);
 		 }
@@ -508,6 +515,9 @@ $.ajaxSetup({
 
 
 });
+
+
+//Sales entry function
 
 $('#salesdataform').on('submit',function(e){
 	e.preventDefault();
@@ -557,7 +567,7 @@ $('#salesdataform').on('submit',function(e){
 			//if saved
 			if(response.status == 'success'){
 				alert(response.message);
-				window.location.replace("http://digitalsystem.com//sales");
+				window.location.replace("http://digitalsystem.com/sales");
 			}else{
 				alert(response.message);
 			}
@@ -575,6 +585,8 @@ $('#salesdataform').on('submit',function(e){
 
 // });
 
+
+//report print out function
 function myFunction(el) {
 	var restorepage = document.body.innerHTML;
 	var printpage = document.getElementById(el).innerHTML;

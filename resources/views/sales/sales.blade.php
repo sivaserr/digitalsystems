@@ -32,7 +32,7 @@
     <?php 
     $customers = DB::table('customer')->select('customer.*')->get();
     $products = DB::table('products')->select('products.*')->get();
-    $trips = DB::table('trips')->select('trips.*')->get();
+    $sales = DB::table('sales')->latest('id')->first();
     ?>
     <div class="card-header">
         <div class="billing_title">
@@ -65,8 +65,8 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
-            <label for="name">Bill No</label>
-            <input type="text" class="form-control" name="saleno" id="saleno" aria-describedby="name" placeholder="Enter invoice no">
+            <label for="name">Sales No</label>
+          <input type="text" class="form-control" name="saleno" id="saleno" aria-describedby="name" placeholder="Enter invoice no" value="{{$sales->id+1}}" readonly>
           </div>
         </div>
         <div class="col-sm-4">

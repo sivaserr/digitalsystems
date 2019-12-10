@@ -59,6 +59,14 @@ Customer list page
                         <label for="phone">Phone</label>
                         <input type="text" class="form-control" name="phone" id="phone" placeholder="phone" required>
                       </div>
+                      <div class="form-group">
+                        <label for="opening_balance">Opening balance</label>
+                        <input type="text" class="form-control" name="opening_balance" id="opening_balance" placeholder="opening_balance" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="opening_box">Opening Box</label>
+                        <input type="text" class="form-control" name="opening_box" id="opening_box" placeholder="opening_box" required>
+                      </div>
                      <div class="customer_status">
                         <label for="phone">Active</label>
                        <select name="status" id="status" class="form-control">
@@ -85,6 +93,8 @@ Customer list page
                       <th>Short name</th>
                       <th>City</th>
                       <th>Phone</th>
+                      <th>open balance</th>
+                      <th>open box</th>
                       <th>Edit</th>
                       <th>Delete</th>
                       <th>Status</th>
@@ -99,6 +109,8 @@ Customer list page
                         <td>{{$supplier ->short_name}}</td>
                         <td>{{$supplier ->city}}</td>
                         <td>{{$supplier ->phone}}</td>
+                        <td>{{$supplier ->opening_balance}}</td>
+                        <td>{{$supplier ->opening_box}}</td>
                       <td><a href="/supplier_edit/{{$supplier ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
                       <td><a href="/supplier/{{$supplier ->id}}" class="btn btn-sm btn-danger">Delete</a></td>
                       <td>

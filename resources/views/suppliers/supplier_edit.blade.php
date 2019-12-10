@@ -36,6 +36,14 @@ $status = DB::table('suppliers')->select('suppliers.status')->get();
                     <label for="phone">Phone</label>
                     <input type="text" class="form-control" name="phone" value="{{$supplier->phone}}" id="phone" placeholder="phone">
                   </div>
+                  <div class="form-group">
+                    <label for="opening_balance">Opening balance</label>
+                    <input type="text" class="form-control" name="opening_balance" value="{{$supplier ->opening_balance}}" id="opening_balance" placeholder="opening_balance" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="opening_box">Opening Box</label>
+                    <input type="text" class="form-control" name="opening_box" value="{{$supplier ->opening_box}}" id="opening_box" placeholder="opening_box" required>
+                  </div>
                   <div class="customer_status">
                     <label for="phone">Active</label>
                    <select name="status" id="status" class="form-control">

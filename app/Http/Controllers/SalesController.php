@@ -37,7 +37,7 @@ class SalesController extends Controller
     {
 
         $sales = new  Sales();
-        $sales->sale_no = $request->input('salesno');
+        $sales->sale_no = $request->input('saleno');
         $sales->customer_id = $request->input('salescustomer');
         $sales->date = date('d-m-Y',strtotime($request->input('date')));
         $sales->total_box = $request->input('totalbox');

@@ -19,6 +19,8 @@ class CreateSuppliersTable extends Migration
             $table->string('short_name');
             $table->string('city');
             $table->string('phone');
+            $table->string('opening_balance');
+            $table->string('opening_box');
             $table->timestamps();
         });
     }
