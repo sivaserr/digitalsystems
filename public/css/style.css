@@ -15,14 +15,14 @@
 .login_logo img {
     height: 100px;
 }
-#subproduct ul,#subbilling ul,#subtrip ul {
+#subproduct ul,#subbilling ul,#subtrip ul,#subcustomer ul{
     padding: 0;
 }
 .sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
     margin: 10px 0px 0!important;
     border-radius: 0px!important;
 }
-#subproduct a ,#subbilling a,#subtrip a{
+#subproduct a ,#subbilling a,#subtrip a,#subcustomer a{
     margin-top: 0!important;
 }
 /* .proarrow {

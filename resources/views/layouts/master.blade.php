@@ -58,11 +58,27 @@
               <p>suppliers</p>
             </a>
           </li>
-          <li class="{{'customer' == request()->path() ? 'active' : ''}}">
-            <a href="/customer">
+          <li>
+            <a href="#" data-toggle="collapse" data-target="#subcustomer">
               <i class="fas fa-users"></i>
               <p>Customers</p>
             </a>
+            <div id="subcustomer" class="collapse">
+                <ul>
+                  <li>
+                      <a href="/customer">
+                          <i class="fas fa-users"></i>
+                          <p>Add Customer</p>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="/customer_rate_fixing">
+                          <i class="fas fa-users"></i>
+                          <p>Customer Rate Fixing</p>
+                      </a>
+                  </li>
+                </ul>
+              </div>
           </li>
           <li class="{{'product_group' == request()->path() ? 'active' : ''}}">
 

@@ -31,8 +31,10 @@
 <div class="card">
     <?php 
     $customers = DB::table('customer')->select('customer.*')->get();
+    $customer_rate_fixings = DB::table('customer_rate_fixings')->select('customer_rate_fixings.*')->get();
     $products = DB::table('products')->select('products.*')->get();
     $sales = DB::table('sales')->latest('id')->first();
+
     ?>
     <div class="card-header">
         <div class="billing_title">
