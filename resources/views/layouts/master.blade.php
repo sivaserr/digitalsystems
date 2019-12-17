@@ -123,15 +123,15 @@
             <div id="subtrip" class="collapse">
               <ul>
                 <li>
-                    <a href="/trips">
+                    <a href="">
                       <i class="fas fa-truck-moving"></i>
-                      <p>Narmal Trip</p>
+                      <p>Trip Type</p>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/trips">
                         <i class="fas fa-truck"></i>
-                        <p>Mini Trip</p>
+                        <p>Trip</p>
                     </a>
                 </li>
               </ul>
@@ -229,15 +229,24 @@
                   </a>
 
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                      <a class="dropdown-item" href="{{ route('password.change') }}">
+                          <i class="fas fa-key"></i>
+                          {{ __('Change password') }}
+                      </a>
                       <a class="dropdown-item" href="{{ route('logout') }}"
                          onclick="event.preventDefault();
                                        document.getElementById('logout-form').submit();">
+                                       <i class="fas fa-sign-out-alt"></i>
                           {{ __('Logout') }}
                       </a>
-
+                    
                       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                           @csrf
                       </form>
+
+
+
                   </div>
               </li>
               {{-- <li class="nav-item dropdown">

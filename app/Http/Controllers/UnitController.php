@@ -104,4 +104,13 @@ class UnitController extends Controller
         return redirect('/unit')->with('unit',$unit);
 
     }
+
+
+
+    public function findunitdata($id)
+    {
+        $findunitdata = Unit::find($id);
+
+        return response()->json($findunitdata);
+    }
 }

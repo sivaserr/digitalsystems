@@ -16,23 +16,23 @@ $(document).ready(function(){
 
     		let value_final = netvalue.value;
     		let boxsvalue_final = boxs.value;
-    		let loosebox_final = loosebox.value;
+    		// let loosebox_final = loosebox.value;
 
     		localStorage.setItem("netvalue",value_final);
     		localStorage.setItem("boxvalue",boxsvalue_final);
-    		localStorage.setItem("loosebox",loosebox_final);
+    		// localStorage.setItem("loosebox",loosebox_final);
 
     		let stored_net = localStorage.getItem("netvalue");
     		let stored_box = localStorage.getItem("boxvalue");
-    		let stored_loosebox = localStorage.getItem("loosebox");
+    		// let stored_loosebox = localStorage.getItem("loosebox");
 
     		let overall = document.getElementById("overall");
     		let totalbox = document.getElementById("totalbox");
-    		let totalloosebox = document.getElementById("totalloosebox");
+    		// let totalloosebox = document.getElementById("totalloosebox");
 
     		overall.value -= stored_net;
     		totalbox.value -=stored_box;
-    		totalloosebox.value -=stored_loosebox;
+    		// totalloosebox.value -=stored_loosebox;
 
 			 $("#totalrowbox").val(totalbox.value);
 			 $("#totalrownetvalue").val(overall.value);
@@ -102,6 +102,7 @@ function changeprice(sel){
 	   
 				perkgprice.value= data.price
 				loosekg.value= data.unit_id
+				console.log(data);
 			},
 			error:function(){
 
@@ -121,11 +122,11 @@ function pendingamount(){
 		data:{'id':sel},
 		dataType:'json',
 		success:function(data){
-			var total = 0;
-			for(var i=0; i<data.length; i++){
-				total += parseInt(data[i].previous_balance);
-			}
-			prebalance.value=total;
+			// var total = 0;
+			// for(var i=0; i<data.length; i++){
+			// 	total += parseInt(data[i].previous_balance);
+			// }
+			// prebalance.value=total;
 			console.log(data);
 		},
 		error:function(){

@@ -119,4 +119,11 @@ class SuppliersController extends Controller
         return redirect('/supplier')->with('supplier' ,$supplier);
 
     }
+
+
+    public function findsupplierdata($id){
+        $supplierdata = Supplier::find($id);
+
+        return response()->json($supplierdata);
+    }
 }

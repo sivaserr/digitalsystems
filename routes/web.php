@@ -26,6 +26,13 @@ Route::get('/home', function () {
     return redirect('customer');
 });
 
+
+
+//Change password function
+Route::get('/change-password','Auth\ChangePasswordController@index')->name('password.change');
+Route::post('/change-password','Auth\ChangePasswordController@changePassword')->name('password.update');
+
+
 // Route::get('/home', 'HomeController@index')->name('home');
 
 // Route::get('/page', 'PageController@index');

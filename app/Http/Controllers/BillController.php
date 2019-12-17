@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Bill;
 use App\BillData;
 use App\Product;
+use App\Supplier;
 use DB;
 class BillController extends Controller
 {
@@ -172,8 +173,23 @@ class BillController extends Controller
     // }
     public function pendingamount(Request $request){
         $balance = Bill::select('previous_balance')->where('supplier_id',$request->id)->get();
+        $Supplier = Supplier::select('opening_balance')->where('id',$request->id)->get();
+
+        // foreach($balance as $value)
+        // {
+        //     array_push($Supplier,$value);
+        // }
 
         return response()->json($balance);
 
     }
+
+
+    public function billdata($id){
+
+        $billdata = Bill::find($id);
+
+        return response()->json($billdata);
+    }
+
 }
