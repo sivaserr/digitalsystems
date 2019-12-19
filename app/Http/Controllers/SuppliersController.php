@@ -41,6 +41,8 @@ class SuppliersController extends Controller
         $supplier->short_name =$request->input('short_name');
         $supplier->city =$request->input('city');
         $supplier->phone =$request->input('phone');
+        $supplier->opening_balance =$request->input('opening_balance');
+        $supplier->opening_box =$request->input('opening_box');
         $supplier->status = $request->input('status');
 
 
@@ -91,6 +93,8 @@ class SuppliersController extends Controller
         $supplier->short_name =$request->input('short_name');
         $supplier->city =$request->input('city');
         $supplier->phone =$request->input('phone');
+        $supplier->opening_balance =$request->input('opening_balance');
+        $supplier->opening_box =$request->input('opening_box');
         $supplier->status = $request->input('status');
 
         

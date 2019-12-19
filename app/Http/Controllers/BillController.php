@@ -159,9 +159,14 @@ class BillController extends Controller
     //     return response()->json($data);
     // }
     public function findproductprice(Request $request){
-        $p = product::select('*')->where('id',$request->id)->first();
+        // $p = product::select('*')->where('id',$request->id)->join('units');
 
-        return response()->json($p);
+$data = DB::table('products')
+       ->join('units', 'units.id', '=', 'products.unit_id')
+       ->select('products.price', 'units.unit_name')->where('products.id',$request->id)
+       ->get();
+
+        return response()->json($data);
     }
 
     // public function inserprice(Request $request){
@@ -175,7 +180,7 @@ class BillController extends Controller
         return response()->json($pendingprice);
 }
     public function pendingamount(Request $request){
-        $balance = Bill::select('*')->where('customer_id',$request->id)->first();
+        $balance = Bill::select('previous_balance')->where('supplier_id',$request->id)->get();
 
         return response()->json($balance);
 

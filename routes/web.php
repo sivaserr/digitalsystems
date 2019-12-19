@@ -74,6 +74,13 @@ Route::put('/customerupdate/{id}','CustomerController@update');
 Route::get('/customer/{id}','CustomerController@destroy');
 // Route::get('/customer/{id}','CustomerController@active');
 
+//Customer Rate Fixing page
+Route::get('/customer_rate_fixing', 'CustomerRateFixingController@index');
+Route::post('/customer_rate_fixing', 'CustomerRateFixingController@store')->name('Addcustomerrate');
+Route::get('/customer_rate_fixing', 'CustomerRateFixingController@show');
+Route::get('/customer_rate_edit/{id}', 'CustomerRateFixingController@edit');
+Route::put('/customerrateupdate/{id}', 'CustomerRateFixingController@update');
+Route::get('/customer_rate_fixing/{id}', 'CustomerRateFixingController@destroy');
 
 //Suppliers page
 

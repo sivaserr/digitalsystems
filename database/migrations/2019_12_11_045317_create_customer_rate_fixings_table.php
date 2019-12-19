@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSuppliersTable extends Migration
+class CreateCustomerRateFixingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateSuppliersTable extends Migration
      */
     public function up()
     {
-        Schema::create('suppliers', function (Blueprint $table) {
+        Schema::create('customer_rate_fixings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('supplier_name');
-            $table->string('short_name');
-            $table->string('city');
-            $table->string('phone');
-            $table->string('opening_balance');
-            $table->string('opening_box');
+            $table->string('customer');
+            $table->string('product');
+            $table->string('fixing_rate');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateSuppliersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('suppliers');
+        Schema::dropIfExists('customer_rate_fixings');
     }
 }

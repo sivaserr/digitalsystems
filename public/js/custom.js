@@ -12,29 +12,29 @@ $(document).ready(function(){
     		let doc = document.getElementById("addr"+icalc);
     		let netvalue = doc.getElementsByClassName("netvalue")[0];
     		let boxs = doc.getElementsByClassName("box")[0];
-    		let loosebox = doc.getElementsByClassName("loosebox")[0];
+    		// let loosebox = doc.getElementsByClassName("loosebox")[0];
 
     		let value_final = netvalue.value;
     		let boxsvalue_final = boxs.value;
-    		let loosebox_final = loosebox.value;
+    		// let loosebox_final = loosebox.value;
 
     		localStorage.setItem("netvalue",value_final);
     		localStorage.setItem("boxvalue",boxsvalue_final);
-    		localStorage.setItem("loosebox",loosebox_final);
+    		// localStorage.setItem("loosebox",loosebox_final);
 
     		let stored_net = localStorage.getItem("netvalue");
     		let stored_box = localStorage.getItem("boxvalue");
-    		let stored_loosebox = localStorage.getItem("loosebox");
+    		// let stored_loosebox = localStorage.getItem("loosebox");
 
     		let overall = document.getElementById("overall");
     		let totalbox = document.getElementById("totalbox");
-    		let totalloosebox = document.getElementById("totalloosebox");
+    		// let totalloosebox = document.getElementById("totalloosebox");
 
     		overall.value -= stored_net;
     		totalbox.value -=stored_box;
-    		totalloosebox.value -=stored_loosebox;
+    		// totalloosebox.value -=stored_loosebox;
 
-			 $("#totalrowbox").val(totalbox.value);
+			 // $("#totalrowbox").val(totalbox.value);
 			 $("#totalrownetvalue").val(overall.value);
 			 $("#totalprice").val(overall.value);
 			$("#addr"+(i-1)).html('');
@@ -100,8 +100,12 @@ function changeprice(sel){
 			dataType:'json',
 			success:function(data){
 	   
-				perkgprice.value= data.price
-				loosekg.value= data.unit_id
+
+
+				data.forEach((i,j)=>{
+			    perkgprice.value= i.price
+				loosekg.value= i.unit_name
+			})
 			},
 			error:function(){
 
@@ -111,22 +115,48 @@ function changeprice(sel){
 }
 
 function pendingamount(){
-	let billcustomer =document.getElementById("billcustomer");
+	let billcustomer =document.getElementById("billsupplier");
 
-	let selbillcustomer = billcustomer.options[billcustomer.selectedIndex].value;
-	let sel = selbillcustomer;
-// 	$.ajax({
-// 		type:'get',
-// 		url:"pendingamount",
-// 		data:{'id':sel},
-// 		dataType:'json',
-// 		success:function(data){
-// 			console.log(data.customer_id);
-// 		},
-// 		error:function(){
+	let selbillsupplier = billsupplier.options[billsupplier.selectedIndex].value;
+	let sel = selbillsupplier;
 
-// 		}
-//  });
+	let total = 0;
+
+	$.ajax({
+		type:'get',
+		url:"http://ars.com/api/supplier/"+sel,		
+		dataType:'json',
+		success:function(data){
+
+			// data.forEach((i,j)=>{
+			// 	console.log(i.opening_balance);
+			// 	total += i.opening_balance;
+			// })
+
+			console.log(data);
+			total +=data.opening_balance;
+
+		},
+		error:function(){
+		}
+ });
+
+	$.ajax({
+		type:'get',
+		url:"pendingamount",
+		data:{'id':sel},
+		dataType:'json',
+		success:function(data){
+			
+			for(var i=0; i<data.length; i++){
+				total += parseInt(data[i].previous_balance);
+			}
+			prebalance.value=total;
+			console.log(data);
+		},
+		error:function(){
+		}
+ });
 }
 
 //billing
@@ -437,6 +467,9 @@ function calculate2(){
 //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 //     }
 // });
+
+
+//Purchase Entry function
 $('#billdataform').on('submit',function(e){
  e.preventDefault();
 
@@ -494,6 +527,7 @@ $.ajaxSetup({
 		 if(response.status == 'success'){
 		 	alert(response.message);
 		 	window.location.replace("http://ars.com/bill");
+		 	window.location.replace("http://digitalsystem.com/bill");
 		 }else{
 		 	alert(response.message);
 		 }
@@ -508,6 +542,9 @@ $.ajaxSetup({
 
 
 });
+
+
+//Sales entry function
 
 $('#salesdataform').on('submit',function(e){
 	e.preventDefault();
@@ -557,7 +594,7 @@ $('#salesdataform').on('submit',function(e){
 			//if saved
 			if(response.status == 'success'){
 				alert(response.message);
-				window.location.replace("http://digitalsystem.com//sales");
+				window.location.replace("http://digitalsystem.com/sales");
 			}else{
 				alert(response.message);
 			}
@@ -585,6 +622,8 @@ $('#salesdataform').on('submit',function(e){
 //       var  date = $('#date').val();
 
 // });
+
+//report print out function
 function myFunction(el) {
 	var restorepage = document.body.innerHTML;
 	var printpage = document.getElementById(el).innerHTML;
