@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('navbar_brand')
-    Bill
+    Purchase
 @endsection
 <style>
 .billing_title {
@@ -12,18 +12,31 @@
     color: #000;
     font-weight: bold!important;
 }
+#totalrowbox,#totalrownetvalue {
+  border: none;
+    text-align: center;
+    width: 100%;
+}
+.totalrowbox,.totalrownetvalue {
+    /* display: inline-flex; */
+    border: none!important;
+}
+#billsupplier,#billtrip {
+    padding: 9px;
+}
 </style>
 
 @section('content')
 <div class="card">
     <?php 
-    $customer = DB::table('customer')->select('customer.*')->get();
+    $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
     $products = DB::table('products')->select('products.*')->get();
-    
+    $trips = DB::table('trips')->select('trips.*')->get();
+    $bills = DB::table('bills')->latest('id')->first();
     ?>
     <div class="card-header">
         <div class="billing_title">
-            <h4 class="card-title">ARS </h4>
+            <h4 class="card-title">ARS <div>[Purchase entry]</div>  </h4>
         </div>
       </div>
         <div class="container">
@@ -34,17 +47,18 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label for="name">Bill no</label>
-            <input type="text" class="form-control" name="billno" id="billno" aria-describedby="name" placeholder="Enter invoice no" required>
+          <input type="text" class="form-control" name="billno" id="billno" aria-describedby="name" placeholder="Enter invoice no" value="{{$bills->id+1}}" readonly>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <div class="customer_status">
-            <label for="phone">Customer</label>
-           <select name="billcustomer" id="billcustomer" class="form-control">
-              @foreach ($customer as $customers) 
-              @if($customers->status === 1)
-              <option value="{{$customers->id}}">{{$customers->name}} </option>
-            @endif
+            <label for="phone">Supplier</label>
+           <select name="billsupplier" id="billsupplier" class="form-control billsupplier" onchange="pendingamount()">
+              <option>Choose</option>  
+            @foreach ($suppliers as $supplier) 
+              @if($supplier->status === 1)
+              <option value="{{$supplier->id}}">{{$supplier->supplier_name}} </option>
+              @endif
              @endforeach
            </select>
          </div>
@@ -55,17 +69,25 @@
             <input type="date" class="form-control" name="date" id="date" aria-describedby="date" placeholder="Enter date" required>
           </div>
         </div>
+        <div class="col-sm-3">
+            <div class="customer_status">
+                <label for="trip">Trip</label>
+               <select name="billtrip" id="billtrip" class="form-control billtrip">
+                  <option>Choose</option>
+                  @foreach ($trips as $trip) 
+                  <option value="{{$trip->id}}">{{$trip->trip_name}} </option>
+                 @endforeach
+               </select>
+             </div>
+        </div>
       </div>
-
-
-
 
       <div class="row clearfix">
           <div class="col-md-12">
             <table class="table table-bordered table-hover" id="tab_logic">
               <thead>
                 <tr class="headtext">
-                  <th class="text-center"> # </th>
+                  <th class="text-center"> S.No </th>
                   <th class="text-center"> Product </th>
                   <th class="text-center"> Box </th>
                   <th class="text-center"> KG </th>
@@ -116,6 +138,20 @@
                 </tr>
                 <tr id='addr1'></tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td class="text-center totalrowbox" ><span>T-Box</span><input type="text" id="totalrowbox" placeholder="0" readonly /></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="text-center totalrownetvalue"><span>T-val</span><input type="text" id="totalrownetvalue" placeholder="0" readonly /></td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>
@@ -164,18 +200,18 @@
                   <th class="text-center">Ice Bar</th>
                   <td class="text-center"><input type="text"  name='total_icebar' id="finalicebar" oninput="calculate2()" placeholder='0.00' class="form-control" value=""/></td>
                 </tr>
-                <tr>
                   <th class="text-center">Discount</th>
                   <td class="text-center"><input type="text"  name='less' id="less" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
-                </tr>
-                <tr>
-                  <th class="text-center">Packing Charge</th>
-                  <td class="text-center"><input type="text"  name='packing_charge' id="packingcharge" oninput="calculate2()" placeholder='0.00' class="form-control packingcharge" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Excess</th>
                   <td class="text-center"><input type="text"  name='excess' id="excess" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
                 </tr>
+                <tr>
+                 <tr>
+                  <th class="text-center">Packing Charge</th>
+                  <td class="text-center"><input type="text"  name='packing_charge' id="packingcharge" oninput="calculate2()" placeholder='0.00' class="form-control packingcharge" /></td>
+                 </tr>
                 <tr>
                   <th class="text-center">previous Balance</th>
                   <td class="text-center"><input type="text" name='previous_balance' id="prebalance" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
@@ -211,3 +247,10 @@
 
 </script>
 @endsection
+
+
+
+
+
+
+

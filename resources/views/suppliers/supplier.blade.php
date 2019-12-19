@@ -87,6 +87,8 @@ Customer list page
                       <th>Phone</th>
                       <th>Edit</th>
                       <th>Delete</th>
+                      <th>Status</th>
+
                     </thead>
                     <tbody>
                         <?php $id = 1; ?>
@@ -99,9 +101,16 @@ Customer list page
                         <td>{{$supplier ->phone}}</td>
                       <td><a href="/supplier_edit/{{$supplier ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
                       <td><a href="/supplier/{{$supplier ->id}}" class="btn btn-sm btn-danger">Delete</a></td>
+                      <td>
+                        @if($supplier->status==1)
+                       <span class="custome_status_en">Enable</span>
+                        @else 
+                        <span class="custome_status_ds">Disable</span>
+                        @endif
+                       </td> 
                     </tr>
                       <?php $id++; ?>
-  
+
                       @endforeach
                     </tbody>
                   </table>

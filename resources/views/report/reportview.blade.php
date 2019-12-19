@@ -12,7 +12,25 @@ Day Report
     font-weight: bold!important;
     font-size: 14px!important;
 }
+.printbtn {
+    text-align: center;
+}
+.purchase_header {
+    text-align: center;
+    padding-top: 30px;
+}
+.purchase_header h5 b {
+    color: #00adef;
+}
 </style>
+    <?php 
+    $bill_datas = DB::table('bill_data')->select('bill_data.*')->get();
+    $products = DB::table('products')->select('products.*')->get();
+    $trips = DB::table('trips')->select('trips.*')->get();
+    $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
+    
+    // var_dump($bill_datas);
+    ?>
 @section('content')
 <div class="card">
         <?php 
@@ -21,28 +39,40 @@ Day Report
         // var_dump($bills);
         ?>
 <div class="container">
+  <div class="printcontent" id="printcontent">
+    <div class="purchase_header">
+      <h5><b>PURCHASE</b></h5>
+    </div>
       <div class="card-header">
-        Bill no:
-      <strong>{{$Bills->bill_no}}</strong> 
-        <span class="float-right"> <strong>Date:</strong> {{$Bills->date}}</span>
+        Bill no : <strong>{{$Bills->bill_no}}</strong> 
+        <span class="float-right"> <strong>Date :</strong> {{$Bills->date}}</span>
+        @foreach($trips as $trip)
+        @if($Bills->trip_id === $trip->id)
+        <div class="trip">Trip : {{$trip->trip_name}}</div>
+        @endif
+        @endforeach
       </div>
       <div class="card-body">
       <div class="row mb-4">
       <div class="col-sm-6">
       <h6 class="mb-3">From:</h6>
       <div>
-      <strong>Webz Poland</strong>
+        @foreach ($suppliers as $supplier)
+        @if($Bills->supplier_id === $supplier->id )
+        <strong>{{$supplier->supplier_name}}</strong>
+        @endif
+        @endforeach
       </div>
-      <div>Madalinskiego 8</div>
+       <div>Madalinskiego 8</div>
       <div>71-101 Szczecin, Poland</div>
       <div>Email: info@webz.com.pl</div>
-      <div>Phone: +48 444 666 3333</div>
+      <div>Phone: +48 444 666 3333</div> 
       </div>
       
-      <div class="col-sm-6">
+       <div class="col-sm-6">
       <h6 class="mb-3">To:</h6>
       <div>
-      <strong>Bob Mart</strong>
+      <strong>ARS</strong>
       </div>
       <div>Attn: Daniel Marek</div>
       <div>43-190 Mikolow, Poland</div>
@@ -106,53 +136,22 @@ Day Report
       </tr>
       </tbody>
       </table>
+
       </div> --}}
-      {{-- <div class="row">
-      <div class="col-lg-4 col-sm-5">
       
-      </div>
       
-      <div class="col-lg-4 col-sm-5 ml-auto">
-      <table class="table table-clear">
-      <tbody>
-      <tr>
-      <td class="left">
-      <strong>Subtotal</strong>
-      </td>
-      <td class="right">$8.497,00</td>
-      </tr>
-      <tr>
-      <td class="left">
-      <strong>Discount (20%)</strong>
-      </td>
-      <td class="right">$1,699,40</td>
-      </tr>
-      <tr>
-      <td class="left">
-       <strong>VAT (10%)</strong>
-      </td>
-      <td class="right">$679,76</td>
-      </tr>
-      <tr>
-      <td class="left">
-      <strong>Total</strong>
-      </td>
-      <td class="right">
-      <strong>$7.477,36</strong>
-      </td>
-      </tr>
-      </tbody>
-      </table>
       
       </div>
       
       </div> --> 
+
       <div class="billviewproduct">
             <table class="table table-striped">
                     <thead>
                       <tr>
                         <th scope="col">Sno</th>
                         <th scope="col">Product</th>
+                        <th scope="col">Box</th>
                         <th scope="col">KG</th>
                         <th scope="col">N-wgt</th>
                         <th scope="col">per(kg)-Rs</th>
@@ -163,8 +162,11 @@ Day Report
                       </tr>
                     </thead>
                     <tbody>
-                        <?php $id=1; ?>
+                        <?php $id=1;?>
+
                       <tr>
+                          @foreach($bill_datas as $bill_data)
+                          @if($Bills->id === $bill_data->bill_id)
                       <th scope="row">{{$id}}</th>
                         <td></td>
                         <td>Otto</td>
@@ -174,9 +176,41 @@ Day Report
                         <td>@mdo</td>
                         <td>@mdo</td>
                         <td>@mdo</td>
+
+                        @foreach($products as $product)
+                        @if($bill_data->product_id === $product->id)
+                        <td>{{$product->product_name}}</td>
+                        @endif
+                        @endforeach
+                        <td>{{$bill_data->box}}</td>
+                        <td>{{$bill_data->weight}}</td>
+                        <td>{{$bill_data->net_weight}}</td>
+                        <td>{{$bill_data->per_kg_price}}</td>
+                        <td>{{$bill_data->actual_price}}</td>
+                        <td>{{$bill_data->discount}}</td>
+                        <td>{{$bill_data->discount_price}}</td>
+                        <td>{{$bill_data->net_value}}</td>
                       </tr>
-                       <?php $id++; ?>
+                      <?php $id++ ?>
+
+                      @endif
+                      @endforeach
+
                     </tbody>
+<!--                      <tfoot>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td class="text-center totalrowbox" ><span>T-Box</span><input type="text" id="totalrowbox" placeholder="0" readonly /></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td class="text-center totalrownetvalue"><span>T-val</span><input type="text" id="totalrownetvalue" placeholder="0" readonly /></td>
+                        </tr>
+                      </tfoot>  -->
                   </table>
       </div>
 
@@ -246,6 +280,10 @@ Day Report
 
 
       </div>
+      </div>
+      </div>
+      <div class="printbtn">
+          <a href="#" class="btn btn-sm btn-info" onclick="myFunction('printcontent')" >Print</a>
       </div>
       </div>
 @endsection

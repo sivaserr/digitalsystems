@@ -33,3 +33,10 @@ Route::post('/customer','CustomerController@jsoncreate');
 Route::get('/customer/{id}','CustomerController@jsondatawidthid');
 Route::put('/customer/update/{id}','CustomerController@jsonupdate');
 Route::delete('/customer/delete/{id}','CustomerController@jsondelete');
+
+
+
+Route::get('bill/{id}','BillController@billdata');
+
+
+Route::get('supplier/{id}','SuppliersController@supplierdata');

@@ -1,5 +1,10 @@
 @extends('layouts.master')
+<?php
+$status = DB::table('suppliers')->select('suppliers.status')->get();
 
+// var_dump($status);
+
+?>
 @section('content')
       
 <div class="row">
@@ -31,7 +36,19 @@
                     <label for="phone">Phone</label>
                     <input type="text" class="form-control" name="phone" value="{{$supplier->phone}}" id="phone" placeholder="phone">
                   </div>
-
+                  <div class="customer_status">
+                    <label for="phone">Active</label>
+                   <select name="status" id="status" class="form-control">
+                     @if($supplier->status == 1){
+                      <option value="0" name='1'selected="selected">Disable</option>
+                      <option value="1" selected="selected">Enable</option>
+                     }@else{
+                      <option value="1" selected="selected">Enable</option>
+                      <option value="0" selected="selected">Disable</option>
+                     }
+                    @endif
+                   </select>
+                 </div>
                 </div>
                 <div class="modal-footer border-top-0 d-flex justify-content-center">
                   <button type="submit" class="btn btn-success">Save</button>

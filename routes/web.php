@@ -84,6 +84,18 @@ Route::get('/supplier_edit/{id}','SuppliersController@edit');
 Route::put('/supplierupdate/{id}','SuppliersController@update');
 Route::get('/supplier/{id}','SuppliersController@destroy');
 
+//trip page
+
+Route::get('/trips','TripController@index');
+Route::post('/trips','TripController@store')->name('addtrip');
+Route::get('/trips','TripController@show');
+Route::get('/trip_edit/{id}','TripController@edit');
+Route::put('/trip_update/{id}','TripController@update');
+Route::get('/trips/{id}','TripController@destroy');
+
+
+
+
 
 //Bill page
 Route::get('/bill' ,'BillController@index');
@@ -107,3 +119,12 @@ Route::get('/billviewedit/{id}','BillController@billview');
 
 //pending price
 Route::get('/pendingprice' ,'BillController@pendingprice');
+Route::get('/pendingamount','BillController@pendingamount');
+
+
+
+
+//Sales entry 
+
+Route::get('/sales', 'SalesController@index');
+Route::post('/sales', 'SalesController@store')->name('Addsales');

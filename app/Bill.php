@@ -9,8 +9,9 @@ class Bill extends Model
     protected $table = 'bills';
     protected $fillable = [
     'bill_no',
-    'customer_id',
+    'supplier_id',
     'date',
+    'trip_id',
     // 'product_id',
     // 'box',
     // 'kg',

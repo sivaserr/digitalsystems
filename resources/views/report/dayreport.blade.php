@@ -31,7 +31,7 @@ Day Report
 </style>
 @section('content')
     <?php 
-    $customers = DB::table('customer')->select('customer.*')->get();
+    $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
     //$bills = DB::table('bills')->select('bills.*')->get();
     
     // var_dump($bills);
@@ -105,6 +105,9 @@ Day Report
          @endforeach
        </tbody>
      </table>
+=======
+
+>>>>>>> 8fbb484715621285d4ef58ea0907ab9a4d4d2c30
 
 <div class="title">
 
@@ -118,7 +121,7 @@ Day Report
           <tr>
             <th scope="col">#</th>
             <th scope="col">Bill no</th>
-            <th scope="col">Customer</th>
+            <th scope="col">Suppliers</th>
             <th scope="col">Date</th>
             <th scope="col">Box</th>
             <th scope="col">Netvalue</th>
@@ -132,9 +135,9 @@ Day Report
           <tr>
           <th scope="row">{{$id}}</th>
             <td>{{$Bill->bill_no}}</td>
-            @foreach($customers as $customer)
-            @if($Bill->customer_id === $customer->id)
-            <td>{{$customer->name}}</td>
+            @foreach($suppliers as $supplier)
+            @if($Bill->supplier_id === $supplier->id)
+            <td>{{$supplier->supplier_name}}</td>
             @endif
             @endforeach
             <td>{{$Bill->date}}</td>

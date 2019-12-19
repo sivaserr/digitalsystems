@@ -58,6 +58,7 @@ $unitss =DB::table('units')->select('units.*')->get();
                           <div class="form-group">
                                 <label for="productname">Group</label>
                                   <select name="productgroupid" id="company" class="form-control">
+                                      <option>Choose</option>
                                     @foreach ($product_groups as $product_group)
                                   <option value="{{$product_group->id}}"> {{$product_group->product_group}}</option>
                                     @endforeach
@@ -66,6 +67,7 @@ $unitss =DB::table('units')->select('units.*')->get();
                           <div class="form-group">
                                 <label for="unitname">Unit</label>
                                   <select name="unitid" id="unit" class="form-control">
+                                      <option>Choose</option>
                                     @foreach ($units as $unit)
                                   <option value="{{$unit->id}}"> {{$unit->unit_name}}</option>
                                     @endforeach
@@ -75,14 +77,14 @@ $unitss =DB::table('units')->select('units.*')->get();
                             <label for="price">Price</label>
                             <input type="number" class="form-control" name="price" id="Price" aria-describedby="Price" placeholder="Enter Price" required>
                           </div>
-                          <div class="form-group">
+                          {{-- <div class="form-group">
                             <label for="weight">Weight</label>
                             <input type="number" class="form-control" name="weight" id="weight" aria-describedby="weight" placeholder="Enter Weight" required>
                           </div>
                           <div class="form-group">
                             <label for="netweight">Net Weight</label>
                             <input type="number" class="form-control" name="netweight" id="net_weight" aria-describedby="net_weight" placeholder="Enter Net Weight" required>
-                          </div>
+                          </div> --}}
 
                           
                     </div>
@@ -105,8 +107,8 @@ $unitss =DB::table('units')->select('units.*')->get();
                     <th>Group</th>
                     <th>Unit</th>
                     <th>Price</th>
-                    <th>Weight</th>
-                    <th>Net weight</th>
+                    {{-- <th>Weight</th>
+                    <th>Net weight</th> --}}
                     <th>Edit</th>
                     <th>Delete</th>
                   </thead>
@@ -129,8 +131,8 @@ $unitss =DB::table('units')->select('units.*')->get();
                       @endforeach
 
                       <td>{{ $product->price }}</td>
-                      <td>{{ $product->weight }}</td>
-                      <td>{{ $product->net_weight }}</td>
+                      {{-- <td>{{ $product->weight }}</td>
+                      <td>{{ $product->net_weight }}</td> --}}
                     <td><a href="product_edit/{{$product ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
                     <td><a href="product/{{$product ->id}}" class="btn btn-sm btn-danger">Delete</a></td>
                     </tr>
