@@ -191,6 +191,14 @@ a{color:inherit;text-decoration:none}
     border-radius: 3px;
     font-size: 15px;
 }
+
+/*Form styel*/
+.form-control:focus {
+    border: 1px solid #00adef!important;
+}
+
+
+
 @media(max-width:769px){
 	.login-html {
 		padding: 90px 20px 50px 20px;
