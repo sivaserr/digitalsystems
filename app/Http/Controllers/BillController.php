@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Bill;
 use App\BillData;
 use App\Product;
+use App\Supplier;
 use DB;
 class BillController extends Controller
 {
@@ -160,12 +161,10 @@ class BillController extends Controller
     // }
     public function findproductprice(Request $request){
         // $p = product::select('*')->where('id',$request->id)->join('units');
-
 $data = DB::table('products')
        ->join('units', 'units.id', '=', 'products.unit_id')
        ->select('products.price', 'units.unit_name')->where('products.id',$request->id)
        ->get();
-
         return response()->json($data);
     }
 
@@ -175,21 +174,17 @@ $data = DB::table('products')
     //     return json_encode(array("statuscode" =>200));
         
     // }
-    public function findpendingamount(Request $request){
-        $pendingprice =Bill::select('*')->where('id',$request->id)->first();
-        return response()->json($pendingprice);
-}
     public function pendingamount(Request $request){
-        $balance = Bill::select('previous_balance')->where('supplier_id',$request->id)->get();
-
+        $balance = Bill::select('previous_balance','total_box')->where('supplier_id',$request->id)->get();
         return response()->json($balance);
-
     }
+
 
     public function billdata($id){
-         $billdata = Bill::find($id);
 
-       return response()->json($billdata);
+        $billdata = Bill::find($id);
 
+        return response()->json($billdata);
     }
+
 }

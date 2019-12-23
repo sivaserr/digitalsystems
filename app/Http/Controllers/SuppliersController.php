@@ -120,9 +120,10 @@ class SuppliersController extends Controller
 
     }
 
-    public function supplierdata($id){
-        $supplierdata = Supplier::find($id);
-        return response()->json($supplierdata);
 
+    public function findsupplierdata($id){
+        $supplierdata = Supplier::find($id);
+
+        return response()->json($supplierdata);
     }
 }

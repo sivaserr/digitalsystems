@@ -59,21 +59,6 @@
             </a>
           </li>
           <li>
-            <a href="/customer" data-toggle="collapse" data-target="#subcustomermenu">
-              <i class="fas fa-users"></i>
-              <p>Customers</p>
-            </a>
-
-            <div id="subcustomermenu" class="collapse">
-              <ul>
-              <li>
-                <a href="#">
-                  <p>Customer Rate Fixing</p>
-                </a>
-              </li>
-              </ul>
-
-            </div>
             <a href="#" data-toggle="collapse" data-target="#subcustomer">
               <i class="fas fa-users"></i>
               <p>Customers</p>
@@ -138,15 +123,15 @@
             <div id="subtrip" class="collapse">
               <ul>
                 <li>
-                    <a href="/trips">
+                    <a href="">
                       <i class="fas fa-truck-moving"></i>
-                      <p>Narmal Trip</p>
+                      <p>Trip Type</p>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/trips">
                         <i class="fas fa-truck"></i>
-                        <p>Mini Trip</p>
+                        <p>Trip</p>
                     </a>
                 </li>
               </ul>
@@ -155,7 +140,7 @@
           <li>
               <a href="/bill" data-toggle="collapse" data-target="#subbilling">
                 <i class="fas fa-money-check"></i>
-                <p>Billing</p>
+                <p>Bill Entry</p>
               </a>
               <div id="subbilling" class="collapse">
           <ul>
@@ -244,15 +229,24 @@
                   </a>
 
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                      <a class="dropdown-item" href="{{ route('password.change') }}">
+                          <i class="fas fa-key"></i>
+                          {{ __('Change password') }}
+                      </a>
                       <a class="dropdown-item" href="{{ route('logout') }}"
                          onclick="event.preventDefault();
                                        document.getElementById('logout-form').submit();">
+                                       <i class="fas fa-sign-out-alt"></i>
                           {{ __('Logout') }}
                       </a>
-
+                    
                       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                           @csrf
                       </form>
+
+
+
                   </div>
               </li>
               {{-- <li class="nav-item dropdown">

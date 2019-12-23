@@ -67,19 +67,14 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
-<<<<<<< HEAD
-            <label for="saleno">Bill No</label>
-            <input type="text" class="form-control" name="saleno" id="saleno" aria-describedby="saleno" placeholder="Enter invoice no">
-=======
             <label for="name">Sales No</label>
           <input type="text" class="form-control" name="saleno" id="saleno" aria-describedby="name" placeholder="Enter invoice no" value="{{$sales->id+1}}" readonly>
->>>>>>> ea32fed51b58a83bb0a5ac5c49b0bc01a5930d2c
           </div>
         </div>
         <div class="col-sm-4">
           <div class="customer_status">
             <label for="phone">Customer</label>
-           <select name="salescustomer" id="salescustomer" class="form-control billsupplier" onchange="">
+           <select name="salescustomer" id="salescustomer" class="form-control billsupplier" onchange="salespendingamount()">
               <option>Choose</option>  
             @foreach ($customers as $customer) 
               @if($customer->status === 1)
@@ -199,6 +194,10 @@
                       <td class="text-center"><input type="text" name='totalloosebox' id="totalloosebox" oninput="salescalculater(this)" placeholder='0.00' class="form-control icebar"/></td>
                     </tr>
                     <tr>
+                      <th class="text-center">balance box</th>
+                      <td class="text-center"><input type="text" name='pendingbox' id="pendingbox" placeholder='0.00' class="form-control icebar"/></td>
+                    </tr>
+                    <tr>
                       <th class="text-center">Overall box</th>
                       <td class="text-center"><input type="text" name='overallbox' id="overallbox" oninput="salescalculater(this)"  placeholder='0.00' class="form-control" /></td>
                     </tr>
@@ -219,7 +218,7 @@
                 <tr>
                 <tr>
                   <th class="text-center">Overall Balance</th>
-                  <td class="text-center"><input type="text"  name='overall' id="overall" oninput="salescalculater(this)" placeholder='0.00' class="form-control overall" /></td>
+                  <td class="text-center"><input type="text"  name='overall' id="customeroverall" oninput="salescalculater(this)" placeholder='0.00' class="form-control overall" /></td>
                 </tr>
               </tbody>
             </table>

@@ -11,8 +11,18 @@
         <img src="{{ asset('assets/images/ARS1.png') }}">
 
 </div>
+@if(session('successMsg'))
+<div class="alert alert-icon alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <i class="mdi mdi-check-all"></i>
+    <strong>Well done!</strong>
+    {{session('successMsg')}}
+</div>
+@endif
                     <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">{{ __('Login') }}</label>
-                    <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                    <input id="#" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"></label>
                     <div class="login-form">
                             <div class="sign-in-htm">
                             <form method="POST" action="{{ route('login') }}">
@@ -58,7 +68,7 @@
                 </div>
 
 
-                    <div class="sign-up-htm">
+                    <!-- <div class="sign-up-htm">
                             <form method="POST" action="{{ route('register') }}">
                                         @csrf
                                 <div class="group">
@@ -104,7 +114,7 @@
                                 </div>
                              </form>
                 
-                            </div>
+                            </div> -->
                     </div>
                 </div>
             </div>

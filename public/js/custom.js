@@ -12,7 +12,7 @@ $(document).ready(function(){
     		let doc = document.getElementById("addr"+icalc);
     		let netvalue = doc.getElementsByClassName("netvalue")[0];
     		let boxs = doc.getElementsByClassName("box")[0];
-    		// let loosebox = doc.getElementsByClassName("loosebox")[0];
+    		let loosebox = doc.getElementsByClassName("loosebox")[0];
 
     		let value_final = netvalue.value;
     		let boxsvalue_final = boxs.value;
@@ -34,7 +34,7 @@ $(document).ready(function(){
     		totalbox.value -=stored_box;
     		// totalloosebox.value -=stored_loosebox;
 
-			 // $("#totalrowbox").val(totalbox.value);
+			 $("#totalrowbox").val(totalbox.value);
 			 $("#totalrownetvalue").val(overall.value);
 			 $("#totalprice").val(overall.value);
 			$("#addr"+(i-1)).html('');
@@ -93,7 +93,7 @@ function changeprice(sel){
 	let loosekg = inputs.getElementsByClassName("loosekg")[0];
 
 
-			$.ajax({
+            $.ajax({
 			type:'get',
 			url:"findproductprice",
 			data:{'id':idpro},
@@ -114,8 +114,10 @@ function changeprice(sel){
 
 }
 
+//Purchase bill pending amount:-
+
 function pendingamount(){
-	let billcustomer =document.getElementById("billsupplier");
+	// let billcustomer =document.getElementById("billsupplier");
 
 	let selbillsupplier = billsupplier.options[billsupplier.selectedIndex].value;
 	let sel = selbillsupplier;
@@ -133,8 +135,8 @@ function pendingamount(){
 			// 	total += i.opening_balance;
 			// })
 
-			console.log(data);
 			total +=data.opening_balance;
+			pendingbox.value = data.opening_box;
 
 		},
 		error:function(){
@@ -152,12 +154,51 @@ function pendingamount(){
 				total += parseInt(data[i].previous_balance);
 			}
 			prebalance.value=total;
-			console.log(data);
 		},
 		error:function(){
 		}
  });
 }
+
+
+//Sales bill pending amount:-
+
+function salespendingamount(){
+
+      let selbillcustomer = salescustomer.options[salescustomer.selectedIndex].value;
+      let sell = selbillcustomer;
+
+      let customertotal = 0;
+
+
+      	$.ajax({
+		type:'get',
+		url:"customerbillpending",
+		data:{'id':sell},
+		dataType:'json',
+		success:function(data){
+			for(var i=0; i<data.length; i++){
+				customertotal += parseInt(data[i].previous_balance);
+			}
+			prebalance.value=customertotal;
+		},
+		error:function(){
+		}
+ });
+
+      	$.ajax({
+		type:'get',
+		url:"http://ars.com/api/sales/"+sell,
+		dataType:'json',
+		success:function(data){
+			customertotal +=data.opening_balance;
+			pendingbox.value = data.opening_box;
+		},
+		error:function(){
+		}
+ });
+}
+
 
 //billing
 
@@ -225,7 +266,10 @@ totalrowbox.value=totalbox;
 totalrownetvalue.value=totalnetvalue;
   // IF has value in 
 
-  $('#transportcharge').add($('#finalicebar')).add($('#less')).add($('#packingcharge')).add($('#excess'))
+
+
+
+  $('#transportcharge').add($('#finalicebar')).add($('#less')).add($('#packingcharge')).add($('#excess')).add($('#prebalance'))
   .on('change',function(e){
   e.preventDefault();
   $('#overall').val(
@@ -234,6 +278,7 @@ totalrownetvalue.value=totalnetvalue;
   -Number($('#less').val())
   +Number($('#packingcharge').val())
   +Number($('#excess').val())
+  +Number($('#prebalance').val())
   +Number(totalnetvalue)
   ).change();
   
@@ -296,7 +341,7 @@ function salescalculater(sales){
 	for (var i= 0; i<salesnetvalue.length; i++){
 		totalsalesnetvalue +=parseInt(salesnetvalue[i].value);
 	}
-	overall.value = totalsalesnetvalue;
+	customeroverall.value = totalsalesnetvalue;
 	
 	overallbox.value = salesbox_id + totalsalesloosebox;
 	
@@ -509,7 +554,6 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 		'allproduct_datas':allRows  // ALL BILL DATA ARRAY
 	}
 
-	console.log(formData);
 	// return false;
 $.ajaxSetup({
     headers: {
@@ -526,7 +570,6 @@ $.ajaxSetup({
 		 //if saved
 		 if(response.status == 'success'){
 		 	alert(response.message);
-		 	window.location.replace("http://ars.com/bill");
 		 	window.location.replace("http://digitalsystem.com/bill");
 		 }else{
 		 	alert(response.message);
@@ -612,16 +655,6 @@ $('#salesdataform').on('submit',function(e){
 
 // });
 
-
-
-
-
-// $('#submit').on('click',function(){
-
-//       var  customer = $('#billcustomer').val();
-//       var  date = $('#date').val();
-
-// });
 
 //report print out function
 function myFunction(el) {

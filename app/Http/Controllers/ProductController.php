@@ -113,4 +113,16 @@ class ProductController extends Controller
 
         return redirect('products')->with('product',$product);
     }
+
+
+
+
+
+
+    public function findprocductdata($id){
+
+        $productdata = Product::find($id);
+
+        return response()->json($productdata);
+    }
 }

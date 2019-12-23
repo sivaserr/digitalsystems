@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sales;
 use App\SalesProducts;
+use App\Customer;
 class SalesController extends Controller
 {
     /**
@@ -121,4 +122,21 @@ class SalesController extends Controller
     {
         //
     }
+
+    public function customerbillpending(Request $request){
+
+        $salesbillamount = Sales::select('previous_balance')->where('customer_id' ,$request->id)->get();
+
+
+        return response()->json($salesbillamount);
+    }
+
+    public function customerpending($id){
+
+        $salescustomeramount =Customer::find($id);
+
+
+        return response()->json($salescustomeramount);
+    }
+
 }

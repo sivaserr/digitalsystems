@@ -26,6 +26,13 @@ Route::get('/home', function () {
     return redirect('customer');
 });
 
+
+
+//Change password function
+Route::get('/change-password','Auth\ChangePasswordController@index')->name('password.change');
+Route::post('/change-password','Auth\ChangePasswordController@changePassword')->name('password.update');
+
+
 // Route::get('/home', 'HomeController@index')->name('home');
 
 // Route::get('/page', 'PageController@index');
@@ -121,11 +128,6 @@ Route::get('report','ReportController@index');
 
 Route::post('/report','BillController@filtered_list')->name('filtered_list');
 Route::get('/billviewedit/{id}','BillController@billview');
-
-
-
-//pending price
-Route::get('/pendingprice' ,'BillController@pendingprice');
 Route::get('/pendingamount','BillController@pendingamount');
 
 
@@ -135,3 +137,5 @@ Route::get('/pendingamount','BillController@pendingamount');
 
 Route::get('/sales', 'SalesController@index');
 Route::post('/sales', 'SalesController@store')->name('Addsales');
+Route::get('customerbillpending' , 'SalesController@customerbillpending');
+

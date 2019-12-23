@@ -27,16 +27,27 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //  return $person;
 // });
 
-
+//Customer
 Route::get('/customer','CustomerController@jsondata');
 Route::post('/customer','CustomerController@jsoncreate');
 Route::get('/customer/{id}','CustomerController@jsondatawidthid');
 Route::put('/customer/update/{id}','CustomerController@jsonupdate');
 Route::delete('/customer/delete/{id}','CustomerController@jsondelete');
 
+//suppliers
+Route::get('/supplier/{id}', 'SuppliersController@findsupplierdata');
+
+//Product api
+Route::get('/product/{id}','ProductController@findprocductdata');
 
 
+//Unit api
+Route::get('unit/{id}', 'UnitController@findunitdata');
+
+
+//Bill api
 Route::get('bill/{id}','BillController@billdata');
 
 
-Route::get('supplier/{id}','SuppliersController@supplierdata');
+//Sales api
+Route::get('sales/{id}','SalesController@customerpending');
