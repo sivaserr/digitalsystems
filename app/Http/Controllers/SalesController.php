@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sales;
 use App\SalesProducts;
+use App\Customer;
 class SalesController extends Controller
 {
     /**
@@ -45,7 +46,7 @@ class SalesController extends Controller
         $sales->ovarall_box = $request->input('ovarall_box');
         $sales->netvalue = $request->input('totalprice');
         $sales->previous_balance = $request->input('prebalance');
-        $sales->ovarall_balance = $request->input('overall');
+        $sales->overall_balance = $request->input('overall_balance');
         
 
 
@@ -121,4 +122,21 @@ class SalesController extends Controller
     {
         //
     }
+
+    public function customerbillpending(Request $request){
+
+        $salesbillamount = Sales::select('overall_balance','total_box')->where('customer_id' ,$request->id)->get();
+
+
+        return response()->json($salesbillamount);
+    }
+
+    public function customerpending($id){
+
+        $salescustomeramount =Customer::find($id);
+
+
+        return response()->json($salescustomeramount);
+    }
+
 }

@@ -93,16 +93,16 @@ function changeprice(sel){
 	let loosekg = inputs.getElementsByClassName("loosekg")[0];
 
 
-			$.ajax({
+            $.ajax({
 			type:'get',
 			url:"findproductprice",
 			data:{'id':idpro},
 			dataType:'json',
 			success:function(data){
-	   
-				perkgprice.value= data.price
-				loosekg.value= data.unit_id
-				console.log(data);
+	   			data.forEach((productdata,j)=>{
+				perkgprice.value= productdata.price
+				loosekg.value= productdata.unit_name
+			})
 			},
 			error:function(){
 
@@ -111,28 +111,97 @@ function changeprice(sel){
 
 }
 
+//Purchase bill pending amount:-
+
 function pendingamount(){
-	let billcustomer =document.getElementById("billsupplier");
+	// let billcustomer =document.getElementById("billsupplier");
 
 	let selbillsupplier = billsupplier.options[billsupplier.selectedIndex].value;
 	let sel = selbillsupplier;
+
+	let total = 0;
+	let totalbox = 0;
+
+	$.ajax({
+		type:'get',
+		url:"http://digitalsystem.com/api/supplier/"+sel,		
+		dataType:'json',
+		success:function(data){
+
+			// data.forEach((i,j)=>{
+			// 	console.log(i.opening_balance);
+			// 	total += i.opening_balance;
+			// })
+
+			total +=data.opening_balance;
+			totalbox+=data.opening_box;
+			// pendingbox.value = data.opening_box;
+
+		},
+		error:function(){
+		}
+ });
+
 	$.ajax({
 		type:'get',
 		url:"pendingamount",
 		data:{'id':sel},
 		dataType:'json',
 		success:function(data){
-			var total = 0;
 			for(var i=0; i<data.length; i++){
-				total += parseInt(data[i].previous_balance);
+				total +=parseInt(data[i].overall);
+				totalbox +=parseInt(data[i].total_box);
 			}
 			prebalance.value=total;
-			console.log(data);
+			pendingbox.value=totalbox;
 		},
 		error:function(){
 		}
  });
 }
+
+
+//Sales bill pending amount:-
+
+function salespendingamount(){
+
+      let selbillcustomer = salescustomer.options[salescustomer.selectedIndex].value;
+      let sell = selbillcustomer;
+
+      let customertotal = 0;
+      let customertotalbox = 0;
+
+
+      	$.ajax({
+		type:'get',
+		url:"customerbillpending",
+		data:{'id':sell},
+		dataType:'json',
+		success:function(data){
+			for(var i=0; i<data.length; i++){
+				customertotal += parseInt(data[i].overall_balance);
+				customertotalbox += parseInt(data[i].total_box);
+			}
+			prebalance.value=customertotal;
+			pendingbox.value=customertotalbox;
+		},
+		error:function(){
+		}
+ });
+
+      	$.ajax({
+		type:'get',
+		url:"http://digitalsystem.com/api/sales/"+sell,
+		dataType:'json',
+		success:function(data){
+			customertotal +=data.opening_balance;
+			customertotalbox += data.opening_box;
+		},
+		error:function(){
+		}
+ });
+}
+
 
 //billing
 
@@ -200,7 +269,10 @@ totalrowbox.value=totalbox;
 totalrownetvalue.value=totalnetvalue;
   // IF has value in 
 
-  $('#transportcharge').add($('#finalicebar')).add($('#less')).add($('#packingcharge')).add($('#excess'))
+
+
+
+  $('#transportcharge').add($('#finalicebar')).add($('#less')).add($('#packingcharge')).add($('#excess')).add($('#prebalance'))
   .on('change',function(e){
   e.preventDefault();
   $('#overall').val(
@@ -209,6 +281,7 @@ totalrownetvalue.value=totalnetvalue;
   -Number($('#less').val())
   +Number($('#packingcharge').val())
   +Number($('#excess').val())
+  +Number($('#prebalance').val())
   +Number(totalnetvalue)
   ).change();
   
@@ -253,7 +326,8 @@ function salescalculater(sales){
 	var box =document.getElementsByClassName('box');
 	var salesloosebox =document.getElementsByClassName('loosebox');
 	var salesnetvalue =document.getElementsByClassName('netvalue');
-
+	let pendingbox =document.getElementsByClassName('pendingbox')[0].value;
+console.log(pendingbox);
 	let salesbox_id = 0;
 	let totalsalesloosebox = 0;
 	let totalsalesnetvalue = 0;
@@ -271,7 +345,7 @@ function salescalculater(sales){
 	for (var i= 0; i<salesnetvalue.length; i++){
 		totalsalesnetvalue +=parseInt(salesnetvalue[i].value);
 	}
-	overall.value = totalsalesnetvalue;
+	customeroverall.value = totalsalesnetvalue;
 	
 	overallbox.value = salesbox_id + totalsalesloosebox;
 	
@@ -484,7 +558,6 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 		'allproduct_datas':allRows  // ALL BILL DATA ARRAY
 	}
 
-	console.log(formData);
 	// return false;
 $.ajaxSetup({
     headers: {
@@ -550,7 +623,7 @@ $('#salesdataform').on('submit',function(e){
 		'ovarall_box': $('#overallbox').val(),
 		'totalprice': $('#totalprice').val(),
 		'prebalance': $('#prebalance').val(),
-		'overall': $('#overall').val(),
+		'overall_balance': $('#customeroverall').val(),
 		'salesproduct_datas':salesproduct  // ALL BILL DATA ARRAY
 	}
 	$.ajaxSetup({

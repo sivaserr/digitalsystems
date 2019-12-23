@@ -187,6 +187,10 @@
                       <th class="text-center">Packing Charge</th>
                       <td class="text-center"><input type="text" name='per_packing_price' id="packing_amount" placeholder='0.00' class="form-control packing_amount" oninput="calculate2()" /></td>
                     </tr>
+                    <tr>
+                      <th class="text-center">Balance box</th>
+                      <td class="text-center"><input type="text" name='pendingbox' id="pendingbox" placeholder='0.00' class="form-control pendingbox"/></td>
+                    </tr>
                   </tbody>
                 </table>          </div>
           <div class="pull-right col-md-6">

@@ -129,11 +129,6 @@ Route::get('report','ReportController@index');
 
 Route::post('/report','BillController@filtered_list')->name('filtered_list');
 Route::get('/billviewedit/{id}','BillController@billview');
-
-
-
-//pending price
-Route::get('/pendingprice' ,'BillController@pendingprice');
 Route::get('/pendingamount','BillController@pendingamount');
 
 //Opening balances
@@ -147,3 +142,5 @@ Route::get('/openingbalance','SuppliersController@findopeningbalance');
 
 Route::get('/sales', 'SalesController@index');
 Route::post('/sales', 'SalesController@store')->name('Addsales');
+Route::get('customerbillpending' , 'SalesController@customerbillpending');
+

@@ -47,3 +47,7 @@ Route::get('unit/{id}', 'UnitController@findunitdata');
 
 //Bill api
 Route::get('bill/{id}','BillController@billdata');
+
+
+//Sales api
+Route::get('sales/{id}','SalesController@customerpending');

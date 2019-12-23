@@ -74,7 +74,7 @@
         <div class="col-sm-4">
           <div class="customer_status">
             <label for="phone">Customer</label>
-           <select name="salescustomer" id="salescustomer" class="form-control billsupplier" onchange="">
+           <select name="salescustomer" id="salescustomer" class="form-control billsupplier" onchange="salespendingamount()">
               <option>Choose</option>  
             @foreach ($customers as $customer) 
               @if($customer->status === 1)
@@ -194,6 +194,10 @@
                       <td class="text-center"><input type="text" name='totalloosebox' id="totalloosebox" oninput="salescalculater(this)" placeholder='0.00' class="form-control icebar"/></td>
                     </tr>
                     <tr>
+                      <th class="text-center">balance box</th>
+                      <td class="text-center"><input type="text" name='pendingbox' id="pendingbox" oninput="salescalculater(this)" placeholder='0.00' class="form-control pendingbox"/></td>
+                    </tr>
+                    <tr>
                       <th class="text-center">Overall box</th>
                       <td class="text-center"><input type="text" name='overallbox' id="overallbox" oninput="salescalculater(this)"  placeholder='0.00' class="form-control" /></td>
                     </tr>
@@ -214,7 +218,7 @@
                 <tr>
                 <tr>
                   <th class="text-center">Overall Balance</th>
-                  <td class="text-center"><input type="text"  name='overall' id="overall" oninput="salescalculater(this)" placeholder='0.00' class="form-control overall" /></td>
+                  <td class="text-center"><input type="text"  name='salesoverall' id="customeroverall" oninput="salescalculater(this)" placeholder='0.00' class="form-control customeroverall" /></td>
                 </tr>
               </tbody>
             </table>

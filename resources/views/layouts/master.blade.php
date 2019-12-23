@@ -140,7 +140,7 @@
           <li>
               <a href="/bill" data-toggle="collapse" data-target="#subbilling">
                 <i class="fas fa-money-check"></i>
-                <p>Billing</p>
+                <p>Bill Entry</p>
               </a>
               <div id="subbilling" class="collapse">
           <ul>
