@@ -5,7 +5,7 @@
 Day Report
 @endsection
 
-<style type="text/css">
+<style>
 	#billcustomer {
     padding: 9px;
 }
@@ -52,7 +52,7 @@ Day Report
 <form method="POST" action="/report">
   {{ csrf_field() }}
   <div class="row">
-    {{-- <div class="col-sm-4">
+<!--      <div class="col-sm-4">
         <div class="form-group">
             <label for="billcustomer">Customer</label>
             <select name="billcustomer" id="billcustomer" class="form-control">
@@ -63,7 +63,7 @@ Day Report
                  @endforeach
             </select>
           </div>
-    </div> --}}
+    </div>  -->
     <div class="col-sm-6">
         <div class="form-group filterdate">
             <label for="Date">Date</label>
@@ -79,32 +79,7 @@ Day Report
 
 
 </form>
-                    {{-- <div class="row">
-        	<div class="col-sm-4">
-            <div class="customer_status">
-            <label for="phone">Customer</label>
-           <select name="billcustomer" id="billcustomer" class="form-control">
-              @foreach ($customer as $customers) 
-              @if($customers->status === 1)
-              <option value="{{$customers->id}}">{{$customers->name}} </option>
-            @endif
-             @endforeach
-           </select>
-         </div>
-        	</div>
-        	<div class="col-sm-4">
-          <div class="form-group">
-            <label for="name">Date</label>
-            <input type="text" class="form-control" value="" name="date" id="date" aria-describedby="date" placeholder="Enter date" required>
-          </div>
-        	</div>
-        	<div class="col-sm-4">
-        		<div class="button">
-        			    <button type="submit" id="submit" class="btn btn-success">Submit</button>
-        		</div>
-        	</div>
-
-        </div>   --}}
+  
 
     </div>
 
@@ -112,13 +87,33 @@ Day Report
 
     
     <div class="output">
+<!--      <table>
+       <thead>
+          <th>customer</th>
+         <th>date</th> 
+       </thead>
+       <tbody>
+         @foreach($Bills as $Bill)
+          <tr>
+           
+            <td>
 
+            </td>
+            <td>
+              </td> 
+          </tr>
+         @endforeach
+       </tbody>
+     </table>
+=======
+
+>>>>>>> 8fbb484715621285d4ef58ea0907ab9a4d4d2c30
 
 <div class="title">
 
 
 
-</div>
+</div> -->
 
 
      <table class="table table-striped">

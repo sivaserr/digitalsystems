@@ -122,11 +122,11 @@ function pendingamount(){
 		data:{'id':sel},
 		dataType:'json',
 		success:function(data){
-			// var total = 0;
-			// for(var i=0; i<data.length; i++){
-			// 	total += parseInt(data[i].previous_balance);
-			// }
-			// prebalance.value=total;
+			var total = 0;
+			for(var i=0; i<data.length; i++){
+				total += parseInt(data[i].previous_balance);
+			}
+			prebalance.value=total;
 			console.log(data);
 		},
 		error:function(){

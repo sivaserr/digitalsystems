@@ -63,13 +63,13 @@ Day Report
         @endif
         @endforeach
       </div>
-      {{-- <div>Madalinskiego 8</div>
+       <div>Madalinskiego 8</div>
       <div>71-101 Szczecin, Poland</div>
       <div>Email: info@webz.com.pl</div>
-      <div>Phone: +48 444 666 3333</div> --}}
+      <div>Phone: +48 444 666 3333</div> 
       </div>
       
-      {{-- <div class="col-sm-6">
+       <div class="col-sm-6">
       <h6 class="mb-3">To:</h6>
       <div>
       <strong>ARS</strong>
@@ -78,12 +78,73 @@ Day Report
       <div>43-190 Mikolow, Poland</div>
       <div>Email: marek@daniel.com</div>
       <div>Phone: +48 123 456 789</div>
+      </div>
+      
+      
+      
+      </div>
+      
+<!--        <div class="table-responsive-sm">
+      <table class="table table-striped">
+      <thead>
+      <tr>
+      <th class="center">#</th>
+      <th>Item</th>
+      <th>Description</th>
+      
+      <th class="right">Unit Cost</th>
+        <th class="center">Qty</th>
+      <th class="right">Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td class="center">1</td>
+      <td class="left strong">Origin License</td>
+      <td class="left">Extended License</td>
+      
+      <td class="right">$999,00</td>
+        <td class="center">1</td>
+      <td class="right">$999,00</td>
+      </tr>
+      <tr>
+      <td class="center">2</td>
+      <td class="left">Custom Services</td>
+      <td class="left">Instalation and Customization (cost per hour)</td>
+      
+      <td class="right">$150,00</td>
+        <td class="center">20</td>
+      <td class="right">$3.000,00</td>
+      </tr>
+      <tr>
+      <td class="center">3</td>
+      <td class="left">Hosting</td>
+      <td class="left">1 year subcription</td>
+      
+      <td class="right">$499,00</td>
+        <td class="center">1</td>
+      <td class="right">$499,00</td>
+      </tr>
+      <tr>
+      <td class="center">4</td>
+      <td class="left">Platinum Support</td>
+      <td class="left">1 year subcription 24/7</td>
+      
+      <td class="right">$3.999,00</td>
+        <td class="center">1</td>
+      <td class="right">$3.999,00</td>
+      </tr>
+      </tbody>
+      </table>
+
       </div> --}}
       
       
       
       </div>
       
+      </div> --> 
+
       <div class="billviewproduct">
             <table class="table table-striped">
                     <thead>
@@ -107,6 +168,15 @@ Day Report
                           @foreach($bill_datas as $bill_data)
                           @if($Bills->id === $bill_data->bill_id)
                       <th scope="row">{{$id}}</th>
+                        <td></td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+
                         @foreach($products as $product)
                         @if($bill_data->product_id === $product->id)
                         <td>{{$product->product_name}}</td>
@@ -127,7 +197,7 @@ Day Report
                       @endforeach
 
                     </tbody>
-                    {{-- <tfoot>
+<!--                      <tfoot>
                         <tr>
                           <td></td>
                           <td></td>
@@ -140,7 +210,7 @@ Day Report
                           <td></td>
                           <td class="text-center totalrownetvalue"><span>T-val</span><input type="text" id="totalrownetvalue" placeholder="0" readonly /></td>
                         </tr>
-                      </tfoot> --}}
+                      </tfoot>  -->
                   </table>
       </div>
 

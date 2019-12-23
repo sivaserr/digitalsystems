@@ -98,6 +98,7 @@ Route::get('/supplier_edit/{id}','SuppliersController@edit');
 Route::put('/supplierupdate/{id}','SuppliersController@update');
 Route::get('/supplier/{id}','SuppliersController@destroy');
 
+
 //trip page
 
 Route::get('/trips','TripController@index');
@@ -128,7 +129,16 @@ Route::get('report','ReportController@index');
 
 Route::post('/report','BillController@filtered_list')->name('filtered_list');
 Route::get('/billviewedit/{id}','BillController@billview');
+
+
+
+//pending price
+Route::get('/pendingprice' ,'BillController@pendingprice');
 Route::get('/pendingamount','BillController@pendingamount');
+
+//Opening balances
+
+Route::get('/openingbalance','SuppliersController@findopeningbalance');
 
 
 

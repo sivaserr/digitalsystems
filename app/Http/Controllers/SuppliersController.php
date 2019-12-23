@@ -119,7 +119,10 @@ class SuppliersController extends Controller
         return redirect('/supplier')->with('supplier' ,$supplier);
 
     }
-
+    public function pendingamount(Request $request){
+        $balance = Bill::select('previous_balance')->where('supplier_id',$request->id)->get();
+        return response()->json($balance);
+    }
 
     public function findsupplierdata($id){
         $supplierdata = Supplier::find($id);

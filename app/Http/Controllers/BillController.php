@@ -172,17 +172,8 @@ class BillController extends Controller
         
     // }
     public function pendingamount(Request $request){
-        $balance = array(Bill::select('previous_balance')->where('supplier_id',$request->id)->get());
-        $Supplier = Supplier::select('opening_balance')->where('id',$request->id)->get();
-
-        // foreach($balance as $value)
-        // {
-        //     array_push($Supplier,$value);
-        // }
-        
-        array_push($balance , $Supplier);
+        $balance = Bill::select('previous_balance')->where('supplier_id',$request->id)->get();
         return response()->json($balance);
-
     }
 
 
