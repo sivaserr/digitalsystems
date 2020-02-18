@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Trip;
+use App\SetTrip;
+use DB;
 class TripController extends Controller
 {
     /**
@@ -104,4 +106,32 @@ class TripController extends Controller
         return redirect('/trips')->with('trip',$trip);
 
     }
+
+    public function settripindex()
+    {
+        return view('trips.settrip');
+    }
+    public function settrip()
+    {
+        $currenttrips = SetTrip::all();
+
+        return view('trips.settrip')->with('currenttrips',$currenttrips);
+    }
+    public function changetrip($id)
+    {
+        $settrip = SetTrip::find($id);
+
+        return view('trips.changetrip')->with('settrip',$settrip);
+    }
+    public function tripupdate(Request $request, $id)
+    {
+        $settrip = SetTrip::find($id);
+
+        $settrip->set_trip =$request->input('settrip');
+
+        $settrip->save();
+
+        return redirect('set_trips')->with('settrip',$settrip);
+    }
+
 }

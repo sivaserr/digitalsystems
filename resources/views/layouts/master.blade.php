@@ -123,15 +123,15 @@
             <div id="subtrip" class="collapse">
               <ul>
                 <li>
-                    <a href="">
-                      <i class="fas fa-truck-moving"></i>
-                      <p>Trip Type</p>
+                    <a href="/trips">
+                        <i class="fas fa-truck"></i>
+                        <p>Create New Trip</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/trips">
-                        <i class="fas fa-truck"></i>
-                        <p>Trip</p>
+                    <a href="/set_trips">
+                      <i class="fas fa-truck-moving"></i>
+                      <p>Set Trip</p>
                     </a>
                 </li>
               </ul>

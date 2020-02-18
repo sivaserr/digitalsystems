@@ -61,7 +61,7 @@ Customer list page
                       </div>
                       <div class="form-group">
                         <label for="opening_balance">Opening balance</label>
-                        <input type="text" class="form-control" name="opening_balance" id="opening_balance" placeholder="opening_balance" required>
+                        <input type="text" class="form-control" name="opening_balance" id="opening_balance"  placeholder="opening_balance" required>
                       </div>
                       <div class="form-group">
                         <label for="opening_box">Opening Box</label>
@@ -103,13 +103,13 @@ Customer list page
                     <tbody>
                         <?php $id = 1; ?>
                       @foreach($suppliers as $supplier)
-                      <tr>
+                      <tr id="supplierdata">
                         <td>{{ $id }}</td>
                         <td>{{$supplier ->supplier_name}}</td>
                         <td>{{$supplier ->short_name}}</td>
                         <td>{{$supplier ->city}}</td>
                         <td>{{$supplier ->phone}}</td>
-                        <td>{{$supplier ->opening_balance}}</td>
+                        <td id="supplier_price">{{$supplier ->opening_balance}}</td>
                         <td>{{$supplier ->opening_box}}</td>
                       <td><a href="/supplier_edit/{{$supplier ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
                       <td><a href="/supplier/{{$supplier ->id}}" class="btn btn-sm btn-danger">Delete</a></td>

@@ -108,6 +108,12 @@ Route::get('/trip_edit/{id}','TripController@edit');
 Route::put('/trip_update/{id}','TripController@update');
 Route::get('/trips/{id}','TripController@destroy');
 
+Route::get('/set_trips','TripController@settripindex');
+Route::get('/set_trips','TripController@settrip');
+Route::get('/change_trip/{id}','TripController@changetrip');
+Route::put('/set_trip/{id}','TripController@tripupdate');
+
+
 
 
 

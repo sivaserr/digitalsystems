@@ -32,6 +32,7 @@
     $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
     $products = DB::table('products')->select('products.*')->get();
     $trips = DB::table('trips')->select('trips.*')->get();
+    $settrips = DB::table('set_trip')->select('set_trip.*')->get();
     $bills = DB::table('bills')->latest('id')->first();
     ?>
     <div class="card-header">
@@ -70,7 +71,19 @@
           </div>
         </div>
         <div class="col-sm-3">
-            <div class="customer_status">
+            <div class="form-group">
+                <label for="name">Trip</label>
+                <select name="trip" id="trip" class="form-control trip" readonly>
+                    @foreach($settrips as $settrip)
+                    @foreach ($trips as $trip)
+                    @if($trip->id === $settrip->set_trip)
+                    <option value="{{$settrip->set_trip}}">{{$trip->trip_name}}</option>
+                    @endif    
+                    @endforeach
+                   @endforeach
+                 </select>
+              </div>
+            {{-- <div class="customer_status">
                 <label for="trip">Trip</label>
                <select name="billtrip" id="billtrip" class="form-control billtrip">
                   <option>Choose</option>
@@ -78,7 +91,7 @@
                   <option value="{{$trip->id}}">{{$trip->trip_name}} </option>
                  @endforeach
                </select>
-             </div>
+             </div> --}}
         </div>
       </div>
 

@@ -80,6 +80,7 @@ $(document).ready(function(){
 // 	$('#total_amount').val((tax_sum+total).toFixed(2));
 // }
 
+let formatter = new Intl.NumberFormat('en-IN',{}, { maximumSignificantDigits: 3 });
 
 function changeprice(sel){
 
@@ -92,6 +93,10 @@ function changeprice(sel){
 	let perkgprice = inputs.getElementsByClassName("prod_price")[0];
 	let loosekg = inputs.getElementsByClassName("loosekg")[0];
 
+	// let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'INR' });
+	// let formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' },{ maximumSignificantDigits: 3 });
+	let formatter = new Intl.NumberFormat('en-IN',{}, { maximumSignificantDigits: 3 });
+
 
             $.ajax({
 			type:'get',
@@ -100,7 +105,8 @@ function changeprice(sel){
 			dataType:'json',
 			success:function(data){
 	   			data.forEach((productdata,j)=>{
-				perkgprice.value= productdata.price
+				// perkgprice.value= Math.round(formatter.format(productdata.price));
+				perkgprice.value= formatter.format(productdata.price);
 				loosekg.value= productdata.unit_name
 			})
 			},
@@ -132,7 +138,7 @@ function pendingamount(){
 			// 	console.log(i.opening_balance);
 			// 	total += i.opening_balance;
 			// })
-
+         
 			total +=data.opening_balance;
 			totalbox+=data.opening_box;
 			// pendingbox.value = data.opening_box;
@@ -225,22 +231,18 @@ function calculate(s) {
 
 	let actualresult = netweight * perkgpricess;
 
-	actualprice.value = actualresult;
+	actualprice.value = formatter.format(actualresult);
 	
 	let discount =inputs.getElementsByClassName('discount')[0].value;
 	let discountprice =inputs.getElementsByClassName('discountprice')[0];	
 
     let discountpriceresult=  actualresult /100 *discount;
-	discountprice.value=discountpriceresult;
+	discountprice.value=formatter.format(discountpriceresult);
 
 	let netvalue =inputs.getElementsByClassName('netvalue')[0];
-	netvalue.value=actualresult-discountpriceresult;
-
-	let prod_netvalue = actualresult-discountpriceresult
-	
-
-
-
+	 
+	let netvalue_output = formatter.format(actualresult-discountpriceresult);
+	    netvalue.value =netvalue_output;
 
 
 var netvalues =document.getElementsByClassName('netvalue');
@@ -266,7 +268,7 @@ $("#totalbox").val(totalbox);
 $("#icebar").val(ice);
 
 totalrowbox.value=totalbox;
-totalrownetvalue.value=totalnetvalue;
+totalrownetvalue.value= totalnetvalue;
   // IF has value in 
 
 
@@ -372,8 +374,7 @@ function calculate2(){
 
 		var result= document.getElementById('totalicebar');
 	   var totalicebar = icebar*pericebar;
-	   result.value=totalicebar;
-	  
+	   result.value=formatter.format(totalicebar);
 
 	   var packing_amount =document.getElementById('packing_amount').value; // Packing per Box
 
@@ -386,7 +387,7 @@ function calculate2(){
 	  
 
 	  finalicebar.value=totalicebar ;
-	  packingcharge.value = ToTalBoxCharge;
+	  packingcharge.value =ToTalBoxCharge;
 
 
 
@@ -668,3 +669,6 @@ function myFunction(el) {
 	window.print();
 	document.body.innerHTML = restorepage;
   }
+
+
+

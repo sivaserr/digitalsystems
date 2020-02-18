@@ -72,7 +72,6 @@ Customer list page
                        <select name="status" id="status" class="form-control">
                          <option value="1" selected="selected">Enable</option>
                          <option value="0">Disable</option>
-
                        </select>
                      </div>
                     </div>
