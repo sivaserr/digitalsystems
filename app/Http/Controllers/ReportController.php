@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Customer;
+use App\Product;
 
 class ReportController extends Controller
 {
@@ -81,6 +83,24 @@ class ReportController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function consolreport()
+    {
+        return view('report.consolreport');
+    }
+    // public function consolreportcustomer()
+    // {
+    //     $consolcustomers = Customer::all();
+
+    //     return view('report.consolreport')->with('consolcustomers',$consolcustomers);
+    // }
+    public function consolreportproduct()
+    {
+        $products = Product::all();
+
+        return view('report.consolreport')->with('products',$products);
+
     }
     
 }

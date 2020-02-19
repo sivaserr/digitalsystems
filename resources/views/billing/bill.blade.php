@@ -73,7 +73,7 @@
         <div class="col-sm-3">
             <div class="form-group">
                 <label for="name">Trip</label>
-                <select name="trip" id="trip" class="form-control trip" readonly>
+                <select name="billtrip" id="billtrip" class="form-control trip" readonly>
                     @foreach($settrips as $settrip)
                     @foreach ($trips as $trip)
                     @if($trip->id === $settrip->set_trip)

@@ -129,6 +129,9 @@ Route::get('/findproductprice' ,'BillController@findproductprice');
 //Report
 Route::get('report','ReportController@index');
 
+Route::get('consolidation','ReportController@consolreport');
+Route::get('consolidation','ReportController@consolreportproduct');
+
 //demo page
 // Route::get('demo' ,'DemoController@index');
 // Route::post('Adddemo' ,'DemoController@store');

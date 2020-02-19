@@ -166,11 +166,33 @@
             </a>
           </li>
 
-          <li class="{{'report' == request()->path() ? 'active' : ''}}">
-            <a href="/report">
+          <li >
+            <a href="#" data-toggle="collapse" data-target="#subreport">
               <i class="fas fa-file-alt"></i>
               <p>Report</p>
             </a>
+            <div id="subreport" class="collapse">
+              <ul>
+                <li>
+                    <a href="/consolidation">
+                      <i class="fas fa-receipt"></i>
+                      <p>Consolidation</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/report">
+                      <i class="fas fa-receipt"></i>                  
+                      <p>Day</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                      <i class="fas fa-receipt"></i>                  
+                      <p>Month</p>
+                    </a>
+                </li>
+              </ul>
+                  </div>
           </li>
 
 

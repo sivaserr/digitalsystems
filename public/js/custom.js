@@ -106,7 +106,7 @@ function changeprice(sel){
 			success:function(data){
 	   			data.forEach((productdata,j)=>{
 				// perkgprice.value= Math.round(formatter.format(productdata.price));
-				perkgprice.value= formatter.format(productdata.price);
+				perkgprice.value= productdata.price;
 				loosekg.value= productdata.unit_name
 			})
 			},
@@ -231,17 +231,17 @@ function calculate(s) {
 
 	let actualresult = netweight * perkgpricess;
 
-	actualprice.value = formatter.format(actualresult);
+	actualprice.value = actualresult;
 	
 	let discount =inputs.getElementsByClassName('discount')[0].value;
 	let discountprice =inputs.getElementsByClassName('discountprice')[0];	
 
     let discountpriceresult=  actualresult /100 *discount;
-	discountprice.value=formatter.format(discountpriceresult);
+	discountprice.value=discountpriceresult;
 
 	let netvalue =inputs.getElementsByClassName('netvalue')[0];
 	 
-	let netvalue_output = formatter.format(actualresult-discountpriceresult);
+	let netvalue_output = actualresult-discountpriceresult;
 	    netvalue.value =netvalue_output;
 
 
@@ -374,7 +374,7 @@ function calculate2(){
 
 		var result= document.getElementById('totalicebar');
 	   var totalicebar = icebar*pericebar;
-	   result.value=formatter.format(totalicebar);
+	   result.value=totalicebar;
 
 	   var packing_amount =document.getElementById('packing_amount').value; // Packing per Box
 
