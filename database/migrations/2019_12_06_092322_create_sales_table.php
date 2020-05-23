@@ -18,6 +18,7 @@ class CreateSalesTable extends Migration
             $table->string('bill_no');
             $table->string('customer_id');
             $table->string('date');
+            $table->string('trip_id');
             $table->string('total_box');
             $table->string('loose_box');
             $table->string('ovarall_box');

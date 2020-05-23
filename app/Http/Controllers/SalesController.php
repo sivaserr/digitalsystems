@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Sales;
 use App\SalesProducts;
 use App\Customer;
+use DB;
 class SalesController extends Controller
 {
     /**
@@ -44,7 +45,7 @@ class SalesController extends Controller
         $sales->total_box = $request->input('totalbox');
         $sales->loose_box = $request->input('totalloosebox');
         $sales->ovarall_box = $request->input('ovarall_box');
-        $sales->netvalue = $request->input('totalprice');
+        $sales->current_balance = $request->input('totalprice');
         $sales->previous_balance = $request->input('prebalance');
         $sales->overall_balance = $request->input('overall_balance');
         
@@ -122,7 +123,14 @@ class SalesController extends Controller
     {
         //
     }
-
+    public function salesfindproductprice(Request $request){
+        // $p = product::select('*')->where('id',$request->id)->join('units');
+       $data = DB::table('products')
+       ->join('units', 'units.id', '=', 'products.unit_id')
+       ->select('products.price', 'units.unit_name')->where('products.id',$request->id)
+       ->get();
+        return response()->json($data);
+    }
     public function customerbillpending(Request $request){
 
         $salesbillamount = Sales::select('overall_balance','total_box')->where('customer_id' ,$request->id)->get();

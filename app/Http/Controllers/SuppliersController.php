@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Supplier;
-
+use DB;
 class SuppliersController extends Controller
 {
     /**
@@ -120,13 +120,59 @@ class SuppliersController extends Controller
 
     }
     public function pendingamount(Request $request){
-        $balance = Bill::select('previous_balance')->where('supplier_id',$request->id)->get();
+        $balance = Bill::select('current_balance')->where('supplier_id',$request->id)->get();
         return response()->json($balance);
     }
 
-    public function findsupplierdata($id){
-        $supplierdata = Supplier::find($id);
+    public function suppliers(){
+        $suppliers = DB::table('suppliers')->get();
+        $products = DB::table('products')->orderByDesc('id')->get();
 
-        return response()->json($supplierdata);
+        $Rows = [];
+
+        // $row_h = [];
+        // $row_h[] = '';
+
+        // foreach ($products as $product) { 
+        // $row_h[] =  $product->product_name; 
+        // }
+
+        // $Rows[] = $row_h;
+
+        foreach ($suppliers as  $supplier) {
+            $row = [];
+            $row[] = $supplier->short_name; //First col
+            foreach ($products as $product) { // Multi cols
+                $Billdata = DB::table('bill_data')->select(DB::raw('sum(box) as boxes'))->where(array('supplier_id'=>$supplier->id,'product_id'=>$product->id))->get()->first();
+                if(!empty($Billdata->boxes)){
+
+                $row[] = $Billdata->boxes;
+                }else{
+                     $row[] = 0;
+                }
+            }
+
+            $Rows[] = $row;
+        }
+// foreach ($Rows as $key => $value) {
+//      echo '<tr>';
+//     foreach ($value as $key => $value2) {
+//         echo '<td>'.$value2. '</td>';
+//     }
+//  echo '</tr>';
+// }
+// exit;
+        // return response()->json($Rows);
+        return view('report.consolreport')->with('Rows',$Rows);
+
     }
+
+    public function findsupplierdata($id){
+            $supplierdata = Supplier::find($id);
+
+            return response()->json($supplierdata);
+    }
+    
+
+
 }

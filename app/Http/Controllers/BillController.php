@@ -43,9 +43,11 @@ class BillController extends Controller
         $bills = new  Bill();
         $bills->bill_no = $request->input('billno');
         $bills->supplier_id = $request->input('billsupplier');
-        $bills->date = date('d-m-Y',strtotime($request->input('date')));
+        $bills->date = $request->input('date');
         $bills->trip_id = $request->input('billtrip');
-        $bills->total_box = $request->input('totalbox');
+        $bills->total_box = $request->input('todaybox');
+        $bills->balance_box = $request->input('purchase_pendingbox');
+        $bills->overall_box = $request->input('purchase_overallbox');
         $bills->ice_bar = $request->input('icebar');
         $bills->per_ice_bar = $request->input('pericebar');
         $bills->total_ice_bar = $request->input('totalicebar');
@@ -55,9 +57,11 @@ class BillController extends Controller
         $bills->less = $request->input('less');
         $bills->packing_charge = $request->input('packingcharge');
         $bills->excess = $request->input('excess');
-        $bills->previous_balance = $request->input('prebalance');
+        $bills->current_balance = $request->input('currentbalance');
+        $bills->pre_balance = $request->input('pre');
         $bills->overall = $request->input('overall');
-        $bills->customer_pending = $request->input('overall');
+        $bills->amount_pending = $request->input('currentbalance');
+        $bills->box_pending = $request->input('todaybox');
 
 
         $allproduct_datas = $request->input('allproduct_datas');    
@@ -72,6 +76,9 @@ class BillController extends Controller
                     $billdata->box = $product_data['box'];
                     $billdata->weight = $product_data['loosekg'];
                     $billdata->net_weight = $product_data['totalweight'];
+                    $billdata->loose_box = $product_data['purchaseloosebox'];
+                    $billdata->loose_kg = $product_data['purchaseloosebox'];
+                    $billdata->overall_weight = $product_data['overallweight'];
                     $billdata->per_kg_price = $product_data['perkgprices'];
                     $billdata->actual_price = $product_data['actualprice'];
                     $billdata->discount = $product_data['discount'];
@@ -90,7 +97,7 @@ class BillController extends Controller
     public function filtered_list(Request $request){
         // var_dump($request->billcustomer);var_dump($request->data);exit;
         // $data['data'] = [1,2,3,4,5];
-        $Bills = Bill::where([ ['date','=',date('d-m-Y',strtotime($request->data))]  ])->get();
+        $Bills = Bill::where([ ['date','=',$request->data]  ])->get();
         // foreach($Bills as $Bill){
         //     $Bill->BillDatas = BillData::where([
         //         ['bill_id','=',$Bill->id],
@@ -100,6 +107,16 @@ class BillController extends Controller
         // echo '<pre>';print_r($Bills);exit;
         return view('report.dayreport',$data);
     }
+    public function filtered_month_and_week(Request $request){
+        $from_date = $request->fromdate;
+        $to_date = $request->todate;
+
+        $bills = Bill::whereBetween('date',[$from_date, $to_date])->get();
+
+        $data['bills'] = $bills;
+        return view('report.month_and_week_report',$data);
+    }
+
    public function billview($id){
        
     $Bills = Bill::find($id);
@@ -161,7 +178,7 @@ class BillController extends Controller
     // }
     public function findproductprice(Request $request){
         // $p = product::select('*')->where('id',$request->id)->join('units');
-$data = DB::table('products')
+      $data = DB::table('products')
        ->join('units', 'units.id', '=', 'products.unit_id')
        ->select('products.price', 'units.unit_name')->where('products.id',$request->id)
        ->get();
@@ -175,7 +192,7 @@ $data = DB::table('products')
         
     // }
     public function pendingamount(Request $request){
-        $balance = Bill::select('overall','total_box')->where('supplier_id',$request->id)->get();
+        $balance = Bill::select('current_balance','total_box')->where('supplier_id',$request->id)->get();
         return response()->json($balance);
     }
 

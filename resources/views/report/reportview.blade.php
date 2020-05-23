@@ -101,7 +101,9 @@ Day Report
                       </tr>
                     </thead>
                     <tbody>
-                        <?php $id=1;?>
+                        <?php $id=1;
+                          $current_value = 0;
+                        ?>
 
                       <tr>
                           @foreach($bill_datas as $bill_data)
@@ -121,7 +123,9 @@ Day Report
                         <td>{{$bill_data->discount_price}}</td>
                         <td>{{$bill_data->net_value}}</td>
                       </tr>
-                      <?php $id++ ?>
+                      <?php 
+                      $current_value += $bill_data->net_value;
+                      $id++ ?>
 
                       @endif
                       @endforeach
@@ -153,6 +157,10 @@ Day Report
                       <tr>
                         <th class="text-center">Total Box</th>
                         <td class="text-center">{{$Bills->total_box}}</td>
+                      </tr>
+                      <tr>
+                        <th class="text-center">Pre Box</th>
+                        <td class="text-center">0</td>
                       </tr>
                       <tr>
                         <th class="text-center">Ice Bar</th>
@@ -198,6 +206,10 @@ Day Report
                   <tr>
                     <th class="text-center">previous Balance</th>
                     <td class="text-center">{{$Bills->previous_balance}}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">Current Bill Amount</th>
+                    <td class="text-center">{{$current_value}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Overall Balance</th>

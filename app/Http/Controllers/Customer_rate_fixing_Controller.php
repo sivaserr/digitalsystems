@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Customer;
-use App\Product;
 
-class ReportController extends Controller
+class Customer_rate_fixing_Controller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +13,9 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $data['Bills'] = [];
-        return view('report.dayreport',$data);
+        //
     }
 
-    public function month_and_week()
-    {
-         $data['bills'] = [];
-        return view('report.month_and_week_report',$data);
-
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -90,23 +81,4 @@ class ReportController extends Controller
     {
         //
     }
-
-    public function consolreport()
-    {
-        return view('report.consolreport');
-    }
-    // public function consolreportcustomer()
-    // {
-    //     $consolcustomers = Customer::all();
-
-    //     return view('report.consolreport')->with('consolcustomers',$consolcustomers);
-    // }
-    public function consolreportproduct()
-    {
-        $products = Product::all();
-
-        return view('report.consolreport')->with('products',$products);
-
-    }
-    
 }

@@ -159,13 +159,40 @@
           </ul>
               </div>
             </li>
+                      <li>
+              <a href="#" data-toggle="collapse" data-target="#subpayment">
+                <i class="fas fa-money-check"></i>
+                <p>Payment</p>
+              </a>
+              <div id="subpayment" class="collapse">
+          <ul>
+            <li>
+                <a href="/payment-for-purchase">
+                  <i class="fas fa-receipt"></i>
+                  <p>Purchase</p>
+                </a>
+            </li>
+            <li>
+                <a href="/payment-for-sales">
+                  <i class="fas fa-receipt"></i>                  
+                  <p>Sales</p>
+                </a>
+            </li>
+          </ul>
+              </div>
+            </li>
           <li class="{{'#' == request()->path() ? 'active' : ''}}">
             <a href="#">
               <i class="fas fa-truck-moving"></i>
               <p>Vechical information</p>
             </a>
           </li>
-
+          <li class="{{'#' == request()->path() ? 'active' : ''}}">
+            <a href="/bank-details">
+              <i class="fas fa-truck-moving"></i>
+              <p>Bank details</p>
+            </a>
+          </li>
           <li >
             <a href="#" data-toggle="collapse" data-target="#subreport">
               <i class="fas fa-file-alt"></i>
@@ -186,7 +213,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/month_and_week_report">
                       <i class="fas fa-receipt"></i>                  
                       <p>Month</p>
                     </a>
@@ -355,11 +382,13 @@
   <script src="../assets/js/now-ui-dashboard.min.js?v=1.3.0" type="text/javascript"></script>
   <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
-  <script src="{{ asset('js/custom.js') }}" defer></script>
+  <script src="{{ asset('js/supplier.js') }}" defer></script>
+  <script src="{{ asset('js/customer.js') }}" defer></script>
   <script src="{{ asset('js/datepicker.min.js') }}" defer></script>
 
-
-  @yield('scripts')
+        <script type="text/javascript">
+            @yield ('scripts')
+        </script>
 </body>
 
 </html>

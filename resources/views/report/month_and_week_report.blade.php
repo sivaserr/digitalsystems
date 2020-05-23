@@ -49,7 +49,7 @@ Day Report
 
         <div class="container">
 
-<form method="POST" action="/report">
+<form method="POST" action="/month_and_week_report">
   {{ csrf_field() }}
   <div class="row">
     {{-- <div class="col-sm-4">
@@ -64,13 +64,19 @@ Day Report
             </select>
           </div>
     </div> --}}
-    <div class="col-sm-6">
+    <div class="col-sm-5">
         <div class="form-group filterdate">
-            <label for="Date">Date</label>
-            <input type="Date" class="form-control" id="Date" name="data" value="">
+            <label for="fromDate">From Date</label>
+            <input type="Date" class="form-control" id="fromDate" name="fromdate" value="">
           </div>
     </div>
-    <div class="col-sm-6">
+      <div class="col-sm-5">
+        <div class="form-group filterdate">
+            <label for="toDate">To Date</label>
+            <input type="Date" class="form-control" id="toDate" name="todate" value="">
+          </div>
+    </div>
+    <div class="col-sm-2">
       <div class="filterbutton">
           <button type="submit" id="submit" class="btn btn-success">Submit</button>
       </div>
@@ -108,20 +114,8 @@ Day Report
 
     </div>
 
-<div class="report_body">
 
-    
-    <div class="output">
-
-
-<div class="title">
-
-
-
-</div>
-
-
-     <table class="table table-striped">
+         <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -134,21 +128,21 @@ Day Report
         </thead>
         <tbody>
           <?php $id = 1?>
-            @if(count($Bills) > 0)
-            @foreach($Bills as $Bill)
+            @if(count($bills) > 0)
+            @foreach($bills as $bill)
 
           <tr>
           <th scope="row">{{$id}}</th>
-            <td>{{$Bill->bill_no}}</td>
+            <td>{{$bill->bill_no}}</td>
             @foreach($suppliers as $supplier)
-            @if($Bill->supplier_id === $supplier->id)
+            @if($bill->supplier_id === $supplier->id)
             <td>{{$supplier->supplier_name}}</td>
             @endif
             @endforeach
-            <td>{{$Bill->date}}</td>
-            <td>{{$Bill->total_box}}</td>
-            <td>{{$Bill->current_balance}}</td>
-          <td><a href="billviewedit/{{$Bill->id}}" class="btn btn-sm btn-info">View</a>
+            <td>{{$bill->date}}</td>
+            <td>{{$bill->total_box}}</td>
+            <td>{{$bill->current_balance}}</td>
+          <td><a href="billviewedit/{{$bill->id}}" class="btn btn-sm btn-info">View</a>
           </td>
           </tr>
           <?php $id++;?>
@@ -160,8 +154,25 @@ Day Report
 
         </tbody>
       </table>
-	</div>
+
+<!-- <div class="report_body">
+
+    
+    <div class="output">
+
+
+<div class="title">
+            @if(count($bills) > 0)
+             @foreach($bills as $bill)
+
+          <h1>{{$bill->bill_no}}</h1>
+     @endforeach
+@endif
 </div>
+
+
+	</div>
+</div> -->
         </div>
 
 @endsection

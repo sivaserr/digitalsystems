@@ -101,4 +101,10 @@ class BillDataController extends Controller
     {
         //
     }
+
+    public function supplierdatas(){
+        $billdatas = BillData::all();
+
+        return response()->json($billdatas);
+    }
 }

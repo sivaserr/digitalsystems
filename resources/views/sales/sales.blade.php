@@ -7,6 +7,15 @@
     height: 150px;
     width: 240px;
 }
+#salestotalrowbox,#salestotalrownetvalue,#salestotalrowloosebox {
+  border: none;
+    text-align: center;
+    width: 100%;
+}
+.salestotalrowbox,.salestotalrownetvalue,#salestotalrowloosebox {
+    /* display: inline-flex; */
+    border: none!important;
+}
 .company_address p {
     /* padding: 0; */
     margin-bottom: 5px;
@@ -115,14 +124,14 @@
                   <th class="text-center"> Loose kg</th>
                   <th class="text-center"> Total weight </th>
                   <th class="text-center"> Price </th>
-                  <th class="text-center"> T-price </th>
+                  <th class="text-center"> N-vel </th>
                 </tr>
               </thead>
               <tbody id="dynamic_product_rows">
                 <tr id='addr0'>
                   <td>1</td>
                   <td>
-                      <select name="salesproductname" id="salesproductname" class="form-control productcategory salesproductname" onchange="changeprice(this)">
+                      <select name="salesproductname" id="salesproductname" class="form-control productcategory salesproductname" onchange="saleschangeprice(this)">
                           <option value="0" disabled="true" selected="true">Choose</option>
                           @foreach ($products as $product) 
                           <option value="{{$product->id}}">{{$product->product_name}} </option>
@@ -160,14 +169,14 @@
                 <tr>
                   <td></td>
                   <td></td>
-                  <td class="text-center" id="totalrowbox">0</td>
+                  <td class="text-center salestotalrowbox" ><span>T-Box</span><input type="text" id="salestotalrowbox" placeholder="0" readonly /></td>
+                  <td></td>
+                  <td></td>
+                  <td class="text-center salestotalrowloosebox" ><span>L-Box</span><input type="text" id="salestotalrowloosebox" placeholder="0" readonly /></td>
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td class="text-center" id="totalnetvalue">0</td>
+                  <td class="text-center salestotalrownetvalue"><span>T-val</span><input type="text" id="salestotalrownetvalue" placeholder="0" readonly /></td>
                 </tr>
               </tfoot>
             </table>
@@ -176,7 +185,7 @@
         <div class="row clearfix">
           <div class="col-md-12">
             <button id="add_row" class="btn btn-default pull-left">Add Row</button>
-            <button id='delete_row' onchange="deletevalue(this)" class="pull-right btn btn-default">Delete Row</button>
+            <button id='customer_delete_row'  class="pull-right btn btn-default">Delete Row</button>
           </div>
         </div>
 
@@ -186,19 +195,15 @@
               <table class="table table-bordered table-hover" id="tab_logic_total">
                   <tbody>
                     <tr>
-                      <th class="text-center">Total Box</th>
+                      <th class="text-center">Today Box</th>
                       <td class="text-center"><input type="text" name='total_box' id="totalbox" oninput="salescalculater(this)" placeholder='0.00' class="form-control" id="sub_total" /></td>
-                    </tr>
-                    <tr>
-                      <th class="text-center">Loose box</th>
-                      <td class="text-center"><input type="text" name='totalloosebox' id="totalloosebox" oninput="salescalculater(this)" placeholder='0.00' class="form-control icebar"/></td>
                     </tr>
                     <tr>
                       <th class="text-center">balance box</th>
                       <td class="text-center"><input type="text" name='pendingbox' id="pendingbox" oninput="salescalculater(this)" placeholder='0.00' class="form-control pendingbox"/></td>
                     </tr>
                     <tr>
-                      <th class="text-center">Overall box</th>
+                      <th class="text-center">Total box</th>
                       <td class="text-center"><input type="text" name='overallbox' id="overallbox" oninput="salescalculater(this)"  placeholder='0.00' class="form-control" /></td>
                     </tr>
                   </tbody>
@@ -208,7 +213,7 @@
               <tbody>
 
 
-                  <th class="text-center">Total Price</th>
+                  <th class="text-center">Current Bill Balance</th>
                   <td class="text-center"><input type="text"  name='totalprice' id="totalprice" oninput="salescalculater(this)" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
@@ -218,7 +223,7 @@
                 <tr>
                 <tr>
                   <th class="text-center">Overall Balance</th>
-                  <td class="text-center"><input type="text"  name='salesoverall' id="customeroverall" oninput="salescalculater(this)" placeholder='0.00' class="form-control customeroverall" /></td>
+                  <td class="text-center"><input type="text"  name='customeroverall' id="customeroverall" oninput="salescalculater(this)" placeholder='0.00' class="form-control customeroverall" /></td>
                 </tr>
               </tbody>
             </table>

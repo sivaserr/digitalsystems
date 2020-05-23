@@ -3,6 +3,7 @@
 @section('navbar_brand')
     Set Trip
 @endsection
+
 <style>
 .settrip {
     padding: 50px;
@@ -17,11 +18,10 @@
     <div class="settrip">
             <form action="/action_page.php">
                 @foreach ($currenttrips as $currenttrip)
-
                 <div class="form-group">
                   <label for="email">Current Trip:</label>
                   @foreach ($trips as $trip)
-                  @if($trip->id === $currenttrip->set_trip )
+                  @if($trip->id == $currenttrip->set_trip)
                   <input type="email" class="form-control" id="email" value="{{$trip->trip_name}}">
                   @endif
                   @endforeach

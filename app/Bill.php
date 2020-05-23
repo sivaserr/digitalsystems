@@ -31,7 +31,7 @@ class Bill extends Model
     'less',
     'packing_charge',
     'excess',
-    'previous_balance',
+    'supplier_pending',
     'overall'
 ];
 

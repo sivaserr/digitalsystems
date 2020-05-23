@@ -8,40 +8,42 @@ consolidation
    }
 </style>
 @section('content')
-<?php
+ <?php
    $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
    $bill_datas = DB::table('bill_data')->select('bill_data.*')->get();
-   ?>
+   $product_array = [];
+   // var_dump($bill_datas);
+   // exit;
+   ?> 
 <div class="card">
    <div class="settrip table-responsive table-bordered">
       <table class="table table-bordered">
          <thead>
          </thead>
-         <tbody>
+          <tbody>
             <tr>
                <th>ARS</th>
-               @foreach ($products as $product)
-               <td scope="col">{{$product->product_name}}</td>
-               @endforeach
-               <td>Total</td>
             </tr>
-            @foreach ($suppliers as $supplier)
+            @foreach($Rows as $Row)
             <tr>
-               <td>{{$supplier->short_name}}</td>
-               <td></td>
-               {{-- <td>
-                    @foreach ($bill_datas as $bill_data)
-                    @if ($supplier->id === $bill_data->supplier_id)
-                    <td>{{$bill_data->box}}</td>
-                    @else
-                    <td></td>
-                    @endif
-                    @endforeach
-               </td> --}}
+               <td>{{$Row[0]}}</td> 
+               <td>{{$Row[1]}}</td>
+               <td>{{$Row[2]}}</td>         
+               <td>{{$Row[3]}}</td>         
+               <td>{{$Row[4]}}</td>         
+               <td>{{$Row[5]}}</td>         
+               <td>{{$Row[6]}}</td>         
             </tr>
-            @endforeach
-         </tbody>
+            @endforeach                                 
+
+         </tbody> 
       </table>
    </div>
 </div>
+@endsection
+@section('scripts')
+
+
+
+
 @endsection

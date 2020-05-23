@@ -130,7 +130,7 @@ function pendingamount(){
 
 	$.ajax({
 		type:'get',
-		url:"http://digitalsystem.com/api/supplier/"+sel,		
+		url:"/api/supplier/"+sel,		
 		dataType:'json',
 		success:function(data){
 
@@ -155,7 +155,7 @@ function pendingamount(){
 		dataType:'json',
 		success:function(data){
 			for(var i=0; i<data.length; i++){
-				total +=parseInt(data[i].overall);
+				total +=parseInt(data[i].current_balance);
 				totalbox +=parseInt(data[i].total_box);
 			}
 			prebalance.value=total;
@@ -167,46 +167,7 @@ function pendingamount(){
 }
 
 
-//Sales bill pending amount:-
 
-function salespendingamount(){
-
-      let selbillcustomer = salescustomer.options[salescustomer.selectedIndex].value;
-      let sell = selbillcustomer;
-
-      let customertotal = 0;
-      let customertotalbox = 0;
-
-
-      	$.ajax({
-		type:'get',
-		url:"customerbillpending",
-		data:{'id':sell},
-		dataType:'json',
-		success:function(data){
-			for(var i=0; i<data.length; i++){
-				customertotal += parseInt(data[i].overall_balance);
-				customertotalbox += parseInt(data[i].total_box);
-			}
-			prebalance.value=customertotal;
-			pendingbox.value=customertotalbox;
-		},
-		error:function(){
-		}
- });
-
-      	$.ajax({
-		type:'get',
-		url:"http://digitalsystem.com/api/sales/"+sell,
-		dataType:'json',
-		success:function(data){
-			customertotal +=data.opening_balance;
-			customertotalbox += data.opening_box;
-		},
-		error:function(){
-		}
- });
-}
 
 
 //billing
@@ -227,9 +188,16 @@ function calculate(s) {
 	totalweight.value = netweight;
 	
 	let perkgpricess =inputs.getElementsByClassName('perkgprices')[0].value;
+	let purchase_loosekg =inputs.getElementsByClassName('purchase_loosekg')[0].value;
 	let actualprice =inputs.getElementsByClassName('actualprice')[0];	
 
-	let actualresult = netweight * perkgpricess;
+	let overalloutput= netweight + parseFloat(purchase_loosekg);
+   
+    let overallweight =inputs.getElementsByClassName('overall_weight')[0];
+
+    overallweight.value= overalloutput;
+
+	let actualresult = overalloutput * perkgpricess;
 
 	actualprice.value = actualresult;
 	
@@ -249,28 +217,50 @@ var netvalues =document.getElementsByClassName('netvalue');
 var box =document.getElementsByClassName('box');
 var overall = document.getElementById('overall');
 var totalrowbox =document.getElementById('totalrowbox');
+var totalrowloosebox =document.getElementById('totalrowloosebox');
 var totalrownetvalue =document.getElementById('totalrownetvalue');
+var purchaseloosebox =document.getElementsByClassName('purchase_loosebox');
+var totalpurchaseloosebox =document.getElementById('total_purchaseloosebox');
+var purchaseoverallbox =document.getElementById('purchase_overallbox');
+var currentbalances =document.getElementById('currentbalance');
+var todaybox =document.getElementById('totalbox');
+var purchase_pendingbox =document.getElementById('pendingbox').value;
+
 
 var totalnetvalue = 0;
 var totalbox= 0;
+var overallpurchaseloosebox=0;
+var total_purchaseloosebox=0;
 for(var i = 0; i < netvalues.length; i++){
 	 totalnetvalue += parseInt(netvalues[i].value);
 }
 for (var i= 0; i<box.length; i++){
 	totalbox +=parseInt(box[i].value);
-
 }
+for(var i=0;i<purchaseloosebox.length; i++){
+	overallpurchaseloosebox += parseInt(purchaseloosebox[i].value);
+}
+	for (var i= 0; i<purchaseloosebox.length; i++){
+		total_purchaseloosebox +=parseInt(purchaseloosebox[i].value);
+	}
+
+     let todaybox_output = total_purchaseloosebox + totalbox
+      todaybox.value = todaybox_output;
+
+
+     purchaseoverallbox.value = todaybox_output + parseInt(purchase_pendingbox);
 
      let  ices=totalbox/3;
      let ice=ices.toFixed(2);
      
-$("#totalbox").val(totalbox);
+// $("#totalbox").val(todaybox);
 $("#icebar").val(ice);
 
 totalrowbox.value=totalbox;
+totalrowloosebox.value=total_purchaseloosebox;
 totalrownetvalue.value= totalnetvalue;
   // IF has value in 
-
+currentbalances.value=totalnetvalue;
 
 
 
@@ -298,65 +288,7 @@ $("#overall").val(totalnetvalue);
 
 }
 
-function salescalculater(sales){
-	let parentnodes = sales.parentNode.parentNode.id;
 
-	let inputs = document.getElementById(parentnodes);
-
-	let box_id =inputs.getElementsByClassName('box')[0].value;
-	let loosekg =inputs.getElementsByClassName('loosekg')[0].value;
-	let loosebox =inputs.getElementsByClassName('loosebox')[0].value;
-	let totalweight =inputs.getElementsByClassName('totalweight')[0];
-
-	let netweight = box_id * loosekg;
-	totalweight.value = netweight;
-
-
-	let salesloosekg = inputs.getElementsByClassName('salesloosekg')[0].value;
-	
-	let salloosekg = netweight + parseInt(salesloosekg);
-    
-	let overallweight = inputs.getElementsByClassName('overallweight')[0];
-
-	overallweight.value = salloosekg;
-
-	let saleperkgprice = inputs.getElementsByClassName('saleperkgprice')[0].value;
-	let netvalue = inputs.getElementsByClassName('netvalue')[0];
-
-	netvalue.value = saleperkgprice*salloosekg;
-
-	var box =document.getElementsByClassName('box');
-	var salesloosebox =document.getElementsByClassName('loosebox');
-	var salesnetvalue =document.getElementsByClassName('netvalue');
-	let pendingbox =document.getElementsByClassName('pendingbox')[0].value;
-console.log(pendingbox);
-	let salesbox_id = 0;
-	let totalsalesloosebox = 0;
-	let totalsalesnetvalue = 0;
-
-	for (var i= 0; i<box.length; i++){
-		salesbox_id +=parseInt(box[i].value);
-	}
-	totalbox.value = salesbox_id;
-
-	for (var i= 0; i<salesloosebox.length; i++){
-		totalsalesloosebox +=parseInt(salesloosebox[i].value);
-	}
-	totalloosebox.value = totalsalesloosebox;
-
-	for (var i= 0; i<salesnetvalue.length; i++){
-		totalsalesnetvalue +=parseInt(salesnetvalue[i].value);
-	}
-	customeroverall.value = totalsalesnetvalue;
-	
-	overallbox.value = salesbox_id + totalsalesloosebox;
-	
-
-
-	//total price
-	totalprice.value =totalsalesnetvalue;
-
-}   
 
 
 $('#val1').on('change',function(e){
@@ -388,7 +320,6 @@ function calculate2(){
 
 	  finalicebar.value=totalicebar ;
 	  packingcharge.value =ToTalBoxCharge;
-
 
 
 
@@ -531,6 +462,9 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 		"box": $(this).find('.box').val(),
 		"loosekg": $(this).find('.loosekg').val(),
 		"totalweight": $(this).find('.totalweight').val(),
+		"purchaseloosebox": $(this).find('.purchase_loosebox').val(),
+		"purchaseloosekg": $(this).find('.purchase_loosekg').val(),
+		"overallweight": $(this).find('.overall_weight').val(),
 		"perkgprices": $(this).find('.perkgprices').val(),
 		"actualprice": $(this).find('.actualprice').val(),
 		"discount": $(this).find('.discount').val(),
@@ -544,7 +478,9 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 		'billsupplier': $('#billsupplier').val(),
 		'date': $('#date').val(),
 		'billtrip': $('#billtrip').val(),
-		'totalbox': $('#totalbox').val(),
+		'todaybox': $('#totalbox').val(),
+		'purchase_pendingbox': $('#pendingbox').val(),
+		'purchase_overallbox': $('#purchase_overallbox').val(),
 		'icebar': $('#icebar').val(),
 		'pericebar': $('#pericebar').val(),
 		'totalicebar': $('#totalicebar').val(),
@@ -554,7 +490,8 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 		'less': $('#less').val(),
 		'packingcharge': $('#packingcharge').val(),
 		'excess': $('#excess').val(),
-		'prebalance': $('#prebalance').val(),
+		'pre': $('#prebalance').val(),
+		'currentbalance': $('#currentbalance').val(),
 		'overall': $('#overall').val(),
 		'allproduct_datas':allRows  // ALL BILL DATA ARRAY
 	}
@@ -575,7 +512,7 @@ $.ajaxSetup({
 		 //if saved
 		 if(response.status == 'success'){
 		 	alert(response.message);
-		 	window.location.replace("http://digitalsystem.com/bill");
+		 	window.location.replace("/bill");
 		 }else{
 		 	alert(response.message);
 		 }
@@ -592,73 +529,41 @@ $.ajaxSetup({
 });
 
 
-//Sales entry function
 
-$('#salesdataform').on('submit',function(e){
-	e.preventDefault();
-
-	let salesproduct = [];
-
-
-	$("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
-		salesproduct.push({ 
-			"salesproductname": $(this).find('.salesproductname').val(),
-			"box": $(this).find('.box').val(),
-			"loosekg": $(this).find('.loosekg').val(),
-			"totalweight": $(this).find('.totalweight').val(),
-			"loosebox": $(this).find('.loosebox').val(),
-			"salesloosekg": $(this).find('.salesloosekg').val(),
-			"overallweight": $(this).find('.overallweight').val(),
-			"saleperkgprice": $(this).find('.saleperkgprice').val(),
-			"netvalue": $(this).find('.netvalue').val(),
-		});
-	});
-
-
-	let salesData = {
-		'saleno': $('#saleno').val(),
-		'salescustomer': $('#salescustomer').val(),
-		'date': $('#date').val(),
-		'totalbox': $('#totalbox').val(),
-		'totalloosebox': $('#totalloosebox').val(),
-		'ovarall_box': $('#overallbox').val(),
-		'totalprice': $('#totalprice').val(),
-		'prebalance': $('#prebalance').val(),
-		'overall_balance': $('#customeroverall').val(),
-		'salesproduct_datas':salesproduct  // ALL BILL DATA ARRAY
-	}
-	$.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('[name="_token"]').val()
-        }
-});
-	$.ajax({
-		type:"post",
-		url:"/sales",
-		data:salesData,
-		success:function(response){
-			response = JSON.parse(response);
-			console.log(response);
-			//if saved
-			if(response.status == 'success'){
-				alert(response.message);
-				window.location.replace("http://digitalsystem.com/sales");
-			}else{
-				alert(response.message);
-			}
-		},
-		error:function(error){
-		   //  console.log(error)
-			alert("Data Not Saved");
-		}
-	});
-});
 
 // $('#submit').on('click',function(e){
 // 	var value= $('#billcustomer').val();
 // 	var date= $('#Date').val();
 
 // });
+
+
+
+// $(document).ready(function(){
+//     const url = 'http://ars.com/api/supplierdatas';
+//     var myHeaders = new Headers();
+//     var requestOptions = {
+//       method: 'GET',
+//       headers: myHeaders,
+//       redirect: 'follow'
+//     };
+
+// fetch(url, requestOptions)
+//   .then(response => response.text())
+//   .then(result => getTable(result))
+//   .catch(error => console.log('error', error));
+
+// getTable = (result) =>{
+//   let res = [];
+//   if(typeof result === "string"){
+//     res = JSON.parse(result);
+//   }
+//   console.log(res)
+// }
+  
+// });
+
+
 
 
 //report print out function

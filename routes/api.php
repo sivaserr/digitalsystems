@@ -34,6 +34,11 @@ Route::get('/customer/{id}','CustomerController@jsondatawidthid');
 Route::put('/customer/update/{id}','CustomerController@jsonupdate');
 Route::delete('/customer/delete/{id}','CustomerController@jsondelete');
 
+
+//customer rate fixing api
+Route::get('/customerratefixing/{id}','CustomerController@getcustomerratefixing');
+
+
 //suppliers
 Route::get('/supplier/{id}', 'SuppliersController@findsupplierdata');
 
@@ -51,3 +56,21 @@ Route::get('bill/{id}','BillController@billdata');
 
 //Sales api
 Route::get('sales/{id}','SalesController@customerpending');
+
+
+Route::get('suppliersbill','Purchase_PaymentController@suppliersbill');
+
+Route::get('payment-for-purchase/{id}','Purchase_PaymentController@showbills');
+
+Route::get('payment-for-purchase/getsuppliersbill/{id}','Purchase_PaymentController@getsuppliersbill');
+
+
+
+//Sales payment api
+
+Route::get('payment-for-sales/getcustomersbill/{id}','Sales_PaymentController@getcustomerbill');
+Route::get('payment-for-sales/{id}','Sales_PaymentController@showsalesbills');
+
+
+// Route::get('suppliers', 'SuppliersController@suppliers');
+// Route::get('supplierdatas','BillDataController@supplierdatas');

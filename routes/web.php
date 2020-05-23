@@ -47,7 +47,7 @@ Route::post('/change-password','Auth\ChangePasswordController@changePassword')->
 
 
 
-//Product page
+//Product CRUD
 Route::get('/products','ProductController@index');
 Route::post('/products','ProductController@store')->name('Addproduct');
 Route::get('/products','ProductController@show');
@@ -55,7 +55,7 @@ Route::get('/product_edit/{id}','ProductController@edit');
 Route::put('/product_update/{id}','ProductController@update');
 Route::get('/product/{id}','ProductController@destroy');
 
-//Product Group page
+//Product Group CRUD
 Route::get('/product_group','ProductGroupController@index');
 Route::post('/product_group','ProductGroupController@store')->name('Addproductgroup');
 Route::get('/product_group','ProductGroupController@show');
@@ -63,7 +63,7 @@ Route::get('/product_group_edit/{id}','ProductGroupController@edit');
 Route::put('/product_group_update/{id}','ProductGroupController@update');
 Route::get('/product_group/{id}','ProductGroupController@destroy');
 
-//Unit Page
+//Unit CRUD
 Route::get('/unit' , 'UnitController@index');
 Route::post('/unit' , 'UnitController@store')->name('Addunit');
 Route::get('/unit' , 'UnitController@show');
@@ -72,7 +72,7 @@ Route::put('/unit_update/{id}','UnitController@update');
 Route::get('unit/{id}','UnitController@destroy');
 
 
-//Customer page
+//Customer CRUD
 Route::get('/customer','CustomerController@index');
 Route::post('/customer','CustomerController@store')->name('Addcustomer');
 Route::get('/customer','CustomerController@show');
@@ -81,7 +81,7 @@ Route::put('/customerupdate/{id}','CustomerController@update');
 Route::get('/customer/{id}','CustomerController@destroy');
 // Route::get('/customer/{id}','CustomerController@active');
 
-//Customer Rate Fixing page
+//Customer Rate Fixing CRUD
 Route::get('/customer_rate_fixing', 'CustomerRateFixingController@index');
 Route::post('/customer_rate_fixing', 'CustomerRateFixingController@store')->name('Addcustomerrate');
 Route::get('/customer_rate_fixing', 'CustomerRateFixingController@show');
@@ -89,7 +89,7 @@ Route::get('/customer_rate_edit/{id}', 'CustomerRateFixingController@edit');
 Route::put('/customerrateupdate/{id}', 'CustomerRateFixingController@update');
 Route::get('/customer_rate_fixing/{id}', 'CustomerRateFixingController@destroy');
 
-//Suppliers page
+//Suppliers CRUD
 
 Route::get('/supplier' ,'SuppliersController@index');
 Route::post('/supplier' ,'SuppliersController@store')->name('Addsupplier');
@@ -99,7 +99,7 @@ Route::put('/supplierupdate/{id}','SuppliersController@update');
 Route::get('/supplier/{id}','SuppliersController@destroy');
 
 
-//trip page
+//trip CRUD
 
 Route::get('/trips','TripController@index');
 Route::post('/trips','TripController@store')->name('addtrip');
@@ -114,7 +114,13 @@ Route::get('/change_trip/{id}','TripController@changetrip');
 Route::put('/set_trip/{id}','TripController@tripupdate');
 
 
-
+//Bank CRUD
+Route::get('bank-details' , 'Bank_Details_Controller@index');
+Route::post('bank-details','Bank_Details_Controller@store')->name('addbank');
+Route::get('bank-details' , 'Bank_Details_Controller@show');
+Route::get('bank-details/{id}' , 'Bank_Details_Controller@edit');
+Route::put('bank-details-update/{id}' , 'Bank_Details_Controller@update');
+Route::get('bank-details/{id}' , 'Bank_Details_Controller@destroy');
 
 
 
@@ -128,15 +134,20 @@ Route::get('/findproductprice' ,'BillController@findproductprice');
 
 //Report
 Route::get('report','ReportController@index');
+Route::get('month_and_week_report','ReportController@month_and_week');
 
 Route::get('consolidation','ReportController@consolreport');
 Route::get('consolidation','ReportController@consolreportproduct');
+Route::get('consolidation','SuppliersController@suppliers');
+
 
 //demo page
 // Route::get('demo' ,'DemoController@index');
 // Route::post('Adddemo' ,'DemoController@store');
 
 Route::post('/report','BillController@filtered_list')->name('filtered_list');
+Route::post('/month_and_week_report','BillController@filtered_month_and_week')->name('filtered_month_and_week');
+
 Route::get('/billviewedit/{id}','BillController@billview');
 Route::get('/pendingamount','BillController@pendingamount');
 
@@ -152,4 +163,21 @@ Route::get('/openingbalance','SuppliersController@findopeningbalance');
 Route::get('/sales', 'SalesController@index');
 Route::post('/sales', 'SalesController@store')->name('Addsales');
 Route::get('customerbillpending' , 'SalesController@customerbillpending');
+Route::get('/salesfindproductprice' ,'SalesController@salesfindproductprice');
 
+
+//Purchase Payment Entry
+
+Route::get('payment-for-purchase' , 'Purchase_PaymentController@index');
+// Route::get('payment-for-purchase' , 'Purchase_PaymentController@showsuppliers');
+Route::post('/payment-for-purchase','Purchase_PaymentController@getbilldata')->name('getbilldata');
+Route::get('/payment-for-purchase/{id}', 'Purchase_PaymentController@showsuppliers');
+// Route::get('payment-for-purchase' , 'Purchase_PaymentController@suppliersbill');
+
+Route::post('/payment-for-purchase','Purchase_PaymentController@store');
+
+
+//Sales Payment Entry
+
+Route::get('payment-for-sales' , 'Sales_PaymentController@index');
+Route::post('/payment-for-sales','Sales_PaymentController@store');

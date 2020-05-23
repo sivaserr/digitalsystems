@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Customer;
-use App\Product;
+use App\Bank_Details;
 
-class ReportController extends Controller
+class Bank_Details_Controller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +14,9 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $data['Bills'] = [];
-        return view('report.dayreport',$data);
+        return view('bank.bank');
     }
 
-    public function month_and_week()
-    {
-         $data['bills'] = [];
-        return view('report.month_and_week_report',$data);
-
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -43,7 +35,13 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $bank = new Bank_Details();
+        $bank->bank_name =$request->input('bankname');
+        $bank->short_name =$request->input('shortname');
+
+        $bank->save();
+
+        return redirect('bank-details')->with('bank',$bank);
     }
 
     /**
@@ -52,9 +50,11 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $banks = Bank_Details::all();
+
+        return view('bank.bank')->with('banks',$banks);
     }
 
     /**
@@ -65,7 +65,9 @@ class ReportController extends Controller
      */
     public function edit($id)
     {
-        //
+        $bank = Bank_Details::find($id);
+
+        return view('bank.bank_edit')->with('bank',$bank);
     }
 
     /**
@@ -77,7 +79,13 @@ class ReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $bank = Bank_Details::find($id);
+        $bank->bank_name =$request->input('bankname');
+        $bank->short_name =$request->input('shortname');
+
+        $bank->save();
+
+        return redirect('bank-details')->with('bank',$bank);
     }
 
     /**
@@ -88,25 +96,11 @@ class ReportController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $bank = Bank_Details::find($id);
 
-    public function consolreport()
-    {
-        return view('report.consolreport');
-    }
-    // public function consolreportcustomer()
-    // {
-    //     $consolcustomers = Customer::all();
+        $bank->delete();
 
-    //     return view('report.consolreport')->with('consolcustomers',$consolcustomers);
-    // }
-    public function consolreportproduct()
-    {
-        $products = Product::all();
-
-        return view('report.consolreport')->with('products',$products);
+       return redirect('bank-details')->with('bank',$bank);
 
     }
-    
 }

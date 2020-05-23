@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Customer;
-
+use App\CustomerRateFixing;
+use DB;
 class CustomerController extends Controller
 {
     /**
@@ -174,5 +175,13 @@ class CustomerController extends Controller
         $customer->delete();
         return response()->json($customer);
 
+    }
+
+
+    public function getcustomerratefixing($id){
+
+        $customer = DB::table('customer_rate_fixings')->where('customer_id','=',$id)->get();
+
+        return response()->json($customer);
     }
 }
