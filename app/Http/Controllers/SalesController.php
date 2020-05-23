@@ -41,14 +41,18 @@ class SalesController extends Controller
         $sales = new  Sales();
         $sales->sale_no = $request->input('saleno');
         $sales->customer_id = $request->input('salescustomer');
-        $sales->date = date('d-m-Y',strtotime($request->input('date')));
+        $sales->date = $request->input('date');
+        $sales->trip_id = $request->input('trip');
         $sales->total_box = $request->input('totalbox');
-        $sales->loose_box = $request->input('totalloosebox');
+        $sales->balance_box = $request->input('salesbalancebox');
+        // $sales->loose_box = $request->input('salesloosebox');
         $sales->ovarall_box = $request->input('ovarall_box');
         $sales->current_balance = $request->input('totalprice');
         $sales->previous_balance = $request->input('prebalance');
         $sales->overall_balance = $request->input('overall_balance');
-        
+        $sales->amount_pending = $request->input('totalprice');
+        $sales->box_pending = $request->input('totalbox');
+
 
 
         $salesproducts = $request->input('salesproduct_datas');    
@@ -123,6 +127,33 @@ class SalesController extends Controller
     {
         //
     }
+
+    public function filtersalesdaywisereport(Request $request){
+
+        $salesbills = Sales::where([ ['date','=',$request->data] ])->get();
+
+        $data['salesbills'] = $salesbills;
+        return view('sales_reports.sales_dayreport',$data);
+    }
+    public function filtermonthandweekreport(Request $request){
+        $from_date = $request->fromdate;
+        $to_date = $request->todate;
+
+        $salesbills = Sales::whereBetween('date',[$from_date, $to_date])->get();
+
+        $data['salesbills'] = $salesbills;
+        return view('sales_reports.sales_month_and_week_report_view',$data);
+    }
+    public function salesbillview($id){
+       
+    $salesbill = Sales::find($id);
+    
+    return view('sales_reports.sales_report_view')->with('salesbill',$salesbill);
+
+   }
+
+
+
     public function salesfindproductprice(Request $request){
         // $p = product::select('*')->where('id',$request->id)->join('units');
        $data = DB::table('products')

@@ -196,7 +196,7 @@
           <li >
             <a href="#" data-toggle="collapse" data-target="#subreport">
               <i class="fas fa-file-alt"></i>
-              <p>Report</p>
+              <p>Supplier Report</p>
             </a>
             <div id="subreport" class="collapse">
               <ul>
@@ -215,13 +215,40 @@
                 <li>
                     <a href="/month_and_week_report">
                       <i class="fas fa-receipt"></i>                  
-                      <p>Month</p>
+                      <p>weekly & Monthly </p>
                     </a>
                 </li>
               </ul>
                   </div>
           </li>
-
+          <li >
+            <a href="#" data-toggle="collapse" data-target="#subcustomerreport">
+              <i class="fas fa-file-alt"></i>
+              <p>Customer Report</p>
+            </a>
+            <div id="subcustomerreport" class="collapse">
+              <ul>
+                <li>
+                    <a href="#">
+                      <i class="fas fa-receipt"></i>
+                      <p>Consolidation</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/sales_day_report">
+                      <i class="fas fa-receipt"></i>                  
+                      <p>Day</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/sales_month_and_week_report">
+                      <i class="fas fa-receipt"></i>                  
+                      <p>weekly & Monthly </p>
+                    </a>
+                </li>
+              </ul>
+                  </div>
+          </li>
 
           {{-- <li class="active-pro">
             <a href="./upgrade.html">

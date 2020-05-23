@@ -25,6 +25,19 @@ class ReportController extends Controller
         return view('report.month_and_week_report',$data);
 
     }
+    public function customer_dayreport()
+    {
+         $data['salesbills'] = [];
+        return view('sales_reports.sales_dayreport',$data);
+
+    }
+
+    public function customer_month_and_week_repot()
+    {
+         $data['salesbills'] = [];
+        return view('sales_reports.sales_month_and_week_report_view',$data);
+
+    }
     /**
      * Show the form for creating a new resource.
      *

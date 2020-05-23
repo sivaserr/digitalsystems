@@ -42,6 +42,8 @@
     $customers = DB::table('customer')->select('customer.*')->get();
     $customer_rate_fixings = DB::table('customer_rate_fixings')->select('customer_rate_fixings.*')->get();
     $products = DB::table('products')->select('products.*')->get();
+    $trips = DB::table('trips')->select('trips.*')->get();
+    $settrips = DB::table('set_trip')->select('set_trip.*')->get();
     $sales = DB::table('sales')->latest('id')->first();
 
     ?>
@@ -74,13 +76,13 @@
               <form id="salesdataform" action="{{ route('Addsales')}} " method="POST">
                 {{ csrf_field() }}
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <div class="form-group">
             <label for="name">Sales No</label>
           <input type="text" class="form-control" name="saleno" id="saleno" aria-describedby="name" placeholder="Enter invoice no" value="{{$sales->id+1}}" readonly>
           </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <div class="customer_status">
             <label for="phone">Customer</label>
            <select name="salescustomer" id="salescustomer" class="form-control billsupplier" onchange="salespendingamount()">
@@ -93,21 +95,35 @@
            </select>
          </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <div class="form-group">
             <label for="name">Date</label>
             <input type="date" class="form-control" name="date" id="date" aria-describedby="date" placeholder="Enter date" required>
           </div>
         </div>
-        {{-- <div class="col-sm-3">
-            <div class="customer_status">
-                <label for="phone">Trip</label>
-               <select name="billsupplier" id="billsupplier" class="form-control billsupplier" onchange="pendingamount()">
+                <div class="col-sm-3">
+            <div class="form-group">
+                <label for="name">Trip</label>
+                <select name="billtrip" id="salestrip" class="form-control salestrip" readonly>
+                    @foreach($settrips as $settrip)
+                    @foreach ($trips as $trip)
+                    @if($trip->id == $settrip->set_trip)
+                    <option value="{{$settrip->set_trip}}">{{$trip->trip_name}}</option>
+                    @endif    
+                    @endforeach
+                   @endforeach
+                 </select>
+              </div>
+            {{-- <div class="customer_status">
+                <label for="trip">Trip</label>
+               <select name="billtrip" id="billtrip" class="form-control billtrip">
                   <option>Choose</option>
-                  <option value=""> </option>
+                  @foreach ($trips as $trip) 
+                  <option value="{{$trip->id}}">{{$trip->trip_name}} </option>
+                 @endforeach
                </select>
-             </div>
-        </div> --}}
+             </div> --}}
+        </div>
       </div>
 
       <div class="row clearfix">

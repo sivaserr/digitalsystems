@@ -132,24 +132,26 @@ Route::get('/findproductname' ,'BillController@findproductname');
 Route::get('/findproductprice' ,'BillController@findproductprice');
 // Route::get('/bill' ,'BillController@inserprice');
 
-//Report
+//Supplier Report
 Route::get('report','ReportController@index');
 Route::get('month_and_week_report','ReportController@month_and_week');
-
 Route::get('consolidation','ReportController@consolreport');
 Route::get('consolidation','ReportController@consolreportproduct');
 Route::get('consolidation','SuppliersController@suppliers');
-
-
-//demo page
-// Route::get('demo' ,'DemoController@index');
-// Route::post('Adddemo' ,'DemoController@store');
-
 Route::post('/report','BillController@filtered_list')->name('filtered_list');
 Route::post('/month_and_week_report','BillController@filtered_month_and_week')->name('filtered_month_and_week');
-
 Route::get('/billviewedit/{id}','BillController@billview');
 Route::get('/pendingamount','BillController@pendingamount');
+
+
+//Customer Report
+Route::get('sales_day_report','ReportController@customer_dayreport');
+Route::post('/sales_day_report','SalesController@filtersalesdaywisereport')->name('filtersalesdaywisereport');
+Route::post('/sales_month_and_week_report','SalesController@filtermonthandweekreport')->name('filtermonthandweekreport');
+Route::get('sales_month_and_week_report','ReportController@customer_month_and_week_repot');
+Route::get('/salesbillviewedit/{id}','SalesController@salesbillview');
+
+
 
 //Opening balances
 
