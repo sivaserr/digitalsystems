@@ -17,7 +17,7 @@ $user = DB::table('product_group')->select('product_group.*')->get();
       <div class="card">
         <div class="card-header">
           <div class="customer_title">
-              <h4 class="card-title">Customers details</h4>
+              <h4 class="card-title">Product details</h4>
           </div>
 
         <form  action="/product_update/{{ $products ->id }}" method="POST">
@@ -33,7 +33,7 @@ $user = DB::table('product_group')->select('product_group.*')->get();
                           <select name="productgroupid" id="company" class="form-control">
                             @foreach($product_groups as $grp)
                             @if($grp->id === $products->product_group)
-                            <option value="{{$grp->product_group}}">{{$grp->product_group}}</option>
+                            <option value="{{$grp->id}}">{{$grp->product_group}}</option>
                             @endif
                             @endforeach
                           </select> 
@@ -42,8 +42,13 @@ $user = DB::table('product_group')->select('product_group.*')->get();
                         <label for="unitname">Unit</label>
                           <select name="unitid" id="unit" class="form-control">
                             @foreach ($units as $unit)
-                            @if($unit->id === $products->unit_id )
-                           <option value="{{$unit->id}}"> {{$unit->unit_name}}</option>
+                            @if($products->unit_id == $unit->id )
+                           <option value="{{$unit->id}}"> {{$unit->unit_name}}Kg</option>
+                            @endif
+                            @endforeach
+                            @foreach ($units as $unit)
+                            @if($products->unit_id !== $unit->id )
+                            <option value="{{$unit->id}}"> {{$unit->unit_name}}Kg</option>
                             @endif
                             @endforeach
                           </select> 

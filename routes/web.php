@@ -22,9 +22,9 @@ Route::get('/admin', function () {
 Auth::routes();
 
 
-Route::get('/home', function () {
-    return redirect('customer');
-});
+// Route::get('/home', function () {
+//     return redirect('customer');
+// });
 
 
 
@@ -118,19 +118,24 @@ Route::put('/set_trip/{id}','TripController@tripupdate');
 Route::get('bank-details' , 'Bank_Details_Controller@index');
 Route::post('bank-details','Bank_Details_Controller@store')->name('addbank');
 Route::get('bank-details' , 'Bank_Details_Controller@show');
-Route::get('bank-details/{id}' , 'Bank_Details_Controller@edit');
+Route::get('bank-detail_edit/{id}' , 'Bank_Details_Controller@edit');
 Route::put('bank-details-update/{id}' , 'Bank_Details_Controller@update');
 Route::get('bank-details/{id}' , 'Bank_Details_Controller@destroy');
 
+//Bank DEtails
 
+Route::get('transaction_details' ,'Bank_Details_Controller@transaction_details');
+Route::post('transaction_details' ,'Bank_Details_Controller@suppliertransfer');
+Route::post('debit' ,'Bank_Details_Controller@debit')->name('adddebit');;
+Route::get('debit','Bank_Details_Controller@debitindex');
 
 //Bill page
-Route::get('/bill' ,'BillController@index');
-Route::post('/bill' ,'BillController@store')->name('Addbill');
+Route::get('/purchase' ,'PurchasesController@index');
+Route::post('/purchase' ,'PurchasesController@store')->name('addpurchase');
 // Route::post('/bill' ,'BillDataController@store')->name('Addbill');
-Route::get('/findproductname' ,'BillController@findproductname');
-Route::get('/findproductprice' ,'BillController@findproductprice');
-// Route::get('/bill' ,'BillController@inserprice');
+Route::get('/findproductname' ,'PurchasesController@findproductname');
+Route::get('/findproductprice' ,'PurchasesController@findproductprice');
+// Route::get('/bill' ,'PurchasesController@inserprice');
 
 //Supplier Report
 Route::get('report','ReportController@index');
@@ -138,20 +143,21 @@ Route::get('month_and_week_report','ReportController@month_and_week');
 Route::get('consolidation','ReportController@consolreport');
 Route::get('consolidation','ReportController@consolreportproduct');
 Route::get('consolidation','SuppliersController@suppliers');
-Route::post('/report','BillController@filtered_list')->name('filtered_list');
-Route::post('/month_and_week_report','BillController@filtered_month_and_week')->name('filtered_month_and_week');
-Route::get('/billviewedit/{id}','BillController@billview');
-Route::get('/pendingamount','BillController@pendingamount');
+Route::post('/report','PurchasesController@filtered_list')->name('filtered_list');
+Route::post('/month_and_week_report','PurchasesController@filtered_month_and_week')->name('filtered_month_and_week');
+Route::get('/billviewedit/{id}','PurchasesController@billview');
+Route::get('/pendingamount','PurchasesController@pendingamount');
 
 
 //Customer Report
 Route::get('sales_day_report','ReportController@customer_dayreport');
+Route::get('sales_consolidation','ReportController@salesconsolreport');
 Route::post('/sales_day_report','SalesController@filtersalesdaywisereport')->name('filtersalesdaywisereport');
 Route::post('/sales_month_and_week_report','SalesController@filtermonthandweekreport')->name('filtermonthandweekreport');
 Route::get('sales_month_and_week_report','ReportController@customer_month_and_week_repot');
 Route::get('/salesbillviewedit/{id}','SalesController@salesbillview');
 
-
+Route::get('sales_consolidation','ReportController@salesconsolproduct');
 
 //Opening balances
 
@@ -183,3 +189,18 @@ Route::post('/payment-for-purchase','Purchase_PaymentController@store');
 
 Route::get('payment-for-sales' , 'Sales_PaymentController@index');
 Route::post('/payment-for-sales','Sales_PaymentController@store');
+
+
+//Stock Details
+
+Route::get('stock_details','StockController@index');
+// Route::get('stock_details','StockController@allproduct');
+Route::get('stock_details','StockController@sumofpurchasstock');
+// Route::get('stock_details','StockController@sumofsalesstock');
+
+
+
+
+//api
+
+Route::get('/api/stockalert/{id}', 'SalesController@customerstockalert');

@@ -72,7 +72,7 @@
                   <tr>
                   <td>{{$id}}</td>
                   <td>{{$trip->trip_name}}</td>
-                  <td>{{$trip->date}}</td>
+                  <td>{{Carbon\Carbon::parse($trip->date)->format('d-m-Y')}}</td>
                   <td><a href="/trip_edit/{{$trip->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
                   <td><a href="/trips/{{$trip->id}}" class="btn btn-sm btn-danger">Delete</a></td>
                   </tr>

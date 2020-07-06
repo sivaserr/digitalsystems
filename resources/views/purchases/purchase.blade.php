@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('navbar_brand')
-    Purchase
+    Purchase Entry
 @endsection
 <style>
 .billing_title {
@@ -44,7 +44,7 @@
     $products = DB::table('products')->select('products.*')->get();
     $trips = DB::table('trips')->select('trips.*')->get();
     $settrips = DB::table('set_trip')->select('set_trip.*')->get();
-    $bills = DB::table('bills')->latest('id')->first();
+    $purchases = DB::table('purchases')->latest('id')->first();
     ?>
     <div class="card-header">
         <div class="billing_title">
@@ -53,13 +53,13 @@
       </div>
         <div class="container">
           <div class="billform">
-              <form id="billdataform" action="{{route('Addbill')}}" method="POST">
+              <form id="billdataform" action="{{route('addpurchase')}}" method="POST">
                 {{ csrf_field() }}
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group">
             <label for="name">Bill no</label>
-          <input type="text" class="form-control" name="billno" id="billno" aria-describedby="name" placeholder="Enter invoice no" value="{{$bills->id+1}}" readonly>
+          <input type="text" class="form-control" name="billno" id="billno" aria-describedby="name" placeholder="Enter invoice no" value="{{$purchases->id+1}}" readonly>
           </div>
         </div>
         <div class="col-sm-3">
@@ -115,14 +115,12 @@
                   <th class="text-center"> Product </th>
                   <th class="text-center"> Box </th>
                   <th class="text-center"> KG </th>
-                  <th class="text-center"> N-wgt </th>
                   <th class="text-center"> Loose box </th>
                   <th class="text-center"> Loose kg</th>
-                  <th class="text-center"> Total weight </th>
+                  <th class="text-center"> Net weight </th>
+                  <th class="text-center"> Dis(5%) </th>
+                  <th class="text-center"> Total Weight </th>
                   <th class="text-center"> per(kg)-Rs </th>
-                  <th class="text-center"> Actual Rs </th>
-                  <th class="text-center"> Dis% </th>
-                  <th class="text-center"> Dis price </th>
                   <th class="text-center"> N-val </th>
                 </tr>
               </thead>
@@ -138,38 +136,38 @@
                       </select>
                     </td>
                   <td>
-                        <input type="text"   class="form-control box" name="box" id="box" onchange="calculate(this)"  aria-describedby="box" placeholder="0" required>
+                        <input type="text"   class="form-control box" name="box" id="box" aria-describedby="box" placeholder="0" required>
                     </div>
                   </td>
                   <td>
-                    <input type="text"   class="form-control loosekg" name="loosekg" onchange="calculate(this)" id="loosekg" aria-describedby="loosekg" placeholder="0 " required>
+                    <input type="text"   class="form-control kg" name="kg" id="kg" aria-describedby="kg" placeholder="0 " required readonly>
                   </td>
-                  <td>
+<!--                   <td>
                     <input type="text"   class="form-control totalweight" name="totalweight" id="totalweight" oninput="calculate(this)" aria-describedby="" placeholder="0 " value="0"required>
-                  </td>
+                  </td> -->
                   <td>
-                      <input type="text"   class="form-control  purchase_loosebox" name="purchase_loosebox" oninput="calculate(this)" id="purchase_loosebox" aria-describedby="" placeholder="0 " required>
+                      <input type="text"   class="form-control  purchase_loosebox" name="purchase_loosebox" id="purchase_loosebox" aria-describedby="" placeholder="0 " required>
                     </td>
                   <td>
                     <input type="text"   class="form-control purchase_loosekg" name="purchase_loosekg" id="purchase_loosekg" oninput="calculate(this)"aria-describedby="" placeholder="0 " required>
                   </td>                 
                    <td>
-                    <input type="text"   class="form-control overall_weight" name="overall_weight" id="overall_weight" aria-describedby="" placeholder="0 " value="0" required>
+                    <input type="text"   class="form-control net_weight" name="net_weight" id="net_weight" aria-describedby="" placeholder="0 " value="0" required readonly>
                   </td>
                   <td>
-                      <input type="text"   class="form-control prod_price perkgprices" name="perkgprice" oninput="calculate(this)" id="perkgprice" aria-describedby="" placeholder="0 " value="0" required>
+                    <input type="text"   class="form-control discount" name="discount" id="discount" oninput="calculate(this)" aria-describedby="" placeholder="0 " required readonly>
+                  </td>
+<!--                   <td>
+                    <input type="text"   class="form-control actualprice" name="actualprice" id="actualprice" oninput="calculate(this)"aria-describedby="" placeholder="0" value="0" required>
+                  </td> -->
+                  <td>
+                    <input type="text"   class="form-control totalweight" name="totalweight" id="totalweight"  aria-describedby="" placeholder="0 " value="0" required readonly>
+                  </td>
+                  <td>
+                      <input type="text"   class="form-control prod_price prices" name="price" oninput="calculate(this)" id="price" aria-describedby="" placeholder="0 " value="0" required>
                     </td>
                   <td>
-                    <input type="text"   class="form-control actualprice" name="actualprice" id="actualprice" oninput="calculate(this)"aria-describedby="" placeholder="0" value="0" required>
-                  </td>
-                  <td>
-                    <input type="text"   class="form-control discount" name="discount" id="discount" oninput="calculate(this)" aria-describedby="" placeholder="0 " required>
-                  </td>
-                  <td>
-                    <input type="text"   class="form-control discountprice" name="discountprice" id="discountprice" oninput="calculate(this)" aria-describedby="" placeholder="0 " value="0" required>
-                  </td>
-                  <td>
-                    <input type="text"   class="form-control netvalue" name="netvalue" id="netvalue" oninput="calculate(this)" aria-describedby="" placeholder="0 " value="0">
+                    <input type="text"   class="form-control netvalue" name="netvalue" id="netvalue" oninput="calculate(this)" aria-describedby="" placeholder="0 " value="0" readonly>
                   </td>
                 </tr>
                 <tr id='addr1'></tr>
@@ -180,9 +178,7 @@
                   <td></td>
                   <td class="text-center totalrowbox" ><span>T-Box</span><input type="text" id="totalrowbox" placeholder="0" readonly /></td>
                   <td></td>
-                  <td></td>
                   <td class="text-center totalrowloosebox" ><span>L-Box</span><input type="text" id="totalrowloosebox" placeholder="0" readonly /></td>
-                  <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -209,20 +205,24 @@
                               <table class="table table-bordered table-hover" id="tab_logic_total">
                   <tbody>
                     <tr>
-                      <th class="text-center">Ice Bar</th>
+                      <th class="text-center">Total No of Box(T-box + L-box)</th>
+                      <td class="text-center"><input type="text" name='totalnoofbox' placeholder='0.00' class="form-control totalnoofbox" id="totalnoofbox"/></td>
+                    </tr>
+                    <tr>
+                      <th class="text-center">No of Ice Bar</th>
                       <td class="text-center"><input type="text" name='ice_bar' oninput="calculate2()" placeholder='0.00' class="form-control icebar" id="icebar"/></td>
                     </tr>
                     <tr>
                       <th class="text-center">Per-ice Bar Amount</th>
                       <td class="text-center"><input type="text" name='per_ice_bar' id="pericebar" oninput="calculate2()"  placeholder='0.00' class="form-control" /></td>
                     </tr>
-                    <tr>
+<!--                     <tr>
                       <th class="text-center">Total Ice Bar Amount</th>
                       <td class="text-center"><input type="text" name='total_ice_bar' id="totalicebar" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
-                    </tr>
+                    </tr> -->
                     <tr>
-                      <th class="text-center">Packing Charge</th>
-                      <td class="text-center"><input type="text" name='per_packing_price' id="packing_amount" placeholder='0.00' class="form-control packing_amount" oninput="calculate2()" /></td>
+                      <th class="text-center">Packing Charge/Box</th>
+                      <td class="text-center"><input type="text" name='per_packing_price' id="packing_amount" placeholder='0.00' class="form-control packing_amount" oninput="calpackingcharge()" /></td>
                     </tr>
 
                   </tbody>
@@ -235,11 +235,11 @@
                   <tbody>
                     <tr class="today_box">
                       <th class="text-center">Today Box</th>
-                      <td class="text-center"><input type="text" name='total_box' id="totalbox" oninput="calculate2()" placeholder='0.00' class="form-control" id="sub_total" /></td>
+                      <td class="text-center"><input type="text" name='total_box' id="totalbox" placeholder='0.00' class="form-control" id="sub_total" /></td>
                     </tr>
                     <tr class="balance_box">
                       <th class="text-center">Balance box</th>
-                      <td class="text-center"><input type="text" name='pendingbox' id="pendingbox" oninput="calculate2()"placeholder='0.00' class="form-control pendingbox"/></td>
+                      <td class="text-center"><input type="text" name='pendingbox' id="pendingbox" placeholder='0.00' class="form-control pendingbox"/></td>
                     </tr>
                     <tr class="total_box">
                       <th class="text-center">Total box</th>
@@ -254,36 +254,40 @@
             <table class="table table-bordered table-hover" id="tab_logic_total2">
               <tbody>
                 <tr>
+                  <th class="text-center">Gross Amount</th>
+                  <td class="text-center"><input type="text"  name='grass' id="grass" placeholder='0.00' class="form-control grass"/></td>
+                </tr>
+                <tr>
                   <th class="text-center">Transport Charge</th>
-                  <td class="text-center"><input type="text"  name='transport_charge' id="transportcharge" oninput="calculate2()" placeholder='0.00' class="form-control transportcharge"/></td>
+                  <td class="text-center"><input type="text"  name='transport_charge' id="transportcharge" oninput="caltransport()" placeholder='0.00' class="form-control transportcharge"/></td>
                 </tr>
                 <tr>
-                  <th class="text-center">Ice Bar</th>
-                  <td class="text-center"><input type="text"  name='total_icebar' id="finalicebar" oninput="calculate2()" placeholder='0.00' class="form-control" value=""/></td>
+                  <th class="text-center">Ice Amount</th>
+                  <td class="text-center"><input type="text"  name='total_icebar' id="finalicebar"  placeholder='0.00' class="form-control" value=""/></td>
                 </tr>
-                  <th class="text-center">Discount</th>
-                  <td class="text-center"><input type="text"  name='less' id="less" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
-                </tr>
-                <tr>
-                  <th class="text-center">Excess</th>
-                  <td class="text-center"><input type="text"  name='excess' id="excess" oninput="calculate2()" placeholder='0.00' class="form-control" /></td>
-                </tr>
-                <tr>
                  <tr>
                   <th class="text-center">Packing Charge</th>
-                  <td class="text-center"><input type="text"  name='packing_charge' id="packingcharge" oninput="calculate2()" placeholder='0.00' class="form-control packingcharge" /></td>
-                 </tr>
+                  <td class="text-center"><input type="text"  name='packing_charge' id="packingcharge" placeholder='0.00' class="form-control packingcharge" /></td>
                 <tr>
-                  <th class="text-center">previous Balance</th>
-                  <td class="text-center"><input type="text" name='previous_balance' id="prebalance" oninput="calculate3()" placeholder='0.00' class="form-control" /></td>
+                  <th class="text-center">Excess</th>
+                  <td class="text-center"><input type="text"  name='excess' id="excess" onchange="calexcess(this)" placeholder='0.00' class="form-control" /></td>
+                </tr>
+                 </tr>
+                  <th class="text-center">Discount</th>
+                  <td class="text-center"><input type="text"  name='less' id="less" onchange="caldiscount()" placeholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
-                  <th class="text-center">Current Balance</th>
-                  <td class="text-center"><input type="text" name='current_balance' id="currentbalance" oninput="calculate(this)" placeholder='0.00' class="form-control" /></td>
+                <tr>
+                  <th class="text-center">Current Bill Amount</th>
+                  <td class="text-center"><input type="text" name='current_balance' id="currentbalance" placeholder='0.00' class="form-control" /></td>
+                </tr>
+                <tr>
+                  <th class="text-center">previous Balance</th>
+                  <td class="text-center"><input type="text" name='previous_balance' id="prebalance" laceholder='0.00' class="form-control" /></td>
                 </tr>
                 <tr>
                   <th class="text-center">Overall Balance</th>
-                  <td class="text-center"><input type="text"  name='overall' id="overall" oninput="calculate(this)" placeholder='0.00' class="form-control overall" /></td>
+                  <td class="text-center"><input type="text"  name='overall' id="overall" placeholder='0.00' class="form-control overall" /></td>
                 </tr>
               </tbody>
             </table>

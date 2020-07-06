@@ -1,4 +1,9 @@
 @extends('layouts.master')
+
+@section('navbar_brand')
+  Edit Supplier Details
+@endsection
+
 <?php
 $status = DB::table('suppliers')->select('suppliers.status')->get();
 

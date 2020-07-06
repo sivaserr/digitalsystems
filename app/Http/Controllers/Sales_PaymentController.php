@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sales;
-use App\Sales_Paid_Details;
+use App\Purchase_paid_details;
 use DB;
 
 class Sales_PaymentController extends Controller
@@ -37,14 +37,39 @@ class Sales_PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        $salespaids = new Sales_Paid_Details();
+
+
+        $balance = 0;
+        $credit = 0;
+        $debit = 0;
+
+        $bankbalance = DB::table('bank_details')->select('bank_details.opening_balance','bank_details.id')->where('bank_details.id','=', $request->input('bank') )->get()->first();
+
+
+            $balance = $bankbalance->opening_balance;
+
+        $paid = DB::table('paid_details')->select('paid_details.bank_id',DB::raw('SUM(paid_amount) as credit'),DB::raw('SUM(debit) as debit'))->where('paid_details.bank_id','=',$bankbalance->id)->groupBy('bank_id')->get()->first();
+
+           $credit = $paid->credit;
+           $debit =  $paid->debit;
+    
+
+
+
+        $salespaids = new Purchase_paid_details();
 
         $salespaids->bill_id = $request->input('salesbill');
         $salespaids->date = $request->input('date');
+        $salespaids->supplier_id = 0;
+        $salespaids->customer_id = $request->input('customer');
         $salespaids->paid_amount = $request->input('amount');
+        $salespaids->debit = 0;
         $salespaids->return_box = $request->input('returnbox');
         $salespaids->note = $request->input('note');
-
+        $salespaids->bank_id = $request->input('bank');
+        $salespaids->transfer_type = $request->input('transfer_type');
+        $salespaids->ref_no = $request->input('ref_no');
+        $salespaids->balance = $balance + $credit - $debit + $request->input('amount');
         if( $salespaids->save()){
                 DB::table('sales')->where('id', $request->input('salesbill'))->limit(1)
                 ->update(array('amount_pending' => $request->input('remainingamount') ,'box_pending' => $request->input('remainbox') ));

@@ -2,7 +2,7 @@
 
 @section('navbar_brand')
 
-Day Report
+Purchase Day Report
 @endsection
 
 <style type="text/css">
@@ -39,7 +39,7 @@ Day Report
           <div class="card">
             <div class="card-header">
               <div class="report_title">
-                  <h4 class="card-title">Day wise report </h4>
+                  <h4 class="card-title">Purchase Day wise report </h4>
               </div>
 
             </div>   
@@ -69,11 +69,12 @@ Day Report
             <label for="Date">Date</label>
             <input type="Date" class="form-control" id="Date" name="data" value="">
           </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="filterbutton">
+                <div class="filterbutton">
           <button type="submit" id="submit" class="btn btn-success">Submit</button>
       </div>
+    </div>
+    <div class="col-sm-6">
+
     </div>
   </div>
 
@@ -129,7 +130,7 @@ Day Report
             <th scope="col">Suppliers</th>
             <th scope="col">Date</th>
             <th scope="col">Box</th>
-            <th scope="col">Netvalue</th>
+            <th scope="col">Total Amount</th>
           </tr>
         </thead>
         <tbody>

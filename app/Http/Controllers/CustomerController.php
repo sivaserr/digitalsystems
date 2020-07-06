@@ -54,6 +54,7 @@ class CustomerController extends Controller
         $customer->phone = $request->input('phone');
         $customer->opening_balance = $request->input('opening_balance');
         $customer->opening_box = $request->input('opening_box');
+        $customer->serial_no = $request->input('serial_no');
         $customer->status = $request->input('status');
 
         $customer->save();
@@ -70,8 +71,8 @@ class CustomerController extends Controller
      */
     public function show()
     {
-        $customers = Customer::all();
-
+        $customers =DB::table('customer')->select('customer.*')->orderBy("serial_no")->get();
+        
         return view('customers.customer')->with('customers',$customers);
     }
 
@@ -105,6 +106,7 @@ class CustomerController extends Controller
         $customerss->phone = $request->input('phone');
         $customerss->opening_balance = $request->input('opening_balance');
         $customerss->opening_box = $request->input('opening_box');
+        $customerss->serial_no = $request->input('serial_no');
         $customerss->status = $request->input('status');
 
         $customerss->save();

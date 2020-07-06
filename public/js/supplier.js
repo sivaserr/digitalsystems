@@ -43,42 +43,12 @@ $(document).ready(function(){
 		
 	});
 	
-	// $('#tab_logic tbody').on('keyup change',function(){
-	// 	calc();
-	// });
-	// $('#tax').on('keyup change',function(){
-	// 	calc_total();
-	// });
+
 	
 
 });
 
-// function calc()
-// {
-// 	$('#tab_logic tbody tr').each(function(i, element) {
-// 		var html = $(this).html();
-// 		if(html!='')
-// 		{
-// 			var qty = $(this).find('.qty').val();
-// 			var price = $(this).find('.price').val();
-// 			$(this).find('.total').val(qty*price);
-			
-// 			calc_total();
-// 		}
-//     });
-// }
 
-// function calc_total()
-// {
-// 	total=0;
-// 	$('.total').each(function() {
-//         total += parseInt($(this).val());
-//     });
-// 	$('#sub_total').val(total.toFixed(2));
-// 	tax_sum=total/100*$('#tax').val();
-// 	$('#tax_amount').val(tax_sum.toFixed(2));
-// 	$('#total_amount').val((tax_sum+total).toFixed(2));
-// }
 
 let formatter = new Intl.NumberFormat('en-IN',{}, { maximumSignificantDigits: 3 });
 
@@ -91,7 +61,7 @@ function changeprice(sel){
 	let idpro = prod_id.options[prod_id.selectedIndex].value;
 
 	let perkgprice = inputs.getElementsByClassName("prod_price")[0];
-	let loosekg = inputs.getElementsByClassName("loosekg")[0];
+	let kg = inputs.getElementsByClassName("kg")[0];
 
 	// let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'INR' });
 	// let formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' },{ maximumSignificantDigits: 3 });
@@ -107,7 +77,7 @@ function changeprice(sel){
 	   			data.forEach((productdata,j)=>{
 				// perkgprice.value= Math.round(formatter.format(productdata.price));
 				perkgprice.value= productdata.price;
-				loosekg.value= productdata.unit_name
+				kg.value= productdata.unit_name
 			})
 			},
 			error:function(){
@@ -155,8 +125,8 @@ function pendingamount(){
 		dataType:'json',
 		success:function(data){
 			for(var i=0; i<data.length; i++){
-				total +=parseInt(data[i].current_balance);
-				totalbox +=parseInt(data[i].total_box);
+				total +=parseInt(data[i].amount_pending);
+				totalbox +=parseInt(data[i].box_pending);
 			}
 			prebalance.value=total;
 			pendingbox.value=totalbox;
@@ -181,48 +151,62 @@ function calculate(s) {
 	let inputs = document.getElementById(parentnodes);
 
 	let box_id =inputs.getElementsByClassName('box')[0].value;
-	let loosekg =inputs.getElementsByClassName('loosekg')[0].value;
-	let totalweight =inputs.getElementsByClassName('totalweight')[0];
-
-	let netweight = box_id * loosekg;
-	totalweight.value = netweight;
-	
-	let perkgpricess =inputs.getElementsByClassName('perkgprices')[0].value;
+	let kg =inputs.getElementsByClassName('kg')[0].value;
+	let netweight =inputs.getElementsByClassName('net_weight')[0];
 	let purchase_loosekg =inputs.getElementsByClassName('purchase_loosekg')[0].value;
-	let actualprice =inputs.getElementsByClassName('actualprice')[0];	
 
-	let overalloutput= netweight + parseFloat(purchase_loosekg);
-   
-    let overallweight =inputs.getElementsByClassName('overall_weight')[0];
-
-    overallweight.value= overalloutput;
-
-	let actualresult = overalloutput * perkgpricess;
-
-	actualprice.value = actualresult;
+	let boxweight = box_id * kg + parseFloat(purchase_loosekg);
+    netweight.value = boxweight;
 	
-	let discount =inputs.getElementsByClassName('discount')[0].value;
-	let discountprice =inputs.getElementsByClassName('discountprice')[0];	
+   let discount =inputs.getElementsByClassName('discount')[0];
+   let pricess =inputs.getElementsByClassName('prices')[0].value;
 
-    let discountpriceresult=  actualresult /100 *discount;
-	discountprice.value=discountpriceresult;
+   let totalweight =inputs.getElementsByClassName('totalweight')[0];
+   	let netvalue =inputs.getElementsByClassName('netvalue')[0];
 
-	let netvalue =inputs.getElementsByClassName('netvalue')[0];
+
+    let discountpriceresult=  boxweight /100 * 5;
+  
+    let discountweight = discountpriceresult.toFixed();
+    discount.value = discountweight;
+    let totalsweight = boxweight - discountweight;
+
+    totalweight.value = totalsweight;
+
+     netvalue.value = totalsweight * pricess;
+	// discountprice.value=discountpriceresult;
+	// let overalloutput= netweight + parseFloat(purchase_loosekg);
+   
+ //    let netweight =inputs.getElementsByClassName('net_weight')[0];
+
+ //    netweight.value= overalloutput;
+
+
+
+	// let actualresult = overalloutput * pricess;
+
+	// actualprice.value = actualresult;
+	
+	// // let discountprice =inputs.getElementsByClassName('discountprice')[0];	
+
+
+
+	// let netvalue =inputs.getElementsByClassName('netvalue')[0];
 	 
-	let netvalue_output = actualresult-discountpriceresult;
-	    netvalue.value =netvalue_output;
+	// let netvalue_output = actualresult-discountpriceresult;
+	//     netvalue.value =netvalue_output;
 
 
 var netvalues =document.getElementsByClassName('netvalue');
 var box =document.getElementsByClassName('box');
-var overall = document.getElementById('overall');
 var totalrowbox =document.getElementById('totalrowbox');
 var totalrowloosebox =document.getElementById('totalrowloosebox');
 var totalrownetvalue =document.getElementById('totalrownetvalue');
 var purchaseloosebox =document.getElementsByClassName('purchase_loosebox');
 var totalpurchaseloosebox =document.getElementById('total_purchaseloosebox');
 var purchaseoverallbox =document.getElementById('purchase_overallbox');
-var currentbalances =document.getElementById('currentbalance');
+var totalnoofbox =document.getElementById('totalnoofbox');
+var grass =document.getElementById('grass');
 var todaybox =document.getElementById('totalbox');
 var purchase_pendingbox =document.getElementById('pendingbox').value;
 
@@ -232,7 +216,7 @@ var totalbox= 0;
 var overallpurchaseloosebox=0;
 var total_purchaseloosebox=0;
 for(var i = 0; i < netvalues.length; i++){
-	 totalnetvalue += parseInt(netvalues[i].value);
+	 totalnetvalue += parseFloat(netvalues[i].value);
 }
 for (var i= 0; i<box.length; i++){
 	totalbox +=parseInt(box[i].value);
@@ -260,28 +244,28 @@ totalrowbox.value=totalbox;
 totalrowloosebox.value=total_purchaseloosebox;
 totalrownetvalue.value= totalnetvalue;
   // IF has value in 
-currentbalances.value=totalnetvalue;
+totalnoofbox.value=todaybox_output;
+grass.value=totalnetvalue;
 
 
 
-  $('#transportcharge').add($('#finalicebar')).add($('#less')).add($('#packingcharge')).add($('#excess')).add($('#prebalance'))
-  .on('change',function(e){
-  e.preventDefault();
-  $('#overall').val(
-   Number($('#transportcharge').val())
-  +Number($('#finalicebar').val())
-  -Number($('#less').val())
-  +Number($('#packingcharge').val())
-  +Number($('#excess').val())
-  +Number($('#prebalance').val())
-  +Number(totalnetvalue)
-  ).change();
+  // $('#transportcharge').add($('#finalicebar')).add($('#less')).add($('#packingcharge')).add($('#excess')).add($('#prebalance'))
+  // .on('change',function(e){
+  // e.preventDefault();
+  // $('#overall').val(
+  //  Number($('#transportcharge').val())
+  // +Number($('#finalicebar').val())
+  // -Number($('#less').val())
+  // +Number($('#packingcharge').val())
+  // +Number($('#excess').val())
+  // +Number($('#prebalance').val())
+  // +Number(totalnetvalue)
+  // ).change();
   
-  });
+  // });
 
 
 
-$("#overall").val(totalnetvalue);
 
 //   overall.value += transportcharge;
 //  console.log(overall.value);
@@ -299,155 +283,83 @@ $('#val1').on('change',function(e){
 function calculate2(){
 	var icebar=document.getElementById('icebar').value;
 	var pericebar =document.getElementById('pericebar').value;
-	// let transportcharge =document.getElementById('transportcharge').value;
-	// var overall =document.getElementById('overall');
-	//   overall.value += parseInt(transportcharge);
-	//  console.log(overall.value);
+	var finalicebar= document.getElementById('finalicebar');
 
-		var result= document.getElementById('totalicebar');
 	   var totalicebar = icebar*pericebar;
-	   result.value=totalicebar;
-
-	   var packing_amount =document.getElementById('packing_amount').value; // Packing per Box
-
-	   let totalbox= document.getElementById('totalbox').value; // total box
+	   finalicebar.value = totalicebar;
 
 
 
-  var packingcharge = document.getElementById('packingcharge'); 
-	  let ToTalBoxCharge = totalbox *packing_amount;
-	  
+	// // let transportcharge =document.getElementById('transportcharge').value;
+	// // var overall =document.getElementById('overall');
+	// //   overall.value += parseInt(transportcharge);
+	// //  console.log(overall.value);
 
-	  finalicebar.value=totalicebar ;
-	  packingcharge.value =ToTalBoxCharge;
+	//   finalicebar.value=totalicebar ;
 
 
 
 }
 
-// function total(){
-// 	var transportcharge = parseInt(document.getElementById('transportcharge').value);
-// 	var finalicebar = parseInt(document.getElementById('finalicebar').value);
-// 	var discount = document.getElementById('discount').value;
-// 	var packingcharge = parseInt(document.getElementById('packingcharge').value);
-// 	var excess = document.getElementById('excess').value;
+function calpackingcharge(){
+   
+    var packing_amount =document.getElementById('packing_amount').value; // Packing per Box
+	let totalbox= document.getElementById('totalbox').value; // total box
+    var packingcharge = document.getElementById('packingcharge'); 
 
-// 	var result =document.getElementById('overall');
-
-// 	parseInt(document.getElementById('finalicebar')).value = totalicebar;
-
-// 	var overall= transportcharge + packingcharge + finalicebar;
-// 	result.value=overall;
+	let ToTalBoxCharge = totalbox *packing_amount;
+    packingcharge.value =ToTalBoxCharge;
+}
 
 
-// 	calculate2();
-	 
-// }
+function caltransport(){
 
+	let transportcharge =document.getElementById('transportcharge').value;
+	var grass =document.getElementById('grass').value;
+	var finalicebar= document.getElementById('finalicebar').value;
+	var packingcharge= document.getElementById('packingcharge').value;
+	var currentbalance =document.getElementById('currentbalance');
+	currentbalance.value = parseFloat(grass) + parseInt(transportcharge) + parseInt(finalicebar) + parseInt(packingcharge);
+    console.log(currentbalance.value);
 
-//   $(document).ready(function(){
-// 	$(document).on('change','.productcategory',function(){
-
-// 		var cat_id=$(this).val();
-
-// 		$.ajax({
-// 			   type:'get',
-// 			   url:"findproductname",
-// 			   data:{'id':cat_id},
-// 			   success:function(data){
-// 				//    console.log('success');
-// 				//    console.log(data);
-// 				//    console.log(data.lenght);
-// 			   },
-// 			   error:function(){
-
-// 			   }
-// 		});
-// 	});
-// 	$(document).on('change','.productcategory',function(){
-// 		var prod_id=$(this).val();
-		
-// 		console.log(prod_id);
-
-// 		$.ajax({
-// 			type:'get',
-// 			url:"findproductprice",
-// 			data:{'id':prod_id},
-// 			dataType:'json',
-// 			success:function(data){
-// 				console.log('price');
-// 				console.log(data);
-// 				$('.prod_price').val(data.price);
-// 				$('.loosekg').val(data.weight);
-// 			},
-// 			error:function(){
-
-// 			}
-// 	 });
-//     });
-// });
+}
+function calexcess(ex){
+    ex = window.event;
+	var excess =document.getElementById('excess').value;
+	var currentbalance =document.getElementById('currentbalance');
+	let cbal = parseInt(currentbalance.value);
+	let ecxc = parseInt(excess)
+    if(excess !== ""){
+        if(ex.keyCode !== 8){
+    cbal +=ecxc;
+	currentbalance.value = cbal;
+    }else{
+    cbal -=ecxc;
+    currentbalance.value = 0;
+    }	
+    }
 
 
 
+}
+function caldiscount(){
+	    le = window.event;
 
-// $('#billdataform').on('submit',function(e){
-// 	e.preventDefault();
-	
-// 	$.ajaxSetup({
-// 		headers: {
-// 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-// 		}
-// 	});
-//     let allRows = $('#tab_logic').find('tr');
+	var less =document.getElementById('less').value;
+	var currentbalance =document.getElementById('currentbalance');
+	var prebalance =document.getElementById('prebalance').value;
+	var overall =document.getElementById('overall');
+	let cbal = parseInt(currentbalance.value);
+	let dis = parseInt(less)
+    if(less !== ""){
+        if(le.keyCode !== 8){
+    cbal -=dis;
+	currentbalance.value = cbal;
+	overall.value = parseInt(cbal)+parseInt(prebalance);
+    }
+    }
 
-// 	let formData = {
-// 		'billno': $('#billno').val(),
-// 		'billcustomer': $('#billcustomer').val(),
-// 		'date': $('#date').val(),
-// 		'billproductname': $('#billproductname').val(),
-// 		'box': $('#box').val(),
-// 		'loosekg': $('#loosekg').val(),
-// 		'totalweight': $('#totalweight').val(),
-// 		'perkgprice': $('#perkgprice').val(),
-// 		'actualprice': $('#actualprice').val(),
-// 		'discount': $('#discount').val(),
-// 		'discountprice': $('#discountprice').val(),
-// 		'netvalue': $('#netvalue').val(),
-// 		'totalbox': $('#totalbox').val(),
-// 		'icebar': $('#icebar').val(),
-// 		'pericebar': $('#pericebar').val(),
-// 		'totalicebar': $('#totalicebar').val(),
-// 		'packing_amount': $('#packing_amount').val(),
-// 		'transportcharge': $('#transportcharge').val(),
-// 		'finalicebar': $('#finalicebar').val(),
-// 		'less': $('#less').val(),
-// 		'packingcharge': $('#packingcharge').val(),
-// 		'excess': $('#excess').val(),
-// 		'prebalance': $('#prebalance').val(),
-// 		'overall': $('#overall').val(),
-// 	}
-
-      
-//     $.ajax({
-// 			method:'post',
-// 			url:"/store",
-// 			data:formData,
-// 			dataType:'json',
-// 			success:function(data){
-	   
-//              console.log(data);
-// 			},
-// 			error:function(){
-//               alert('Not insert');
-// 			}
-// 	 });
-    
-//   });
-// $.ajaxSetup({
-//     headers: {
-//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//     }
-// });
+}
 
 
 //Purchase Entry function
@@ -460,15 +372,14 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
     allRows.push({ 
 		"billproductname": $(this).find('.billproductname').val(),
 		"box": $(this).find('.box').val(),
-		"loosekg": $(this).find('.loosekg').val(),
-		"totalweight": $(this).find('.totalweight').val(),
+		"kg": $(this).find('.kg').val(),
 		"purchaseloosebox": $(this).find('.purchase_loosebox').val(),
 		"purchaseloosekg": $(this).find('.purchase_loosekg').val(),
-		"overallweight": $(this).find('.overall_weight').val(),
-		"perkgprices": $(this).find('.perkgprices').val(),
-		"actualprice": $(this).find('.actualprice').val(),
+		"netweight": $(this).find('.net_weight').val(),
 		"discount": $(this).find('.discount').val(),
-		"discountprice": $(this).find('.discountprice').val(),
+		"totalweight": $(this).find('.totalweight').val(),
+		"prices": $(this).find('.prices').val(),
+		// "actualprice": $(this).find('.actualprice').val(),
 		"netvalue": $(this).find('.netvalue').val(),
     });
 });
@@ -478,20 +389,22 @@ $("#dynamic_product_rows tr:not(:last-child)").each(function(index) {
 		'billsupplier': $('#billsupplier').val(),
 		'date': $('#date').val(),
 		'billtrip': $('#billtrip').val(),
-		'todaybox': $('#totalbox').val(),
-		'purchase_pendingbox': $('#pendingbox').val(),
-		'purchase_overallbox': $('#purchase_overallbox').val(),
+		'totalnoofbox': $('#totalnoofbox').val(),
+	    'pericebar': $('#pericebar').val(),
 		'icebar': $('#icebar').val(),
 		'pericebar': $('#pericebar').val(),
-		'totalicebar': $('#totalicebar').val(),
 		'packing_amount': $('#packing_amount').val(),
+		'todaybox': $('#totalbox').val(),
+		'balancebox': $('#pendingbox').val(),
+		'totalbox': $('#purchase_overallbox').val(),
+		'grass_amount': $('#grass').val(),
 		'transportcharge': $('#transportcharge').val(),
-		'finalicebar': $('#finalicebar').val(),
-		'less': $('#less').val(),
+		'icebaramount': $('#finalicebar').val(),
 		'packingcharge': $('#packingcharge').val(),
 		'excess': $('#excess').val(),
-		'pre': $('#prebalance').val(),
-		'currentbalance': $('#currentbalance').val(),
+		'less': $('#less').val(),
+	    'currentbillamount': $('#currentbalance').val(),
+		'previousbalance': $('#prebalance').val(),
 		'overall': $('#overall').val(),
 		'allproduct_datas':allRows  // ALL BILL DATA ARRAY
 	}
@@ -504,15 +417,14 @@ $.ajaxSetup({
 });
  $.ajax({
 	 type:"post",
-	 url:"/bill",
+	 url:"/purchase",
 	 data:formData,
 	 success:function(response){
 	 	response = JSON.parse(response);
-	 	console.log(response);
 		 //if saved
 		 if(response.status == 'success'){
 		 	alert(response.message);
-		 	window.location.replace("/bill");
+		 	window.location.replace("/purchase");
 		 }else{
 		 	alert(response.message);
 		 }
@@ -527,43 +439,6 @@ $.ajaxSetup({
 
 
 });
-
-
-
-
-// $('#submit').on('click',function(e){
-// 	var value= $('#billcustomer').val();
-// 	var date= $('#Date').val();
-
-// });
-
-
-
-// $(document).ready(function(){
-//     const url = 'http://ars.com/api/supplierdatas';
-//     var myHeaders = new Headers();
-//     var requestOptions = {
-//       method: 'GET',
-//       headers: myHeaders,
-//       redirect: 'follow'
-//     };
-
-// fetch(url, requestOptions)
-//   .then(response => response.text())
-//   .then(result => getTable(result))
-//   .catch(error => console.log('error', error));
-
-// getTable = (result) =>{
-//   let res = [];
-//   if(typeof result === "string"){
-//     res = JSON.parse(result);
-//   }
-//   console.log(res)
-// }
-  
-// });
-
-
 
 
 //report print out function

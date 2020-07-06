@@ -101,8 +101,8 @@ $products =DB::table('products')->select('products.*')->get();
                    @endif
                   @endforeach
                     <td>{{$customerratefixing->fixing_rate}}</td>
-                    <td><a href="/customer_rate_edit/{{$customerratefixing->customer_id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
-                    <td><a href="/customer_rate_fixing/{{$customerratefixing->customer_id}}" class="btn btn-sm btn-danger">Delete</a></td>
+                    <td><a href="/customer_rate_edit/{{$customerratefixing->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td><a href="/customer_rate_fixing/{{$customerratefixing->id}}" class="btn btn-sm btn-danger">Delete</a></td>
                   </tr>
                     <?php $id++; ?>
                     @endforeach

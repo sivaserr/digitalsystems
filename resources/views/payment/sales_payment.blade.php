@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('navbar_brand')
-    Payment for purchase
+    Payment For Sales
 @endsection
 <style>
   .reportview {
@@ -63,6 +63,8 @@
 @section('content')
 <?php
     $customer = DB::table('customer')->select('customer.*')->get();
+    $bank_details = DB::table('bank_details')->select('bank_details.*')->get();
+    $transfer_types = DB::table('transfer_types')->select('transfer_types.*')->get();
 ?>
 
 
@@ -92,7 +94,7 @@
              		<label for="cars">customer</label>
 
        <select id="customer" class="form-control" name="customer">
-	    <option>Chosse</option>
+	    <option>Choose</option>
 	    @foreach($customer as $customer)
          <option value="{{$customer->id}}">{{$customer->short_name}}</option>
       @endforeach
@@ -101,7 +103,7 @@
              	<div class="col-sm-4">
              		<label for="cars">customer Bill</label>
              		<select id="salesbill" class="form-control" name="salesbill">
-	              <option>Chosse</option>
+	              <option>Choose</option>
 
        </select>
              	</div>
@@ -170,20 +172,43 @@
                     <input type="text" class="form-control" name="note" id="note" aria-describedby="note"  required>
                 </div>
     </div>
-<!--     <div class="col-sm-4">
+    <div class="col-sm-4">
               <div class="form-group">
                     <label for="payment">Bank</label>
-                    <input type="text" class="form-control" name="amount" id="amount" aria-describedby="amount"  required>
-                </div>
+              <select id="bank" class="form-control" name="bank">
+              <option>Choose</option>
+              @foreach($bank_details as $bank_detail)
+              <option value="{{$bank_detail->id}}">{{$bank_detail->short_name}}-{{$bank_detail->ac_holder}}</option>
+              @endforeach
+              </select>
+              </div>
     </div>
         <div class="col-sm-4">
               <div class="form-group">
-               <label for="payment"> Transfer Types</label>
-                    <input type="text" class="form-control" name="amount" id="amount" aria-describedby="amount"  required>
+               <label for="transfer_type"> Transfer Types</label>
+              <select id="transfer_type" class="form-control" name="transfer_type">
+              <option>Choose</option>
+              @foreach($transfer_types as $transfer_type)
+              <option value="{{$transfer_type->id}}">{{$transfer_type->types}}</option>
+              @endforeach
+              </select>
                 </div>
-    </div> -->
+    </div>
 
   </div>
+  <div class="row">
+    <div class="col-sm-4">
+                    <div class="form-group">
+                    <label for="ref no">Reference Number</label>
+                    <input type="text" class="form-control" name="ref_no" id="ref_no"  aria-describedby="ref_no"  value="0" required>
+              </div>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4"></div>
+    
+  </div>
+
+
 </div>
 </div>
 
@@ -199,16 +224,16 @@
     <div class="row">
       <div class="col-sm-6">
                 <div class="form-group">
-                    <label for="payment"> Overall box:</label>
-                    <input type="text" class="box_detail" name="overallbox" id="overallbox" aria-describedby="amount"  readonly>
+                    <label for="payment">Current Bill Box:</label>
+                    <input type="text" class="box_detail" name="currentbillbox" id="currentbillbox" aria-describedby="currentbillbox"  readonly>
                 </div>
                 <div class="form-group">
                     <label for="payment">Pre-Box:</label>
                     <input type="text" class="box_detail" name="prebox" id="prebox" aria-describedby="amount"   readonly>
                 </div>
                 <div class="form-group">
-                    <label for="payment">Current Bill Box:</label>
-                    <input type="text" class="box_detail" name="currentbillbox" id="currentbillbox" aria-describedby="currentbillbox"  readonly>
+                    <label for="payment"> Overall box:</label>
+                    <input type="text" class="box_detail" name="overallbox" id="overallbox" aria-describedby="amount"  readonly>
                 </div>
                 <div class="form-group">
                     <label for="payment">Paid Box:</label>
@@ -222,16 +247,16 @@
          <div class="col-sm-6">
              <div class="amount_details">
                 <div class="form-group">
-                    <label for="payment">overall Rs: </label>
-                    <input type="text" class="amount_details" name="overallbalance" id="overallbalance" aria-describedby="overallbalance" readonly>
+                    <label for="payment">Current bill Rs: </label>
+                    <input type="text" class="amount_details" name="currentbillamount" id="currentbillamount" aria-describedby="amount"  readonly>
                 </div>
                 <div class="form-group">
                     <label for="payment">Previouse Rs: </label>
                     <input type="text" class="amount_details" name="previousebalance" id="previousebalance" aria-describedby="previousebalance"  readonly>
                 </div>
                 <div class="form-group">
-                    <label for="payment">Current bill Rs: </label>
-                    <input type="text" class="amount_details" name="currentbillamount" id="currentbillamount" aria-describedby="amount"  readonly>
+                    <label for="payment">overall Rs: </label>
+                    <input type="text" class="amount_details" name="overallbalance" id="overallbalance" aria-describedby="overallbalance" readonly>
                 </div>
                 <div class="form-group">
                     <label for="payment">paid Rs: </label>
@@ -432,7 +457,7 @@ jQuery(document).ready(function ()
                     </tr>
                     <tr class="total_box">
                       <th class="text-center">Total box</th>
-                      <td class="text-center">${data.ovarall_box}</td>
+                      <td class="text-center">${data.total_box}</td>
                     </tr>
                     <tr class="total_box">
                       <th class="text-center">Paid Pending box</th>
@@ -473,16 +498,32 @@ jQuery(document).ready(function ()
               <table class="table table-bordered table-hover" id="tab_logic_total2">
                 <tbody>
                   <tr>
-                    <th class="text-center">previous Balance</th>
-                    <td class="text-center">${data.previous_balance}</td>
+                    <th class="text-center">Grass Amount</th>
+                    <td class="text-center">${data.grass_amount}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">Transport Charge</th>
+                    <td class="text-center">${data.transport_charge}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">Excess</th>
+                    <td class="text-center">${data.excess}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">Discount</th>
+                    <td class="text-center">${data.less}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Current Bill Amount</th>
                     <td class="text-center">${data.current_balance}</td>
                   </tr>
                   <tr>
+                    <th class="text-center">previous Balance</th>
+                    <td class="text-center">${data.pre_balance}</td>
+                  </tr>
+                  <tr>
                     <th class="text-center">Overall Balance</th>
-                    <td class="text-center">${data.overall_balance}</td>
+                    <td class="text-center">${data.overall}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Paid Pending Amount</th>
@@ -506,9 +547,9 @@ jQuery(document).ready(function ()
         let currentbillamount =document.getElementById("currentbillamount");
         let currentbox =document.getElementById("currentbillbox");
 
-        overallbalance.value = data.overall_balance;
-        overallbox.value =data.ovarall_box;
-        previousebalance.value = data.previous_balance;
+        overallbalance.value = data.overall;
+        overallbox.value =data.total_box;
+        previousebalance.value = data.pre_balance;
         previousebox.value =data.balance_box;
         currentbillamount.value = data.amount_pending;
         currentbox.value = data.box_pending;

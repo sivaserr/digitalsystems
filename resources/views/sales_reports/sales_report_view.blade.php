@@ -127,8 +127,12 @@ Day Report
                 <table class="table table-bordered table-hover" id="tab_logic_total">
                     <tbody>
                       <tr>
-                        <th class="text-center">Total Box</th>
-                        <td class="text-center">{{$salesbill->total_box}}</td>
+                        <th class="text-center">Total No of Box(T-box + L-box)</th>
+                        <td class="text-center">{{$salesbill->total_no_of_box}}</td>
+                      </tr>
+                      <tr>
+                        <th class="text-center">Today Box</th>
+                        <td class="text-center">{{$salesbill->today_box}}</td>
                       </tr>
                       <tr>
                         <th class="text-center">Balances Box</th>
@@ -136,7 +140,7 @@ Day Report
                       </tr>
                       <tr>
                         <th class="text-center">Total Box</th>
-                        <td class="text-center">{{$salesbill->ovarall_box}}</td>
+                        <td class="text-center">{{$salesbill->total_box}}</td>
                       </tr>
                     </tbody>
                   </table>          </div>
@@ -144,16 +148,32 @@ Day Report
               <table class="table table-bordered table-hover" id="tab_logic_total2">
                 <tbody>
                   <tr>
-                    <th class="text-center">previous Balance</th>
-                    <td class="text-center">{{$salesbill->previous_balance}}</td>
+                    <th class="text-center">Grass Amount</th>
+                    <td class="text-center">{{$salesbill->grass_amount}}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">Transport Charge</th>
+                    <td class="text-center">{{$salesbill->transport_charge}}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">Excess</th>
+                    <td class="text-center">{{$salesbill->excess}}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">Discount</th>
+                    <td class="text-center">{{$salesbill->less}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Current Bill Amount</th>
                     <td class="text-center">{{$salesbill->current_balance}}</td>
                   </tr>
                   <tr>
+                    <th class="text-center">previous Balance</th>
+                    <td class="text-center">{{$salesbill->pre_balance}}</td>
+                  </tr>
+                  <tr>
                     <th class="text-center">Overall Balance</th>
-                    <td class="text-center">{{$salesbill->overall_balance}}</td>
+                    <td class="text-center">{{$salesbill->overall}}</td>
                   </tr>
                 </tbody>
               </table>

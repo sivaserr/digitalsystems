@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 
 <head>
   <meta charset="utf-8" />
@@ -20,6 +20,7 @@
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
   <link href="{{ URL::asset('css/style.css') }}" rel="stylesheet" />
+  <link href="{{ URL::asset('css/sales.css') }}" rel="stylesheet" />
   <link href="{{ URL::asset('css/all.min.css') }}" rel="stylesheet" />
   <link href="{{ URL::asset('css/datepicker.min.css') }}" rel="stylesheet" />
 </head>
@@ -138,14 +139,14 @@
             </div>
             </li>
           <li>
-              <a href="/bill" data-toggle="collapse" data-target="#subbilling">
+              <a href="/purchase" data-toggle="collapse" data-target="#subbilling">
                 <i class="fas fa-money-check"></i>
                 <p>Bill Entry</p>
               </a>
               <div id="subbilling" class="collapse">
           <ul>
             <li>
-                <a href="/bill">
+                <a href="/purchase">
                   <i class="fas fa-receipt"></i>
                   <p>Purchase Entry</p>
                 </a>
@@ -188,15 +189,45 @@
             </a>
           </li>
           <li class="{{'#' == request()->path() ? 'active' : ''}}">
-            <a href="/bank-details">
+            <a href="#" data-toggle="collapse" data-target="#subbank">
               <i class="fas fa-truck-moving"></i>
               <p>Bank details</p>
+            </a>
+            <div id="subbank" class="collapse">
+              <ul>
+                <li>
+                    <a href="/bank-details">
+                      <i class="fas fa-receipt"></i>
+                      <p>Add Bank</p>
+                    </a>
+                </li>
+<!--                 <li>
+                    <a href="/debit">
+                      <i class="fas fa-receipt"></i>                  
+                      <p>Debit</p>
+                    </a>
+                </li> -->
+                <li>
+                    <a href="/transaction_details">
+                      <i class="fas fa-receipt"></i>                  
+                      <p>Bank Transaction</p>
+                    </a>
+                </li>
+              </ul>
+                  </div>
+
+
+          </li>
+          <li class="{{'#' == request()->path() ? 'active' : ''}}">
+            <a href="/stock_details">
+              <i class="fas fa-truck-moving"></i>
+              <p>Stock details</p>
             </a>
           </li>
           <li >
             <a href="#" data-toggle="collapse" data-target="#subreport">
               <i class="fas fa-file-alt"></i>
-              <p>Supplier Report</p>
+              <p>Purchase Report</p>
             </a>
             <div id="subreport" class="collapse">
               <ul>
@@ -224,12 +255,12 @@
           <li >
             <a href="#" data-toggle="collapse" data-target="#subcustomerreport">
               <i class="fas fa-file-alt"></i>
-              <p>Customer Report</p>
+              <p>Sales Report</p>
             </a>
             <div id="subcustomerreport" class="collapse">
               <ul>
                 <li>
-                    <a href="#">
+                    <a href="/sales_consolidation">
                       <i class="fas fa-receipt"></i>
                       <p>Consolidation</p>
                     </a>
@@ -305,7 +336,6 @@
                   </a>
 
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
                       <a class="dropdown-item" href="{{ route('password.change') }}">
                           <i class="fas fa-key"></i>
                           {{ __('Change password') }}

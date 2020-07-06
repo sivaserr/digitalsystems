@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Bill;
-use App\BillData;
+use App\Purchases;
+use App\PurchasesProducts;
 use App\Product;
 use App\Supplier;
 use DB;
-class BillController extends Controller
+class PurchasesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class BillController extends Controller
      */
     public function index()
     {
-        return view('billing.bill');
+        return view('purchases.purchase');
     }
 
     /**
@@ -40,50 +40,51 @@ class BillController extends Controller
     {
         
 
-        $bills = new  Bill();
+        $bills = new  Purchases();
         $bills->bill_no = $request->input('billno');
         $bills->supplier_id = $request->input('billsupplier');
         $bills->date = $request->input('date');
         $bills->trip_id = $request->input('billtrip');
-        $bills->total_box = $request->input('todaybox');
-        $bills->balance_box = $request->input('purchase_pendingbox');
-        $bills->overall_box = $request->input('purchase_overallbox');
-        $bills->ice_bar = $request->input('icebar');
+        $bills->total_no_of_box = $request->input('totalnoofbox');
+        $bills->no_of_ice_bar = $request->input('icebar');
         $bills->per_ice_bar = $request->input('pericebar');
-        $bills->total_ice_bar = $request->input('totalicebar');
         $bills->per_packing_price = $request->input('packing_amount');
+        $bills->today_box = $request->input('todaybox');
+        $bills->balance_box = $request->input('balancebox');
+        $bills->total_box = $request->input('totalbox');
+        $bills->grass_amount = $request->input('grass_amount');
         $bills->transport_charge = $request->input('transportcharge');
-        $bills->total_icebar = $request->input('finalicebar');
-        $bills->less = $request->input('less');
+        $bills->icebar_amount = $request->input('icebaramount');
         $bills->packing_charge = $request->input('packingcharge');
         $bills->excess = $request->input('excess');
-        $bills->current_balance = $request->input('currentbalance');
-        $bills->pre_balance = $request->input('pre');
+        $bills->less = $request->input('less');
+        $bills->current_balance = $request->input('currentbillamount');
+        $bills->pre_balance = $request->input('previousbalance');
         $bills->overall = $request->input('overall');
-        $bills->amount_pending = $request->input('currentbalance');
+        $bills->amount_pending = $request->input('currentbillamount');
         $bills->box_pending = $request->input('todaybox');
 
 
-        $allproduct_datas = $request->input('allproduct_datas');    
-        
+        $allproduct_datas = $request->input('allproduct_datas'); 
+
             if($bills->save())  // IF BILL SAVED TRUE
             {
                 foreach ($allproduct_datas as $product_data) {
-                    $billdata = new BillData(); // NEW BILLDATA.
+                    $billdata = new PurchasesProducts(); // NEW BILLDATA.
                     $billdata->bill_id = $bills->id;
-                    $billdata->product_id = $product_data['billproductname']; 
                     $billdata->supplier_id = $request->input('billsupplier'); 
+                    $billdata->product_id = $product_data['billproductname']; 
                     $billdata->box = $product_data['box'];
-                    $billdata->weight = $product_data['loosekg'];
-                    $billdata->net_weight = $product_data['totalweight'];
+                    $billdata->weight = $product_data['kg'];
                     $billdata->loose_box = $product_data['purchaseloosebox'];
-                    $billdata->loose_kg = $product_data['purchaseloosebox'];
-                    $billdata->overall_weight = $product_data['overallweight'];
-                    $billdata->per_kg_price = $product_data['perkgprices'];
-                    $billdata->actual_price = $product_data['actualprice'];
+                    $billdata->loose_kg = $product_data['purchaseloosekg'];
+                    $billdata->net_weight = $product_data['netweight'];
                     $billdata->discount = $product_data['discount'];
-                    $billdata->discount_price = $product_data['discountprice'];
-                    $billdata->net_value = $product_data['netvalue'];
+                    $billdata->total_weight = $product_data['totalweight'];
+                    $billdata->price = $product_data['prices'];
+                    // $billdata->actual_price = $product_data['actualprice'];
+                    // $billdata->discount_price = $product_data['discountprice'];
+                    $billdata->netvalue = $product_data['netvalue'];
                     $billdata->save();
                 } 
                 echo json_encode(['status'=>'success','message'=>'Bill Saved Successfully.']);
@@ -97,7 +98,7 @@ class BillController extends Controller
     public function filtered_list(Request $request){
         // var_dump($request->billcustomer);var_dump($request->data);exit;
         // $data['data'] = [1,2,3,4,5];
-        $Bills = Bill::where([ ['date','=',$request->data]  ])->get();
+        $Bills = Purchases::where([ ['date','=',$request->data]  ])->orderBy('id')->get();
         // foreach($Bills as $Bill){
         //     $Bill->BillDatas = BillData::where([
         //         ['bill_id','=',$Bill->id],
@@ -111,7 +112,7 @@ class BillController extends Controller
         $from_date = $request->fromdate;
         $to_date = $request->todate;
 
-        $bills = Bill::whereBetween('date',[$from_date, $to_date])->get();
+        $bills = Purchases::whereBetween('date',[$from_date, $to_date])->orderBy('id')->get();
 
         $data['bills'] = $bills;
         return view('report.month_and_week_report',$data);
@@ -119,7 +120,7 @@ class BillController extends Controller
 
    public function billview($id){
        
-    $Bills = Bill::find($id);
+    $Bills = Purchases::find($id);
 
         
     
@@ -192,14 +193,14 @@ class BillController extends Controller
         
     // }
     public function pendingamount(Request $request){
-        $balance = Bill::select('current_balance','total_box')->where('supplier_id',$request->id)->get();
+        $balance = Purchases::select('amount_pending','box_pending')->where('supplier_id',$request->id)->get();
         return response()->json($balance);
     }
 
 
     public function billdata($id){
 
-        $billdata = Bill::find($id);
+        $billdata = Purchases::find($id);
 
         return response()->json($billdata);
     }

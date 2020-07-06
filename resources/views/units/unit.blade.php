@@ -24,7 +24,22 @@
                   <a href="#" type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#form" ><span class="glyphicon glyphicon-plus"></span> CREATE</a>
               </div>
             </div>
-            
+@if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
+@if(session('error'))
+    <div class="alert alert-danger">{{session('error')}}</div>
+@endif
+
+@if($errors->any())
+@foreach($errors->all() as $error)
+<div class="alert alert-danger">
+<li>{{$error}}</li>
+</div>
+@endforeach
+@endif 
             <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -57,7 +72,7 @@
                       <table class="table">
                         <thead class=" text-primary">
                           <th>S.no</th>
-                          <th>Group name</th>
+                          <th>Unit</th>
                           <th>Edit</th>
                           <th>Delete</th>
                         </thead>
@@ -66,7 +81,7 @@
                           @foreach($units as $unit)
                           <tr>
                             <td>{{ $id }}</td>
-                            <td>{{ $unit->unit_name }}</td>
+                            <td>{{ $unit->unit_name }}Kg</td>
                           <td><a href="unit_edit/{{$unit ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
                           <td><a href="unit/{{$unit ->id}}" class="btn btn-sm btn-danger">Delete</a></td>
                           </tr>

@@ -27,6 +27,7 @@
                   @endforeach
                 </div>
             <a href="/change_trip/1" class="btn btn-primary my-1">Change</a>
+            <a href="#" class="btn btn-primary my-1">Completed</a>
                 @endforeach
 
             </form>

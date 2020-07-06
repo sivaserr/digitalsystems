@@ -15,10 +15,9 @@ class CreateSalesProductsTable extends Migration
     {
         Schema::create('sales_products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('salesbill_no');
-            $table->string('sales_id');
-            $table->string('customer_id');
-            $table->string('product_id');
+            $table->integer('sales_id');
+            $table->integer('customer_id');
+            $table->integer('product_id');
             $table->string('box');
             $table->string('weight');
             $table->string('net_weight');

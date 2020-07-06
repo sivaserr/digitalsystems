@@ -12,6 +12,7 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         return view('units.unit');
@@ -35,6 +36,10 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+         'unit' => 'required|unique:units,unit_name',
+        ]);
+
         $unit = new Unit();
 
         $unit->unit_name = $request->input('unit');
@@ -81,6 +86,10 @@ class UnitController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+         'unit' => 'required|unique:units,unit_name,'.$id,
+        ]);
+
         $unit = Unit::find($id);
 
         $unit->unit_name = $request->input('unit');

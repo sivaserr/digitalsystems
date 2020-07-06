@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title')
+@section('navbar_brand')
     supplier list
 @endsection
 

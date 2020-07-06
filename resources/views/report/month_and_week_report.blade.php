@@ -2,7 +2,7 @@
 
 @section('navbar_brand')
 
-Day Report
+Purchase Monthly And Weekly Report
 @endsection
 
 <style type="text/css">
@@ -39,7 +39,7 @@ Day Report
           <div class="card">
             <div class="card-header">
               <div class="report_title">
-                  <h4 class="card-title">Day wise report </h4>
+                  <h4 class="card-title">Purchase Monthly And Weekly Report</h4>
               </div>
 
             </div>   

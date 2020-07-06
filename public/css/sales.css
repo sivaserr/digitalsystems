@@ -1,0 +1,11 @@
+ .stock_table,.consol_table {
+    border: 1px solid #dee2e6;
+}
+.stock_table tr th,.consol_table tr th,.stock_table  tr td,.consol_table tr td{
+    border: 1px solid #dee2e6!important;
+}
+.consol_table tr th {
+    font-size: 14px!important;
+    color: #777;
+    font-weight: 600!important;
+}

@@ -63,6 +63,8 @@
 @section('content')
 <?php
     $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
+    $bank_details = DB::table('bank_details')->select('bank_details.*')->get();
+    $transfer_types = DB::table('transfer_types')->select('transfer_types.*')->get();
 ?>
 
 
@@ -170,20 +172,43 @@
                     <input type="text" class="form-control" name="note" id="note" aria-describedby="note"  required>
                 </div>
     </div>
-<!--     <div class="col-sm-4">
+    <div class="col-sm-4">
               <div class="form-group">
                     <label for="payment">Bank</label>
-                    <input type="text" class="form-control" name="amount" id="amount" aria-describedby="amount"  required>
-                </div>
+              <select id="bank" class="form-control" name="bank">
+              <option>Chosse</option>
+              @foreach($bank_details as $bank_detail)
+              <option value="{{$bank_detail->id}}">{{$bank_detail->short_name}}-{{$bank_detail->ac_holder}}</option>
+              @endforeach
+              </select>
+              </div>
     </div>
         <div class="col-sm-4">
               <div class="form-group">
-               <label for="payment"> Transfer Types</label>
-                    <input type="text" class="form-control" name="amount" id="amount" aria-describedby="amount"  required>
+               <label for="transfer_type"> Transfer Types</label>
+              <select id="transfer_type" class="form-control" name="transfer_type">
+              <option>Chosse</option>
+              @foreach($transfer_types as $transfer_type)
+              <option value="{{$transfer_type->id}}">{{$transfer_type->types}}</option>
+              @endforeach
+              </select>
                 </div>
-    </div> -->
+    </div>
 
   </div>
+  <div class="row">
+    <div class="col-sm-4">
+                    <div class="form-group">
+                    <label for="ref no">Reference Number</label>
+                    <input type="text" class="form-control" name="ref_no" id="ref_no"  aria-describedby="ref_no"  value="0" required>
+              </div>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4"></div>
+    
+  </div>
+
+
 </div>
 </div>
 
@@ -277,12 +302,14 @@ jQuery(document).ready(function ()
             jQuery('#supplier').on('change',function(){
                let bill = document.getElementById("bill");
                var supplierID = jQuery(this).val();
+
                if(supplierID)
                {
                   jQuery.ajax({
                      url : 'api/payment-for-purchase/getsuppliersbill/' +supplierID,
                      type : "GET",
                      dataType : "json",
+
                      success:function(data)
                      {
                         //console.log(data);
@@ -318,7 +345,7 @@ jQuery(document).ready(function ()
         let report = document.getElementById("report");        
         let data = [];
         data = JSON.parse(result);
-        console.log(data);
+        //console.log(data);
           jQuery('#report').empty();
           let html = '';
           let sno =1;
@@ -353,14 +380,12 @@ jQuery(document).ready(function ()
                         <th scope="col">Product</th>
                         <th scope="col">Box</th>
                         <th scope="col">KG</th>
-                        <th scope="col">N-wgt</th>
                         <th scope="col">Loose box </th>
                         <th scope="col">Loose kg</th>
-                        <th scope="col">Total weight </th>
-                        <th scope="col">per(kg)-Rs</th>
-                        <th scope="col">Actual Rs</th>
+                        <th scope="col">N-wgt</th>
                         <th scope="col">Dis%</th>
-                        <th scope="col">Dis price</th>
+                        <th scope="col">Total weight </th>
+                        <th scope="col">price</th>
                         <th scope="col">N-val</th>
                       </tr>
                     </thead>
@@ -374,15 +399,14 @@ jQuery(document).ready(function ()
    <td>${product.product_name}</td>
    <td>${product.box}</td>
    <td>${product.weight}</td>
-   <td>${product.net_weight}</td>
+   <!-- <td>${product.net_weight}</td> -->
    <td>${product.loose_box}</td>
    <td>${product.loose_kg}</td>
-   <td>${product.overall_weight}</td>
-   <td>${product.per_kg_price}</td>
-   <td>${product.actual_price}</td>
+   <td>${product.net_weight}</td>
    <td>${product.discount}</td>
-   <td>${product.discount_price}</td>
-   <td>${product.net_value}</td>
+   <td>${product.total_weight}</td>
+   <td>${product.price}</td>
+   <td>${product.netvalue}</td>
 </tr>`
 
     current_bill_amount +=Number(product.net_value);
@@ -404,19 +428,19 @@ jQuery(document).ready(function ()
                               <table class="table table-bordered table-hover" id="tab_logic_total">
                   <tbody>
                     <tr>
-                      <th class="text-center">Ice Bar</th>
-                      <td class="text-center">${data.ice_bar}</td>
+                      <th class="text-center">Total No of Box(T-box + L-box)</th>
+                      <td class="text-center">${data.total_no_of_box}</td>
+                    </tr>
+                    <tr>
+                      <th class="text-center">No of Ice Bar</th>
+                      <td class="text-center">${data.no_of_ice_bar}</td>
                     </tr>
                     <tr>
                       <th class="text-center">Per-ice Bar Amount</th>
                       <td class="text-center">${data.per_ice_bar}</td>
                     </tr>
                     <tr>
-                      <th class="text-center">Total Ice Bar Amount</th>
-                      <td class="text-center">${data.total_ice_bar}</td>
-                    </tr>
-                    <tr>
-                      <th class="text-center">Packing Charge</th>
+                      <th class="text-center">Packing Charge/Box</th>
                       <td class="text-center">${data.per_packing_price}</td>
                     </tr>
 
@@ -430,7 +454,7 @@ jQuery(document).ready(function ()
                   <tbody>
                     <tr class="today_box">
                       <th class="text-center">Today Box</th>
-                      <td class="text-center">${data.total_box}</td>
+                      <td class="text-center">${data.today_box}</td>
                     </tr>
                     <tr class="balance_box">
                       <th class="text-center">Balance box</th>
@@ -438,7 +462,7 @@ jQuery(document).ready(function ()
                     </tr>
                     <tr class="total_box">
                       <th class="text-center">Total box</th>
-                      <td class="text-center">${data.overall_box}</td>
+                      <td class="text-center">${data.total_box}</td>
                     </tr>
                     <tr class="total_box">
                       <th class="text-center">Paid Pending box</th>
@@ -479,16 +503,16 @@ jQuery(document).ready(function ()
               <table class="table table-bordered table-hover" id="tab_logic_total2">
                 <tbody>
                   <tr>
+                    <th class="text-center">Grass Amount</th>
+                    <td class="text-center">${data.grass_amount}</td>
+                  </tr>
+                  <tr>
                     <th class="text-center">Transport Charge</th>
                     <td class="text-center">${data.transport_charge}</td>
                   </tr>
                   <tr>
-                    <th class="text-center">Ice Bar</th>
-                    <td class="text-center">${data.total_icebar}</td>
-                  </tr>
-                  <tr>
-                    <th class="text-center">Discount</th>
-                    <td class="text-center">${data.less}</td>
+                    <th class="text-center">Ice Amount</th>
+                    <td class="text-center">${data.icebar_amount}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Packing Charge</th>
@@ -499,12 +523,16 @@ jQuery(document).ready(function ()
                     <td class="text-center">${data.excess}</td>
                   </tr>
                   <tr>
-                    <th class="text-center">previous Balance</th>
-                    <td class="text-center">${data.pre_balance}</td>
+                    <th class="text-center">Discount</th>
+                    <td class="text-center">${data.less}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Current Bill Amount</th>
-                    <td class="text-center">${current_bill_amount}</td>
+                    <td class="text-center">${data.current_balance}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">previous Balance</th>
+                    <td class="text-center">${data.pre_balance}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Overall Balance</th>

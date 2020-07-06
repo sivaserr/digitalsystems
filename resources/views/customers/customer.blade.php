@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
-@section('title')
-  Dashboard | Digital systems
+@section('navbar_brand')
+  Customer List
 @endsection
 
 <style>
@@ -67,6 +67,10 @@ Customer list page
                         <label for="opening_box">Opening Box</label>
                         <input type="text" class="form-control" name="opening_box" id="opening_box" placeholder="opening_box" required>
                       </div>
+                      <div class="form-group">
+                        <label for="serial_no">Serial No</label>
+                        <input type="text" class="form-control" name="serial_no" id="serial_no" placeholder="serial_no" required>
+                      </div>
                      <div class="customer_status">
                         <label for="phone">Active</label>
                        <select name="status" id="status" class="form-control">
@@ -95,31 +99,30 @@ Customer list page
                     <th>Phone</th>
                     <th>open_balance</th>
                     <th>open_box</th>
+                    <th>Status</th>
                     <th>Edit</th>
                     <th>Delete</th>
-                    <th>Status</th>
                   </thead>
                   <tbody>
                       <?php $id = 1; ?>
                     @foreach($customers as $customer)
                     <tr>
-                      <td>{{ $id }}</td>
+                      <td>{{$customer->serial_no}}</td>
                       <td>{{$customer ->name}}</td>
                       <td>{{$customer ->short_name}}</td>
                       <td>{{$customer ->city}}</td>
                       <td>{{$customer ->phone}}</td>
                       <td>{{$customer ->opening_balance}}</td>
                       <td>{{$customer ->opening_box}}</td>
-
-                    <td><a href="/customer_edit/{{$customer ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
-                    <td><a href="/customer/{{$customer ->id}}" class="btn btn-sm btn-danger">Delete</a></td>
                     <td>
                      @if($customer->status==1)
                     <span class="custome_status_en">Enable</span>
                      @else 
                      <span class="custome_status_ds">Disable</span>
                      @endif
-                    </td>  
+                    </td> 
+                    <td><a href="/customer_edit/{{$customer ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td><a href="/customer/{{$customer ->id}}" class="btn btn-sm btn-danger">Delete</a></td> 
                   </tr>
                     <?php $id++; ?>
 
@@ -128,6 +131,9 @@ Customer list page
                 </table>
               </div>
             </div>
+
+
+            
           </div>
         </div>
       </div>

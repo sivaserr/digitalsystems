@@ -69,7 +69,7 @@ $unitss =DB::table('units')->select('units.*')->get();
                                   <select name="unitid" id="unit" class="form-control">
                                       <option>Choose</option>
                                     @foreach ($units as $unit)
-                                  <option value="{{$unit->id}}"> {{$unit->unit_name}}</option>
+                                  <option value="{{$unit->id}}"> {{$unit->unit_name}}Kg</option>
                                     @endforeach
                                   </select> 
                             </div>
@@ -107,8 +107,7 @@ $unitss =DB::table('units')->select('units.*')->get();
                     <th>Group</th>
                     <th>Unit</th>
                     <th>Price</th>
-                    {{-- <th>Weight</th>
-                    <th>Net weight</th> --}}
+                    <th>Status</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </thead>
@@ -126,7 +125,7 @@ $unitss =DB::table('units')->select('units.*')->get();
                       @endforeach
                       @foreach($units as $uts)
                        @if($uts->id === $product->unit_id)
-                        <td>{{$uts->unit_name}}</td>
+                        <td>{{$uts->unit_name}}Kg</td>
                       @endif
                       @endforeach
 

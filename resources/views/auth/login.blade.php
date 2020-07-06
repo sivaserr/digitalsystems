@@ -46,10 +46,10 @@
                                     </span>
                                 @enderror
 							</div>
-                            <div class="group">
+<!--                             <div class="group">
                                 <input  type="checkbox" class="check" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} >
                                 <label for="remember"><span class="icon"></span> {{ __('Remember Me') }}</label>
-                            </div>
+                            </div> -->
                             <div class="group">
 							    <button type="submit" class="button">
                                     {{ __('Login') }}

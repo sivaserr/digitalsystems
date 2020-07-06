@@ -31,12 +31,28 @@
 
           <div class="modal-body">
                 <div class="form-group">
+                    <label for="bank">Account Holder</label>
+                    <input type="text" class="form-control" name="accountholder" id="accountholder" aria-describedby="accountholder" placeholder="Enter name" required>
+                </div>
+                <div class="form-group">
+                    <label for="bank">Account No</label>
+                    <input type="text" class="form-control" name="accountno" id="accountno" aria-describedby="accountno" placeholder="Enter name" required>
+                </div>
+                <div class="form-group">
                     <label for="bank">Bank name</label>
                     <input type="text" class="form-control" name="bankname" id="bankname" aria-describedby="bankname" placeholder="Enter name" required>
                 </div>
                 <div class="form-group">
                     <label for="bank">Short name</label>
                     <input type="text" class="form-control" name="shortname" id="shortname" aria-describedby="shortname" placeholder="Enter name" required>
+                </div>
+                <div class="form-group">
+                    <label for="bank">Branch</label>
+                    <input type="text" class="form-control" name="branch" id="branch" aria-describedby="branch" placeholder="Enter Branch" required>
+                </div>
+                <div class="form-group">
+                    <label for="bank">Opening Balance</label>
+                    <input type="text" class="form-control" name="openbalance" id="openbalance" aria-describedby="openbalance" placeholder="Enter Opening Balance" required>
                 </div>
             </div>
             <div class="modal-footer border-top-0 d-flex justify-content-center">
@@ -65,7 +81,7 @@
                   <td>{{$id}}</td>
                   <td>{{$bank->bank_name}}</td>
                   <td>{{$bank->short_name}}</td>
-                  <td><a href="/bank-details/{{$bank->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
+                  <td><a href="/bank-detail_edit/{{$bank->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
                   <td><a href="/bank-details/{{$bank->id}}" class="btn btn-sm btn-danger">Delete</a></td>
                   </tr>
                   <?php $id++; ?>

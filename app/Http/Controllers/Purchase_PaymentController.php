@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Supplier;
-use App\Bill;
-use App\Payment;
+use App\Purchases;
+use App\Purchase_paid_details;
 use DB;
 class Purchase_PaymentController extends Controller
 {
@@ -37,21 +37,48 @@ class Purchase_PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        $paids = new Payment();
+           $balance = 0;
+           $credit = 0;
+           $debit = 0;
 
+        $bankbalance = DB::table('bank_details')->select('bank_details.opening_balance','bank_details.id')->where('bank_details.id','=', $request->input('bank') )->get()->first();
+
+
+              $balance = $bankbalance->opening_balance;
+
+
+         $lastpaid = DB::table('paid_details')->select('paid_details.bank_id',DB::raw('SUM(paid_amount) as credit'),DB::raw('SUM(debit) as debit'))->where('paid_details.bank_id','=',$bankbalance->id)->groupBy('bank_id')->get()->first();
+
+           if($lastpaid !== null){
+           $credit = $lastpaid->credit;
+           $debit =  $lastpaid->debit;
+           }else{
+                       $credit = 0;
+           $debit =  0;
+           }
+
+    
+    
+        $paids = new Purchase_paid_details();
+      
         $paids->bill_id = $request->input('bill');
         $paids->date = $request->input('date');
-        $paids->paid_amount = $request->input('amount');
+        $paids->supplier_id = $request->input('supplier');
+        $paids->customer_id = 0;
+        $paids->paid_amount = 0;
+        $paids->debit = $request->input('amount');
         $paids->return_box = $request->input('returnbox');
         $paids->note = $request->input('note');
-
+        $paids->bank_id = $request->input('bank');
+        $paids->transfer_type = $request->input('transfer_type');
+        $paids->ref_no = $request->input('ref_no');
+        $paids->balance = $balance + $credit -$debit - $request->input('amount');
         if( $paids->save()){
-                DB::table('bills')->where('id', $request->input('bill'))->limit(1)
+                DB::table('purchases')->where('id', $request->input('bill'))->limit(1)
                 ->update(array('amount_pending' => $request->input('remainingamount') ,'box_pending' => $request->input('remainbox') ));
          }
-
-
-        return redirect('/payment-for-purchase')->with('paids',$paids);
+        
+         return redirect('/payment-for-purchase')->with('paids',$paids);
 
     }
 
@@ -106,12 +133,12 @@ class Purchase_PaymentController extends Controller
     {
 
         $bills= [] ;
-        $bills = Bill::find($id);
+        $bills = Purchases::find($id);
         $bill_trip = DB::table('trips')->select('trips.trip_name')->where('id','=',$bills->trip_id)->get(); 
-        $bill_product = DB::table('bill_data')
-                        ->select('bill_data.*','products.product_name', 'suppliers.supplier_name')
-                        ->Join('products', 'bill_data.product_id', '=', 'products.id')
-                        ->Join('suppliers', 'bill_data.supplier_id', '=', 'suppliers.id')
+        $bill_product = DB::table('purchases_products')
+                        ->select('purchases_products.*','products.product_name', 'suppliers.supplier_name')
+                        ->Join('products', 'purchases_products.product_id', '=', 'products.id')
+                        ->Join('suppliers', 'purchases_products.supplier_id', '=', 'suppliers.id')
                         ->where('bill_id','=',$bills->id)
                         ->get();
 
@@ -132,7 +159,7 @@ class Purchase_PaymentController extends Controller
     {
 
         
-        $bills = DB::table("bills")->where([["supplier_id",$id],["amount_pending",'>',0]])->pluck("bill_no","id");
+        $bills = DB::table("purchases")->where([["supplier_id",$id],["amount_pending",'>',0]])->pluck("bill_no","id");
         
         return response()->json($bills);
 

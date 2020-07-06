@@ -2,7 +2,7 @@
 
 @section('navbar_brand')
 
-Day Report
+Sales Day Report
 @endsection
 
 <style type="text/css">
@@ -36,7 +36,7 @@ Day Report
           <div class="card">
             <div class="card-header">
               <div class="report_title">
-                  <h4 class="card-title">Day wise report </h4>
+                  <h4 class="card-title">Sales Day wise report </h4>
               </div>
 
             </div>   
@@ -89,6 +89,7 @@ Day Report
             <th scope="col">Date</th>
             <th scope="col">Box</th>
             <th scope="col">Netvalue</th>
+            <th scope="col">View</th>
           </tr>
         </thead>
         <tbody>
@@ -98,7 +99,7 @@ Day Report
 
           <tr>
           <th scope="row">{{$id}}</th>
-            <td>{{$salesbill->sales_no}}</td>
+            <td>{{$salesbill->sale_no}}</td>
             @foreach($customers as $customer)
             @if($salesbill->customer_id === $customer->id)
             <td>{{$customer->name}}</td>

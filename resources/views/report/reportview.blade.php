@@ -24,7 +24,7 @@ Day Report
 }
 </style>
     <?php 
-    $bill_datas = DB::table('bill_data')->select('bill_data.*')->get();
+    $purchases_products = DB::table('purchases_products')->select('purchases_products.*')->get();
     $products = DB::table('products')->select('products.*')->get();
     $trips = DB::table('trips')->select('trips.*')->get();
     $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
@@ -92,39 +92,41 @@ Day Report
                         <th scope="col">Product</th>
                         <th scope="col">Box</th>
                         <th scope="col">KG</th>
+                        <th scope="col">Loose-box</th>
+                        <th scope="col">Loose-kg</th>
                         <th scope="col">N-wgt</th>
-                        <th scope="col">per(kg)-Rs</th>
-                        <th scope="col">Actual Rs</th>
                         <th scope="col">Dis%</th>
-                        <th scope="col">Dis price</th>
+                        <th scope="col">Total Weight</th>
+                        <th scope="col">Per(kg)-Rs</th>
                         <th scope="col">N-val</th>
                       </tr>
                     </thead>
                     <tbody>
                         <?php $id=1;
-                          $current_value = 0;
+                          // $current_value = 0;
                         ?>
 
                       <tr>
-                          @foreach($bill_datas as $bill_data)
-                          @if($Bills->id === $bill_data->bill_id)
+                          @foreach($purchases_products as $purchases_product)
+                          @if($Bills->id === $purchases_product->bill_id)
                       <th scope="row">{{$id}}</th>
                         @foreach($products as $product)
-                        @if($bill_data->product_id === $product->id)
+                        @if($purchases_product->product_id === $product->id)
                         <td>{{$product->product_name}}</td>
                         @endif
                         @endforeach
-                        <td>{{$bill_data->box}}</td>
-                        <td>{{$bill_data->weight}}</td>
-                        <td>{{$bill_data->net_weight}}</td>
-                        <td>{{$bill_data->per_kg_price}}</td>
-                        <td>{{$bill_data->actual_price}}</td>
-                        <td>{{$bill_data->discount}}</td>
-                        <td>{{$bill_data->discount_price}}</td>
-                        <td>{{$bill_data->net_value}}</td>
+                        <td>{{$purchases_product->box}}</td>
+                        <td>{{$purchases_product->weight}}</td>
+                        <td>{{$purchases_product->loose_box}}</td>
+                        <td>{{$purchases_product->loose_kg}}</td>
+                        <td>{{$purchases_product->net_weight}}</td>
+                        <td>{{$purchases_product->discount}}</td>
+                        <td>{{$purchases_product->total_weight}}</td>
+                        <td>{{$purchases_product->price}}</td>
+                        <td>{{$purchases_product->netvalue}}</td>
                       </tr>
                       <?php 
-                      $current_value += $bill_data->net_value;
+                      // $current_value += $purchases_product->netvalue;
                       $id++ ?>
 
                       @endif
@@ -152,48 +154,68 @@ Day Report
 
       <div class="row clearfix" style="margin-top:20px">
             <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-12">
                 <table class="table table-bordered table-hover" id="tab_logic_total">
                     <tbody>
                       <tr>
-                        <th class="text-center">Total Box</th>
-                        <td class="text-center">{{$Bills->total_box}}</td>
+                        <th class="text-center">Total No of Box(T-box + L-box)</th>
+                        <td class="text-center">{{$Bills->total_no_of_box}}</td>
                       </tr>
                       <tr>
-                        <th class="text-center">Pre Box</th>
-                        <td class="text-center">0</td>
-                      </tr>
-                      <tr>
-                        <th class="text-center">Ice Bar</th>
-                        <td class="text-center">{{$Bills->ice_bar}}</td>
+                        <th class="text-center">No of Ice Bar</th>
+                        <td class="text-center">{{$Bills->no_of_ice_bar}}</td>
                       </tr>
                       <tr>
                         <th class="text-center">Per-ice Bar Amount</th>
                         <td class="text-center">{{$Bills->per_ice_bar}}</td>
                       </tr>
                       <tr>
-                        <th class="text-center">Total Ice Bar Amount</th>
-                        <td class="text-center">{{$Bills->total_ice_bar}}</td>
-                      </tr>
-                      <tr>
-                        <th class="text-center">Packing Charge</th>
+                        <th class="text-center">Packing Charge/Box</th>
                         <td class="text-center">{{$Bills->per_packing_price}}</td>
                       </tr>
+                      <tr>
+                        <th class="text-center">Per-ice Bar Amount</th>
+                        <td class="text-center">{{$Bills->per_ice_bar}}</td>
+                      </tr>
                     </tbody>
-                  </table>          </div>
+                  </table> 
+                </div>
+                <div class="col-sm-12">
+                <table class="table table-bordered table-hover" id="tab_logic_total">
+                    <tbody>
+                      <tr>
+                        <th class="text-center">Today Box</th>
+                        <td class="text-center">{{$Bills->today_box}}</td>
+                      </tr>
+                      <tr>
+                        <th class="text-center">Balance box</th>
+                        <td class="text-center">{{$Bills->balance_box}}</td>
+                      </tr>
+                      <tr>
+                        <th class="text-center">Total box</th>
+                        <td class="text-center">{{$Bills->total_box}}</td>
+                      </tr>
+                    </tbody>
+                  </table>    
+                </div>
+              </div>
+          
+                </div>
             <div class="pull-right col-md-6">
               <table class="table table-bordered table-hover" id="tab_logic_total2">
                 <tbody>
+                  <tr>
+                    <th class="text-center">Grass Amount</th>
+                    <td class="text-center">{{$Bills->grass_amount}}</td>
+                  </tr>
                   <tr>
                     <th class="text-center">Transport Charge</th>
                     <td class="text-center">{{$Bills->transport_charge}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Ice Bar</th>
-                    <td class="text-center">{{$Bills->total_icebar}}</td>
-                  </tr>
-                  <tr>
-                    <th class="text-center">Discount</th>
-                    <td class="text-center">{{$Bills->less}}</td>
+                    <td class="text-center">{{$Bills->icebar_amount}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Packing Charge</th>
@@ -204,12 +226,16 @@ Day Report
                     <td class="text-center">{{$Bills->excess}}</td>
                   </tr>
                   <tr>
-                    <th class="text-center">previous Balance</th>
-                    <td class="text-center">{{$Bills->previous_balance}}</td>
+                    <th class="text-center">Discount</th>
+                    <td class="text-center">{{$Bills->less}}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">Previous Balance</th>
+                    <td class="text-center">{{$Bills->pre_balance}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Current Bill Amount</th>
-                    <td class="text-center">{{$current_value}}</td>
+                    <td class="text-center">{{$Bills->current_balance}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Overall Balance</th>

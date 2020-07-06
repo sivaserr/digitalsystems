@@ -191,7 +191,9 @@ a{color:inherit;text-decoration:none}
     border-radius: 3px;
     font-size: 15px;
 }
-
+.table thead tr th {
+    font-size: 18px;
+}
 /*Form styel*/
 .form-control:focus {
     border: 1px solid #00adef!important;

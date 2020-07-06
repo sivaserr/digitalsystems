@@ -51,7 +51,7 @@ Route::get('unit/{id}', 'UnitController@findunitdata');
 
 
 //Bill api
-Route::get('bill/{id}','BillController@billdata');
+Route::get('bill/{id}','PurchasesController@billdata');
 
 
 //Sales api
@@ -71,6 +71,12 @@ Route::get('payment-for-purchase/getsuppliersbill/{id}','Purchase_PaymentControl
 Route::get('payment-for-sales/getcustomersbill/{id}','Sales_PaymentController@getcustomerbill');
 Route::get('payment-for-sales/{id}','Sales_PaymentController@showsalesbills');
 
+
+
+
+//bank_details api
+
+Route::get('bank_details/{id}' , 'Bank_Details_Controller@bank_details');
 
 // Route::get('suppliers', 'SuppliersController@suppliers');
 // Route::get('supplierdatas','BillDataController@supplierdatas');

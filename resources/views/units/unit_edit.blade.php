@@ -16,7 +16,22 @@ unit List
         <form  action="/unit_update/{{ $unit->id }}" method="POST">
                 {{ csrf_field()}} <!--security token-->
                 {{ method_field('PUT')}}
+@if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
+@if(session('error'))
+    <div class="alert alert-danger">{{session('error')}}</div>
+@endif
 
+@if($errors->any())
+@foreach($errors->all() as $error)
+<div class="alert alert-danger">
+<li>{{$error}}</li>
+</div>
+@endforeach
+@endif
                 <div class="modal-body">
                       <div class="form-group">
                           <label for="unit">unit Name</label>

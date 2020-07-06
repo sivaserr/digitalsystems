@@ -2,7 +2,7 @@
 
 @section('navbar_brand')
 
-Weekly and Monthly Report
+Sales Weekly and Monthly Report
 @endsection
 
 <style type="text/css">
@@ -39,7 +39,7 @@ Weekly and Monthly Report
           <div class="card">
             <div class="card-header">
               <div class="report_title">
-                  <h4 class="card-title">Weekly and Monthly Sales report </h4>
+                  <h4 class="card-title">Sales Weekly and Monthly report </h4>
               </div>
 
             </div>   

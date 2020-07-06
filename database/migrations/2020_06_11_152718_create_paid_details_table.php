@@ -17,9 +17,13 @@ class CreatePaidDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->string('bill_id');
             $table->date('date');
+            $table->integer('supplier_id');
             $table->string('paid_amount');
             $table->string('return_box');
             $table->string('note');
+            $table->string('bank_id');
+            $table->string('transfer_type');
+            $table->string('ref_no');
             $table->timestamps();
         });
     }

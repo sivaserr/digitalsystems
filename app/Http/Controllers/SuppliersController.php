@@ -143,7 +143,7 @@ class SuppliersController extends Controller
             $row = [];
             $row[] = $supplier->short_name; //First col
             foreach ($products as $product) { // Multi cols
-                $Billdata = DB::table('bill_data')->select(DB::raw('sum(box) as boxes'))->where(array('supplier_id'=>$supplier->id,'product_id'=>$product->id))->get()->first();
+                $Billdata = DB::table('purchases_products')->select(DB::raw('sum(box) as boxes'))->where(array('supplier_id'=>$supplier->id,'product_id'=>$product->id))->get()->first();
                 if(!empty($Billdata->boxes)){
 
                 $row[] = $Billdata->boxes;
