@@ -28,6 +28,13 @@
   .sidebar[data-color="orange"]:after, .off-canvas-sidebar[data-color="orange"]:after {
     background: #285381;
 }
+.active {
+    color: #18ce0f!important;
+    background: #fff!important;
+}
+.active i{
+    color: #18ce0f!important;
+}
 </style>
 <body class="">
   <div class="wrapper ">
@@ -47,13 +54,13 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-          <li class="{{'admin' == request()->path() ? 'active' : ''}}">
+          <li>
             <a href="/admin">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="{{'supplier' == request()->path() ? 'active' : ''}}">
+          <li>
             <a href="/supplier">
               <i class="fas fa-user"></i>
               <p>suppliers</p>
@@ -68,12 +75,12 @@
                 <ul>
                   <li>
                       <a href="/customer">
-                          <i class="fas fa-users"></i>
+                          <i class="fas fa-user-plus"></i>
                           <p>Add Customer</p>
                       </a>
                   </li>
                   <li>
-                      <a href="/customer_rate_fixing">
+                      <a href="/rate_fixing">
                           <i class="fas fa-users"></i>
                           <p>Customer Rate Fixing</p>
                       </a>
@@ -81,7 +88,7 @@
                 </ul>
               </div>
           </li>
-          <li class="{{'product_group' == request()->path() ? 'active' : ''}}">
+          <li>
 
           </li>
           <li>
@@ -96,7 +103,7 @@
               <ul>
               <li>
               <a href="/product_group">
-                <i class="now-ui-icons design_bullet-list-67"></i>
+                <i class="fas fa-object-group"></i>
                 <p>Product Group</p>
               </a>
             </li>
@@ -117,7 +124,7 @@
             </div>
           </li>
           <li>
-              <a href="/trips" data-toggle="collapse" data-target="#subtrip">
+              <a href="#" data-toggle="collapse" data-target="#subtrip">
                 <i class="fas fa-truck-loading"></i>
                 <p>Create Trip</p>
               </a>
@@ -139,7 +146,7 @@
             </div>
             </li>
           <li>
-              <a href="/purchase" data-toggle="collapse" data-target="#subbilling">
+              <a href="#" data-toggle="collapse" data-target="#subbilling">
                 <i class="fas fa-money-check"></i>
                 <p>Bill Entry</p>
               </a>
@@ -147,13 +154,13 @@
           <ul>
             <li>
                 <a href="/purchase">
-                  <i class="fas fa-receipt"></i>
+                  <i class="fas fa-file-invoice"></i>
                   <p>Purchase Entry</p>
                 </a>
             </li>
             <li>
                 <a href="/sales">
-                  <i class="fas fa-receipt"></i>                  
+                  <i class="fas fa-file-invoice"></i>                  
                   <p>Sales Entry</p>
                 </a>
             </li>
@@ -162,7 +169,7 @@
             </li>
                       <li>
               <a href="#" data-toggle="collapse" data-target="#subpayment">
-                <i class="fas fa-money-check"></i>
+                <i class="fas fa-coins"></i>
                 <p>Payment</p>
               </a>
               <div id="subpayment" class="collapse">
@@ -182,15 +189,16 @@
           </ul>
               </div>
             </li>
-          <li class="{{'#' == request()->path() ? 'active' : ''}}">
+          <li>
             <a href="#">
               <i class="fas fa-truck-moving"></i>
               <p>Vechical information</p>
             </a>
           </li>
-          <li class="{{'#' == request()->path() ? 'active' : ''}}">
+          <li>
             <a href="#" data-toggle="collapse" data-target="#subbank">
-              <i class="fas fa-truck-moving"></i>
+              <!-- <i class="fas fa-truck-moving"></i> -->
+              <i class="fas fa-university"></i>
               <p>Bank details</p>
             </a>
             <div id="subbank" class="collapse">
@@ -215,12 +223,36 @@
                 </li>
               </ul>
                   </div>
+          </li>
+            <li>
+            <a href="#" data-toggle="collapse" data-target="#subcodlist">
+              <i class="fas fa-hand-holding-usd"></i>
+              <p>COD details</p>
+            </a>
+            <div id="subcodlist" class="collapse">
+              <ul>
+                <li>
+                    <a href="/purchase_cod">
+                      <i class="fas fa-receipt"></i>
+                      <p>Purchase COD</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/sales_cod">
+                      <i class="fas fa-receipt"></i>                  
+                      <p>Sales COD</p>
+                    </a>
+                </li>
+              </ul>
+                  </div>
 
 
           </li>
-          <li class="{{'#' == request()->path() ? 'active' : ''}}">
+
+
+          <li>
             <a href="/stock_details">
-              <i class="fas fa-truck-moving"></i>
+              <i class="fas fa-clipboard-list"></i>
               <p>Stock details</p>
             </a>
           </li>
@@ -280,7 +312,50 @@
               </ul>
                   </div>
           </li>
-
+          <li >
+            <a href="#" data-toggle="collapse" data-target="#subpurchasepaymentreport">
+              <i class="fas fa-file-alt"></i>
+              <p>Purchase Payment Report</p>
+            </a>
+            <div id="subpurchasepaymentreport" class="collapse">
+              <ul>
+                <li>
+                    <a href="/purchasepayment_day_report">
+                      <i class="fas fa-receipt"></i>                  
+                      <p>Day</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/purchasepayment_month_report">
+                      <i class="fas fa-receipt"></i>                  
+                      <p>weekly & Monthly </p>
+                    </a>
+                </li>
+              </ul>
+                  </div>
+          </li>
+          <li >
+            <a href="#" data-toggle="collapse" data-target="#subsalespaymentreport">
+              <i class="fas fa-file-alt"></i>
+              <p>Sales Payment Report</p>
+            </a>
+            <div id="subsalespaymentreport" class="collapse">
+              <ul>
+                <li>
+                    <a href="/salespayment_day_report">
+                      <i class="fas fa-receipt"></i>                  
+                      <p>Day</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/salespayment_month_report">
+                      <i class="fas fa-receipt"></i>                  
+                      <p>weekly & Monthly </p>
+                    </a>
+                </li>
+              </ul>
+                  </div>
+          </li>
           {{-- <li class="active-pro">
             <a href="./upgrade.html">
               <i class="now-ui-icons arrows-1_cloud-download-93"></i>
@@ -295,6 +370,11 @@
       <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
         <div class="container-fluid">
           <div class="navbar-wrapper">
+                  <div id="sidebar-btn">
+     <span></span>
+     <span></span>
+     <span></span>
+     </div>
             <div class="navbar-toggle">
               <button type="button" class="navbar-toggler">
                 <span class="navbar-toggler-bar bar1"></span>
@@ -445,6 +525,23 @@
 
         <script type="text/javascript">
             @yield ('scripts')
+$(function() {
+  $('.nav a[href^="/' + location.pathname.split("/")[1] + '"]').addClass('active');
+ 
+});
+            $('#sidebar-btn').on('click', function () {
+                $('.sidebar').toggleClass('visible');
+                $('#main-panel').toggleClass('bodycollapse');
+                
+               
+            });
+
+      $(document).ready(function(){
+  let active = document.getElementsByClassName("active")[0];
+
+  let parentNodes = active.parentNode.parentNode.parentNode;
+  parentNodes.classList.add("show")
+});      
         </script>
 </body>
 

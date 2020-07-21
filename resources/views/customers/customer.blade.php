@@ -42,6 +42,10 @@ Customer list page
                   {{ csrf_field()}} <!--security token-->
 
                   <div class="modal-body">
+                      <div class="form-group">
+                        <label for="serial_no">Serial No</label>
+                        <input type="text" class="form-control" name="serial_no" id="serial_no" placeholder="serial_no" required>
+                      </div>
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" name="name" id="name" aria-describedby="name" placeholder="Enter name" required>
@@ -67,12 +71,8 @@ Customer list page
                         <label for="opening_box">Opening Box</label>
                         <input type="text" class="form-control" name="opening_box" id="opening_box" placeholder="opening_box" required>
                       </div>
-                      <div class="form-group">
-                        <label for="serial_no">Serial No</label>
-                        <input type="text" class="form-control" name="serial_no" id="serial_no" placeholder="serial_no" required>
-                      </div>
                      <div class="customer_status">
-                        <label for="phone">Active</label>
+                        <label for="status">Active</label>
                        <select name="status" id="status" class="form-control">
                          <option value="1" selected="selected">Enable</option>
                          <option value="0">Disable</option>

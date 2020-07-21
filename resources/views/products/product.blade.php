@@ -77,14 +77,13 @@ $unitss =DB::table('units')->select('units.*')->get();
                             <label for="price">Price</label>
                             <input type="number" class="form-control" name="price" id="Price" aria-describedby="Price" placeholder="Enter Price" required>
                           </div>
-                          {{-- <div class="form-group">
-                            <label for="weight">Weight</label>
-                            <input type="number" class="form-control" name="weight" id="weight" aria-describedby="weight" placeholder="Enter Weight" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="netweight">Net Weight</label>
-                            <input type="number" class="form-control" name="netweight" id="net_weight" aria-describedby="net_weight" placeholder="Enter Net Weight" required>
-                          </div> --}}
+                     <div class="product_status">
+                        <label for="status">Active</label>
+                       <select name="status" id="status" class="form-control">
+                         <option value="1" selected="selected">Enable</option>
+                         <option value="0">Disable</option>
+                       </select>
+                     </div>
 
                           
                     </div>
@@ -130,8 +129,14 @@ $unitss =DB::table('units')->select('units.*')->get();
                       @endforeach
 
                       <td>{{ $product->price }}</td>
-                      {{-- <td>{{ $product->weight }}</td>
-                      <td>{{ $product->net_weight }}</td> --}}
+                    <td>
+                     @if($product->status==1)
+                    <span class="custome_status_en">Enable</span>
+                     @else 
+                     <span class="custome_status_ds">Disable</span>
+                     @endif
+                    </td> 
+
                     <td><a href="product_edit/{{$product ->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
                     <td><a href="product/{{$product ->id}}" class="btn btn-sm btn-danger">Delete</a></td>
                     </tr>

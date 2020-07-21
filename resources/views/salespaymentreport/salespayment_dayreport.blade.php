@@ -2,7 +2,7 @@
 
 @section('navbar_brand')
 
-Sales Weekly and Monthly Report
+Sales Payment Day Report
 @endsection
 
 <style type="text/css">
@@ -32,6 +32,7 @@ Sales Weekly and Monthly Report
 @section('content')
     <?php 
     $customers = DB::table('customer')->select('customer.*')->get();
+    $sales = DB::table('sales')->select('sales.*')->get();
     //$bills = DB::table('bills')->select('bills.*')->get();
     
     // var_dump($bills);
@@ -39,7 +40,7 @@ Sales Weekly and Monthly Report
           <div class="card">
             <div class="card-header">
               <div class="report_title">
-                  <h4 class="card-title">Sales Weekly and Monthly report </h4>
+                  <h4 class="card-title">Sales Payment Day wise report </h4>
               </div>
 
             </div>   
@@ -49,72 +50,87 @@ Sales Weekly and Monthly Report
 
         <div class="container">
 
-<form method="POST" action="/sales_month_and_week_report">
+<form method="POST" action="/salespayment_day_report">
   {{ csrf_field() }}
   <div class="row">
-    <div class="col-sm-5">
+
+    <div class="col-sm-6">
         <div class="form-group filterdate">
-            <label for="fromDate">From Date</label>
-            <input type="Date" class="form-control" id="fromDate" name="fromdate" value="">
+            <label for="Date">Date</label>
+            <input type="Date" class="form-control" id="Date" name="data" value="">
           </div>
-    </div>
-      <div class="col-sm-5">
-        <div class="form-group filterdate">
-            <label for="toDate">To Date</label>
-            <input type="Date" class="form-control" id="toDate" name="todate" value="">
-          </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="filterbutton">
+                <div class="filterbutton">
           <button type="submit" id="submit" class="btn btn-success">Submit</button>
       </div>
+    </div>
+    <div class="col-sm-6">
+
     </div>
   </div>
 
 
 </form>
 
-
     </div>
 
+<div class="report_body">
 
-         <table class="table table-striped">
+    
+    <div class="output">
+
+
+<div class="title">
+
+
+
+</div>
+
+
+     <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Sales no</th>
-            <th scope="col">Customer</th>
+            <th scope="col">Bill no</th>
+            <th scope="col">Customers</th>
             <th scope="col">Date</th>
-            <th scope="col">Box</th>
-            <th scope="col">Netvalue</th>
+            <th scope="col">Paid Amount</th>
+            <th scope="col">Return Box</th>
           </tr>
         </thead>
         <tbody>
           <?php $id = 1?>
-            @if(count($salesbills) > 0)
-            @foreach($salesbills as $salesbill)
+            @if(count($Salespayments) > 0)
+            @foreach($Salespayments as $Salespayment)
 
           <tr>
           <th scope="row">{{$id}}</th>
-            <td>{{$salesbill->sales_no}}</td>
+          @foreach($sales as $sale)
+          @if($sale->id == $Salespayment->sale_id)
+            <td>{{$sale->sale_no}}</td>
+          @endif
+          @endforeach
             @foreach($customers as $customer)
-            @if($salesbill->customer_id === $customer->id)
+            @if($Salespayment->customer_id === $customer->id)
             <td>{{$customer->name}}</td>
             @endif
             @endforeach
-            <td>{{Carbon\Carbon::parse($salesbill->date)->format('d-m-Y')}}</td>
-            <td>{{$salesbill->total_box}}</td>
-            <td>{{number_format($salesbill->current_balance)}}</td>
-          <td><a href="salesbillviewedit/{{$salesbill->id}}" class="btn btn-sm btn-info">View</a>
+            <td>{{Carbon\Carbon::parse($Salespayment->date)->format('d-m-Y')}}</td>
+            <td>{{number_format($Salespayment->credit + $Salespayment->recived_amount)}}</td>
+            <td>{{$Salespayment->return_box}}</td>
+          <td><a href="salespayment/{{$Salespayment->sale_id}}" class="btn btn-sm btn-info">View</a>
           </td>
           </tr>
           <?php $id++;?>
 
           @endforeach
+
+
           @endif
+
         </tbody>
       </table>
-
+	</div>
+</div>
         </div>
 
 @endsection

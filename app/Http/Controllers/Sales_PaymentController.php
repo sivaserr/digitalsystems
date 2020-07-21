@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sales;
-use App\Purchase_paid_details;
+use App\Sales_Paid_Details;
+use App\sales_cod;
 use DB;
 
 class Sales_PaymentController extends Controller
@@ -38,8 +39,26 @@ class Sales_PaymentController extends Controller
     public function store(Request $request)
     {
 
+          if($request->transfer_type == 2){
+             
+           $sales_cod  = new sales_cod();
+           $sales_cod->sale_id = $request->input('salesbill');
+           $sales_cod->date = $request->input('date');
+           $sales_cod->customer_id = $request->input('customer');
+           $sales_cod->bill_amount = $request->input('currentbillamount');
+           $sales_cod->recived_amount = $request->input('amount');
+           $sales_cod->return_box = $request->input('returnbox');
+           $sales_cod->note = $request->input('note');
+           $sales_cod->balance = $request->input('remainingamount');
 
-        $balance = 0;
+        if( $sales_cod->save()){
+                DB::table('sales')->where('id', $request->input('salesbill'))->limit(1)
+                ->update(array('amount_pending' =>$request->input('remainingamount'),'box_pending' =>$request->input('remainbox') ));
+         }
+           return redirect('/payment-for-sales')->with('sales_cod',$sales_cod);
+
+          }else{
+                   $balance = 0;
         $credit = 0;
         $debit = 0;
 
@@ -48,22 +67,21 @@ class Sales_PaymentController extends Controller
 
             $balance = $bankbalance->opening_balance;
 
-        $paid = DB::table('paid_details')->select('paid_details.bank_id',DB::raw('SUM(paid_amount) as credit'),DB::raw('SUM(debit) as debit'))->where('paid_details.bank_id','=',$bankbalance->id)->groupBy('bank_id')->get()->first();
-
+        $paid = DB::table('paid_details')
+                ->leftJoin('sales_paid_details','paid_details.bank_id','=','sales_paid_details.bank_id')
+                ->select('paid_details.bank_id',DB::raw('SUM(sales_paid_details.credit) as credit'),DB::raw('SUM(paid_details.debit) as debit'))->where('paid_details.bank_id','=',$bankbalance->id)->groupBy('bank_id')->get()->first();
            $credit = $paid->credit;
            $debit =  $paid->debit;
     
 
 
 
-        $salespaids = new Purchase_paid_details();
+        $salespaids = new Sales_Paid_Details();
 
-        $salespaids->bill_id = $request->input('salesbill');
+        $salespaids->sale_id = $request->input('salesbill');
         $salespaids->date = $request->input('date');
-        $salespaids->supplier_id = 0;
         $salespaids->customer_id = $request->input('customer');
-        $salespaids->paid_amount = $request->input('amount');
-        $salespaids->debit = 0;
+        $salespaids->credit = $request->input('amount');
         $salespaids->return_box = $request->input('returnbox');
         $salespaids->note = $request->input('note');
         $salespaids->bank_id = $request->input('bank');
@@ -76,7 +94,9 @@ class Sales_PaymentController extends Controller
          }
 
 
-        return redirect('/payment-for-sales')->with('salespaids',$salespaids);
+        return redirect('/payment-for-sales')->with('salespaids',$salespaids); 
+          }
+
     }
 
     /**

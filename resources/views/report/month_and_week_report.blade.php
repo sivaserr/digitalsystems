@@ -114,7 +114,7 @@ Purchase Monthly And Weekly Report
 
     </div>
 
-
+<div class="table-responsive">
          <table class="table table-striped">
         <thead>
           <tr>
@@ -139,9 +139,9 @@ Purchase Monthly And Weekly Report
             <td>{{$supplier->supplier_name}}</td>
             @endif
             @endforeach
-            <td>{{$bill->date}}</td>
+            <td>{{Carbon\Carbon::parse($bill->date)->format('d-m-Y')}}</td>
             <td>{{$bill->total_box}}</td>
-            <td>{{$bill->current_balance}}</td>
+            <td>{{number_format($bill->current_balance)}}</td>
           <td><a href="billviewedit/{{$bill->id}}" class="btn btn-sm btn-info">View</a>
           </td>
           </tr>
@@ -174,5 +174,6 @@ Purchase Monthly And Weekly Report
 	</div>
 </div> -->
         </div>
+      </div>
 
 @endsection

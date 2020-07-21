@@ -2,7 +2,7 @@
 
 @section('navbar_brand')
 
-Day Report
+Purchase Payment Day Report
 @endsection
 <style>
 .billviewproduct {
@@ -25,11 +25,14 @@ Day Report
 </style>
     <?php 
     $purchases_products = DB::table('purchases_products')->select('purchases_products.*')->get();
+    $paid_details = DB::table('paid_details')
+                    ->join('purchase_cod','paid_details.bill_id','=','purchase_cod.bill_id')
+                    ->select('paid_details.*','purchase_cod.recived_amount')->get();
     $products = DB::table('products')->select('products.*')->get();
     $trips = DB::table('trips')->select('trips.*')->get();
     $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
     
-    // var_dump($bill_datas);
+    //var_dump($paid_details);exit;
     ?>
 @section('content')
 <div class="card">
@@ -44,10 +47,10 @@ Day Report
       <h5><b>PURCHASE</b></h5>
     </div>
       <div class="card-header">
-        Bill no : <strong>{{$Bills->bill_no}}</strong> 
-        <span class="float-right"> <strong>Date :</strong> {{Carbon\Carbon::parse($Bills->date)->format('d-m-Y')}}</span>
+        Bill no : <strong>{{$purchasepayment->bill_no}}</strong> 
+        <span class="float-right"> <strong>Date :</strong> {{Carbon\Carbon::parse($purchasepayment->date)->format('d-m-Y')}}</span>
         @foreach($trips as $trip)
-        @if($Bills->trip_id === $trip->id)
+        @if($purchasepayment->trip_id === $trip->id)
         <div class="trip">Trip : {{$trip->trip_name}}</div>
         @endif
         @endforeach
@@ -58,7 +61,7 @@ Day Report
       <h6 class="mb-3">From:</h6>
       <div>
         @foreach ($suppliers as $supplier)
-        @if($Bills->supplier_id === $supplier->id )
+        @if($purchasepayment->supplier_id === $supplier->id )
         <strong>{{$supplier->supplier_name}}</strong>
         @endif
         @endforeach
@@ -108,7 +111,7 @@ Day Report
 
                       <tr>
                           @foreach($purchases_products as $purchases_product)
-                          @if($Bills->id === $purchases_product->bill_id)
+                          @if($purchasepayment->id === $purchases_product->bill_id)
                       <th scope="row">{{$id}}</th>
                         @foreach($products as $product)
                         @if($purchases_product->product_id === $product->id)
@@ -160,23 +163,23 @@ Day Report
                     <tbody>
                       <tr>
                         <th class="text-center">Total No of Box(T-box + L-box)</th>
-                        <td class="text-center">{{$Bills->total_no_of_box}}</td>
+                        <td class="text-center">{{$purchasepayment->total_no_of_box}}</td>
                       </tr>
                       <tr>
                         <th class="text-center">No of Ice Bar</th>
-                        <td class="text-center">{{$Bills->no_of_ice_bar}}</td>
+                        <td class="text-center">{{$purchasepayment->no_of_ice_bar}}</td>
                       </tr>
                       <tr>
                         <th class="text-center">Per-ice Bar Amount</th>
-                        <td class="text-center">{{$Bills->per_ice_bar}}</td>
+                        <td class="text-center">{{$purchasepayment->per_ice_bar}}</td>
                       </tr>
                       <tr>
                         <th class="text-center">Packing Charge/Box</th>
-                        <td class="text-center">{{$Bills->per_packing_price}}</td>
+                        <td class="text-center">{{$purchasepayment->per_packing_price}}</td>
                       </tr>
                       <tr>
                         <th class="text-center">Per-ice Bar Amount</th>
-                        <td class="text-center">{{$Bills->per_ice_bar}}</td>
+                        <td class="text-center">{{$purchasepayment->per_ice_bar}}</td>
                       </tr>
                     </tbody>
                   </table> 
@@ -186,18 +189,18 @@ Day Report
                     <tbody>
                       <tr>
                         <th class="text-center">Today Box</th>
-                        <td class="text-center">{{$Bills->today_box}}</td>
+                        <td class="text-center">{{$purchasepayment->today_box}}</td>
                       </tr>
                       <tr>
                         <th class="text-center">Balance box</th>
-                        <td class="text-center">{{$Bills->balance_box}}</td>
+                        <td class="text-center">{{$purchasepayment->balance_box}}</td>
                       </tr>
                       <tr>
                         <th class="text-center">Total box</th>
-                        <td class="text-center">{{$Bills->total_box}}</td>
+                        <td class="text-center">{{$purchasepayment->total_box}}</td>
                       </tr>
                     </tbody>
-                  </table>    
+                  </table>   
                 </div>
               </div>
           
@@ -207,46 +210,65 @@ Day Report
                 <tbody>
                   <tr>
                     <th class="text-center">Grass Amount</th>
-                    <td class="text-center">{{number_format($Bills->grass_amount)}}</td>
+                    <td class="text-center">{{number_format($purchasepayment->grass_amount)}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Transport Charge</th>
-                    <td class="text-center">{{number_format($Bills->transport_charge)}}</td>
+                    <td class="text-center">{{number_format($purchasepayment->transport_charge)}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Ice Bar</th>
-                    <td class="text-center">{{number_format($Bills->icebar_amount)}}</td>
+                    <td class="text-center">{{number_format($purchasepayment->icebar_amount)}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Packing Charge</th>
-                    <td class="text-center">{{number_format($Bills->packing_charge)}}</td>
+                    <td class="text-center">{{number_format($purchasepayment->packing_charge)}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Excess</th>
-                    <td class="text-center">{{number_format($Bills->excess)}}</td>
+                    <td class="text-center">{{number_format($purchasepayment->excess)}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Discount</th>
-                    <td class="text-center">{{number_format($Bills->less)}}</td>
+                    <td class="text-center">{{number_format($purchasepayment->less)}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Previous Balance</th>
-                    <td class="text-center">{{number_format($Bills->pre_balance)}}</td>
+                    <td class="text-center">{{number_format($purchasepayment->pre_balance)}}</td>
                   </tr>
                   <tr>
                     <th class="text-center">Current Bill Amount</th>
-                    <td class="text-center">{{number_format($Bills->current_balance)}}</td>
+                    <td class="text-center">{{number_format($purchasepayment->current_balance)}}</td>
                   </tr>
-                  <tr>
+<!--                   <tr>
                     <th class="text-center">Overall Balance</th>
-                    <td class="text-center">{{number_format($Bills->overall)}}</td>
-                  </tr>
+                    <td class="text-center">{{$purchasepayment->overall}}</td>
+                  </tr> -->
                 </tbody>
               </table>
             </div>
           </div>
 
-
+                <table class="table table-bordered table-hover" id="tab_logic_total">
+                    <tbody>
+                    	@foreach($paid_details as $paid_detail)
+                        @if($purchasepayment->id == $paid_detail->bill_id)
+                      <tr>
+                        <th class="text-center">Current Bill Amount</th>
+                        <td class="text-center">{{number_format($purchasepayment->current_balance)}}</td>
+                      </tr>
+                      <tr>
+                        <th class="text-center">( {{Carbon\Carbon::parse($paid_detail->date)->format('d-m-Y')}} )Cash Recived</th>
+                        <td class="text-center">{{number_format($paid_detail->debit + $paid_detail->recived_amount)}}</td>
+                      </tr>
+                      <tr>
+                        <th class="text-center">Total</th>
+                        <td class="text-center">{{number_format($purchasepayment->current_balance - $paid_detail->debit-$paid_detail->recived_amount)}}</td>
+                      </tr>
+                      @endif
+                      @endforeach
+                    </tbody>
+                  </table> 
       </div>
       </div>
       </div>

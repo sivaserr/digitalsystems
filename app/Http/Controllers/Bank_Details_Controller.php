@@ -172,9 +172,15 @@ class Bank_Details_Controller extends Controller
 
       $bank_id = $request->account_holder;
 
-      $tranfers =DB::table('paid_details')->where([ ['paid_details.bank_id' ,'=' , $bank_id] ])->orderBy('id')->get();
-      
+      // $tranfers =DB::table('paid_details')
+      //            ->leftJoin('sales_paid_details','paid_details.bank_id','=','sales_paid_details.bank_id')
+      //            ->select('paid_details.bank_id','paid_details.debit','paid_details.supplier_id','paid_details.date','paid_details.ref_no','paid_details.balance','sales_paid_details.customer_id','sales_paid_details.credit')
+      //           ->where('paid_details.bank_id','=', $bank_id)->get();
 
+
+      $tranfers =DB::table('paid_details')
+                 ->where([ ['paid_details.bank_id' ,'=' , $bank_id] ])->orderBy('id')->get();
+      
       $data['tranfers'] = $tranfers;
 
       return view('bank.transaction_details',$data);

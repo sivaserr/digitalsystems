@@ -129,18 +129,19 @@ class ReportController extends Controller
     public function salesconsolproduct()
     {
     
-   $products = DB::table('products')->select('products.id')->get();
-   $customers = DB::table('customer')->select('customer.id')->get();
+   //$products = DB::table('products')->select('products.id')->get();
+   //$customers = DB::table('customer')->select('customer.id')->get();
     // $productslists = DB::table('sales_products')->select('sales_products.*')->where([['customer_id','=',22],['product_id','=', $product->id]])->get();
 
-foreach ($products as $product) {
-    foreach ($customers as $customer) {
+//foreach ($products as $product) {
+    //foreach ($customers as $customer) {
     
-       $productslists = DB::table('sales_products')->select('sales_products.customer_id','sales_products.box','sales_products.product_id')->get();
-    }
-}
+      // $productslists = DB::table('sales_products')->select('sales_products.customer_id','sales_products.box','sales_products.product_id')->get();
+    //}
+  //}
+
+        $productslists = Product::all();        
       
-    //var_dump($productslists);exit;
         return view('sales_reports.sales_consolreport')->with('productslists' ,$productslists);
 
 

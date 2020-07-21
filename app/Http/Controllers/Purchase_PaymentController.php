@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Supplier;
 use App\Purchases;
 use App\Purchase_paid_details;
+use App\purchase_cod;
 use DB;
 class Purchase_PaymentController extends Controller
 {
@@ -18,7 +19,12 @@ class Purchase_PaymentController extends Controller
     {
         return view('payment.purchase_payment');
     }
-
+    public function purchasescodindex(){
+        return view('cash_on_delivery.purchases_cod');
+    }
+    public function salescodindex(){
+        return view('cash_on_delivery.sales_cod');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -37,6 +43,29 @@ class Purchase_PaymentController extends Controller
      */
     public function store(Request $request)
     {
+
+          if($request->transfer_type == 2){
+             
+           $purchase_cod  = new purchase_cod();
+           $purchase_cod->bill_id = $request->input('bill');
+           $purchase_cod->date = $request->input('date');
+           $purchase_cod->supplier_id = $request->input('supplier');
+           $purchase_cod->bill_amount = $request->input('currentbillamount');
+           $purchase_cod->recived_amount = $request->input('amount');
+           $purchase_cod->return_box = $request->input('returnbox');
+           $purchase_cod->note = $request->input('note');
+           $purchase_cod->balance = $request->input('remainingamount');
+          
+
+         if(  $purchase_cod->save()){
+                DB::table('purchases')->where('id', $request->input('bill'))->limit(1)
+                ->update(array('amount_pending' =>$request->input('remainingamount'),'box_pending' =>$request->input('remainbox') ));
+         }
+
+           return redirect('/payment-for-purchase')->with('purchase_cod',$purchase_cod);
+
+          }else{
+
            $balance = 0;
            $credit = 0;
            $debit = 0;
@@ -47,7 +76,9 @@ class Purchase_PaymentController extends Controller
               $balance = $bankbalance->opening_balance;
 
 
-         $lastpaid = DB::table('paid_details')->select('paid_details.bank_id',DB::raw('SUM(paid_amount) as credit'),DB::raw('SUM(debit) as debit'))->where('paid_details.bank_id','=',$bankbalance->id)->groupBy('bank_id')->get()->first();
+         $lastpaid = DB::table('paid_details')
+                     ->leftJoin('sales_paid_details','paid_details.bank_id','=','sales_paid_details.bank_id')
+                     ->select('paid_details.bank_id',DB::raw('SUM(credit) as credit'),DB::raw('SUM(debit) as debit'))->where('paid_details.bank_id','=',$bankbalance->id)->groupBy('bank_id')->get()->first();
 
            if($lastpaid !== null){
            $credit = $lastpaid->credit;
@@ -64,8 +95,6 @@ class Purchase_PaymentController extends Controller
         $paids->bill_id = $request->input('bill');
         $paids->date = $request->input('date');
         $paids->supplier_id = $request->input('supplier');
-        $paids->customer_id = 0;
-        $paids->paid_amount = 0;
         $paids->debit = $request->input('amount');
         $paids->return_box = $request->input('returnbox');
         $paids->note = $request->input('note');
@@ -73,12 +102,19 @@ class Purchase_PaymentController extends Controller
         $paids->transfer_type = $request->input('transfer_type');
         $paids->ref_no = $request->input('ref_no');
         $paids->balance = $balance + $credit -$debit - $request->input('amount');
+
+
         if( $paids->save()){
                 DB::table('purchases')->where('id', $request->input('bill'))->limit(1)
-                ->update(array('amount_pending' => $request->input('remainingamount') ,'box_pending' => $request->input('remainbox') ));
+                ->update(array('amount_pending' => $request->input('remainingamount'),'box_pending' => $request->input('remainbox') ));
          }
-        
          return redirect('/payment-for-purchase')->with('paids',$paids);
+
+
+          }
+
+
+        
 
     }
 

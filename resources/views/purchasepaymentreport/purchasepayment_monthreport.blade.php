@@ -2,7 +2,7 @@
 
 @section('navbar_brand')
 
-Sales Weekly and Monthly Report
+Purchase Payment Weekly and Monthly Report
 @endsection
 
 <style type="text/css">
@@ -31,7 +31,9 @@ Sales Weekly and Monthly Report
 </style>
 @section('content')
     <?php 
-    $customers = DB::table('customer')->select('customer.*')->get();
+    $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
+    $purchases = DB::table('purchases')->select('purchases.*')->get();
+
     //$bills = DB::table('bills')->select('bills.*')->get();
     
     // var_dump($bills);
@@ -39,7 +41,7 @@ Sales Weekly and Monthly Report
           <div class="card">
             <div class="card-header">
               <div class="report_title">
-                  <h4 class="card-title">Sales Weekly and Monthly report </h4>
+                  <h4 class="card-title">Purchase Payment Weekly and Monthly report </h4>
               </div>
 
             </div>   
@@ -49,7 +51,7 @@ Sales Weekly and Monthly Report
 
         <div class="container">
 
-<form method="POST" action="/sales_month_and_week_report">
+<form method="POST" action="/purchasepayment_month_report">
   {{ csrf_field() }}
   <div class="row">
     <div class="col-sm-5">
@@ -78,40 +80,47 @@ Sales Weekly and Monthly Report
     </div>
 
 
-         <table class="table table-striped">
+     <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Sales no</th>
-            <th scope="col">Customer</th>
+            <th scope="col">Bill no</th>
+            <th scope="col">Suppliers</th>
             <th scope="col">Date</th>
-            <th scope="col">Box</th>
-            <th scope="col">Netvalue</th>
+            <th scope="col">Paid Amount</th>
+            <th scope="col">Return Box</th>
           </tr>
         </thead>
         <tbody>
           <?php $id = 1?>
-            @if(count($salesbills) > 0)
-            @foreach($salesbills as $salesbill)
+            @if(count($purchasepayments) > 0)
+            @foreach($purchasepayments as $purchasepayment)
 
           <tr>
           <th scope="row">{{$id}}</th>
-            <td>{{$salesbill->sales_no}}</td>
-            @foreach($customers as $customer)
-            @if($salesbill->customer_id === $customer->id)
-            <td>{{$customer->name}}</td>
+          @foreach($purchases as $purchase)
+          @if($purchase->id == $purchasepayment->bill_id)
+            <td>{{$purchase->bill_no}}</td>
+          @endif
+          @endforeach
+            @foreach($suppliers as $supplier)
+            @if($purchasepayment->supplier_id === $supplier->id)
+            <td>{{$supplier->supplier_name}}</td>
             @endif
             @endforeach
-            <td>{{Carbon\Carbon::parse($salesbill->date)->format('d-m-Y')}}</td>
-            <td>{{$salesbill->total_box}}</td>
-            <td>{{number_format($salesbill->current_balance)}}</td>
-          <td><a href="salesbillviewedit/{{$salesbill->id}}" class="btn btn-sm btn-info">View</a>
+            <td>{{Carbon\Carbon::parse($purchasepayment->date)->format('d-m-Y')}}</td>
+            <td>{{number_format($purchasepayment->debit + $purchasepayment->recived_amount)}}</td>
+            <td>{{$purchasepayment->return_box}}</td>
+          <td><a href="purchasepayment/{{$purchasepayment->bill_id}}" class="btn btn-sm btn-info">View</a>
           </td>
           </tr>
           <?php $id++;?>
 
           @endforeach
+
+
           @endif
+
         </tbody>
       </table>
 

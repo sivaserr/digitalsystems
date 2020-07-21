@@ -43,9 +43,12 @@ Customer list page
 
                   <div class="modal-body">
                         <div class="form-group">
+                            <label for="supplier_name">Serial No</label>
+                            <input type="text" class="form-control" name="serialno" id="serialno" aria-describedby="serialno" placeholder="Enter serial no" required>
+                          </div>
+                        <div class="form-group">
                             <label for="supplier_name">supplier</label>
                             <input type="text" class="form-control" name="supplier_name" id="supplier_name" aria-describedby="supplier_name" placeholder="Enter supplier name" required>
-                            {{-- <small id="name" class="form-text text-muted">Your information is safe with us.</small> --}}
                           </div>
                           <div class="form-group">
                               <label for="short_name">short name</label>
@@ -104,7 +107,7 @@ Customer list page
                         <?php $id = 1; ?>
                       @foreach($suppliers as $supplier)
                       <tr id="supplierdata">
-                        <td>{{ $id }}</td>
+                        <td>{{$supplier->serial_no }}</td>
                         <td>{{$supplier ->supplier_name}}</td>
                         <td>{{$supplier ->short_name}}</td>
                         <td>{{$supplier ->city}}</td>

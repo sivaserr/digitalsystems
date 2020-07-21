@@ -42,10 +42,9 @@ class ProductController extends Controller
 
         $product->product_name = $request->input('productname');
         $product->price = $request->input('price');
-        // $product->weight = $request->input('weight');
-        // $product->net_weight = $request->input('netweight');
         $product->product_group = $request->input('productgroupid');
         $product->unit_id = $request->input('unitid');
+        $product->status = $request->input('status');
         $product->save();
 
         return redirect('/products')->with('product' ,$product);
@@ -92,9 +91,7 @@ class ProductController extends Controller
         $products->price = $request->input('price');
         $products->product_group = $request->input('productgroupid');
         $products->unit_id = $request->input('unitid');
-        // $products->weight = $request->input('weight');
-        // $products->net_weight = $request->input('netweight');
-
+        $products->status = $request->input('status');
         $products->save();
 
         return redirect('/products')->with('products' ,$products);

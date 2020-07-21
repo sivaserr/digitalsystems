@@ -182,7 +182,10 @@ class CustomerController extends Controller
 
     public function getcustomerratefixing($id){
 
-        $customer = DB::table('customer_rate_fixings')->where('customer_id','=',$id)->get();
+        $customer = DB::table('customer_rate_fixings')
+                    ->leftJoin('customer_rate_fixing_products','customer_rate_fixings.id','=','customer_rate_fixing_products.customerratefixing_id')
+                    ->select('customer_rate_fixings.customer_id','product_id','fixed_rate')
+                    ->where('customer_rate_fixings.customer_id','=',$id)->get();
 
         return response()->json($customer);
     }

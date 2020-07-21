@@ -5,30 +5,35 @@ Purchase consolidation
 
 @section('content')
  <?php
-   $products = DB::table('products')->select('products.*')->get();
-   $purchaseofproducts = DB::table('products')
-                     ->join('purchases_products' ,'products.id' ,'=','purchases_products.product_id')
-                     ->select('products.product_name','products.id')
-                     ->groupBy('products.id')
-                     ->get();
 
-//var_dump($sales_products);exit;
-
-
-
-   $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
+   $suppliers = DB::table('suppliers')->select('suppliers.*')->orderBy('serial_no')->get();
    $trips = DB::table('trips')->select('trips.*')->get();
    $set_trip = DB::table('set_trip')->select('set_trip.set_trip')->first();
-    $supplierpurchaseproducts = DB::table('purchases_products')
-                            ->select('purchases_products.supplier_id', DB::raw('SUM(box) as total_box'),DB::raw('SUM(loose_kg) as loose_kg'))
-                     ->groupBy('supplier_id')
+   $products = DB::table('products')->select('products.*')->get();
+
+   $purchaseofproducts = DB::table('products')
+                     ->join('purchases_products' ,'products.id' ,'=','purchases_products.product_id')
+                     ->join('purchases' ,'purchases_products.bill_id','=','purchases.id')
+                     ->select('purchases.trip_id','products.product_name','products.id')
+                     ->where('trip_id','=',$set_trip->set_trip)
+                     ->groupBy('product_id')
                      ->get();
+
+//var_dump($purchaseofproducts);exit;
+
+
+
+    // $supplierpurchaseproducts = DB::table('purchases_products')
+    //                         ->select('purchases_products.supplier_id', DB::raw('SUM(box) as total_box'),DB::raw('SUM(loose_kg) as loose_kg'))
+    //                  ->groupBy('supplier_id')
+    //                  ->get();
 
     $supplierpurchases = DB::table('purchases')
                      ->select('purchases.supplier_id',DB::raw('SUM(current_balance) as amount'), DB::raw('SUM(balance_box) as balance_box'),DB::raw('SUM(today_box) as total_box'),DB::raw('SUM(box_pending) as taken_box'))
                      ->where('trip_id','=',$set_trip->set_trip)
                      ->groupBy('supplier_id')
                      ->get();
+  
 // $products2 = json_decode($products,true);
 // $customers2 = json_decode($customers,true);
 
@@ -75,10 +80,10 @@ Purchase consolidation
                   <tr scope="row">
                     @foreach($trips as $trip)
                     @if($trip->id == $set_trip->set_trip)
-                    <th colspan="6">Trip :{{$trip->trip_name}}</th>
+                    <th colspan="4">Trip :{{$trip->trip_name}}</th>
 
-                    <th colspan="6" style="text-align: center;">Delivery sheet</th>
-                    <th colspan="6">Date :{{$trip->date}}</th>
+                    <th colspan="4" style="text-align: center;">Delivery sheet</th>
+                    <th colspan="4">Date :{{Carbon\Carbon::parse($trip->date)->format('d-m-Y')}}</th>
                     @endif
                     @endforeach
                   </tr>
@@ -108,24 +113,38 @@ Purchase consolidation
                   <td>{{$id}}</td>
                   <td>{{$supplier->short_name}}</td>
                   @foreach($purchaseofproducts as $purchaseofproduct)
-                  <?php $purchase_productdatas = DB::table('purchases_products')->select('purchases_products.price','purchases_products.supplier_id','purchases_products.product_id',DB::raw('SUM(box) as total_box'),DB::raw('SUM(loose_kg) as total_loosekg'))->where(['supplier_id' => $supplier->id,'product_id' => $purchaseofproduct->id])->groupBy('supplier_id','product_id','price')->get()->first();
+                  <?php 
+
+                  // $purchase_productdatas = DB::table('purchases_products')
+                  // ->select('purchases_products.price','purchases_products.supplier_id','purchases_products.product_id',DB::raw('SUM(box) as total_box'),DB::raw('SUM(loose_kg) as total_loosekg'))->where(['supplier_id' => $supplier->id,'product_id' => $purchaseofproduct->id])->groupBy('supplier_id','product_id','price')->get()->first();
+
+                  $purchase_productdatas = DB::table('purchases')
+                  ->leftJoin('purchases_products','purchases.id','=','purchases_products.bill_id')
+                  ->select('purchases.trip_id','purchases_products.price','purchases_products.supplier_id','purchases_products.product_id',DB::raw('SUM(purchases_products.box) as total_box'),DB::raw('SUM(purchases_products.loose_kg) as total_loosekg'))
+                  ->where(['purchases_products.supplier_id' => $supplier->id,'purchases_products.product_id' => $purchaseofproduct->id,'purchases.trip_id' =>$set_trip->set_trip ])
+                  ->get()->first();
+                  
+
                    $purchase_productdata = json_decode(json_encode($purchase_productdatas) , true);
- //var_dump($purchase_productdata);exit;
+
+
+
                    ?>  
-                  @if($purchase_productdata['total_box'] > 0)
+
+                  @if($purchase_productdata['total_box'] >= 0)
                   @if($purchase_productdata['product_id'] == $purchaseofproduct->id)      
                   <td>{{$purchase_productdata['total_box']}} + {{$purchase_productdata['total_loosekg']}}X {{$purchase_productdata['price']}}</td>
-                  @endif 
                   @else<td>-</td>
-               @endif
+                  @endif 
+                  @endif
                   @endforeach
 
-                  <td>{{$supplierpurchase->amount}}</td>
+                  <td>{{number_format($supplierpurchase->amount)}}</td>
                   <td>{{$supplierpurchase->total_box}}</td>
                   <td>{{$supplierpurchase->balance_box}}</td>
                   <td>{{$supplierpurchase->total_box + $supplierpurchase->balance_box}}</td>
-                  <td>{{$supplierpurchase->taken_box}}</td>
-                  <td>{{($supplierpurchase->total_box + $supplierpurchase->balance_box) - $supplierpurchase->taken_box }}</td>
+                  <td>{{$supplierpurchase->total_box - $supplierpurchase->taken_box}}</td>
+                  <td>{{($supplierpurchase->total_box + $supplierpurchase->balance_box)-($supplierpurchase->total_box - $supplierpurchase->taken_box)}}</td>
                   </tr>
                   <?php $id++?>
 

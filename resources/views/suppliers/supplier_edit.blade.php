@@ -25,6 +25,10 @@ $status = DB::table('suppliers')->select('suppliers.status')->get();
            {{ method_field('PUT')}}
               <div class="modal-body">
                     <div class="form-group">
+                            <label for="supplier_name">Serial No</label>
+                            <input type="text" class="form-control" name="serialno" id="serialno" aria-describedby="serialno" value="{{$supplier->serial_no}}" required>
+                    </div>
+                    <div class="form-group">
                         <label for="supplier_name">supplier</label>
                     <input type="text" class="form-control" name="supplier_name" value="{{$supplier->supplier_name}}" id="supplier_name" aria-describedby="supplier_name" placeholder="Enter supplier name">
                         {{-- <small id="name" class="form-text text-muted">Your information is safe with us.</small> --}}

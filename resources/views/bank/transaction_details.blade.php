@@ -31,6 +31,7 @@
 
   $suppliers = DB::table('suppliers')->select('suppliers.*')->get();
   $customers = DB::table('customer')->select('customer.*')->get();
+  $sales_paid_details = DB::table('sales_paid_details')->select('sales_paid_details.*')->get();
 ?>
 <div class="row">
 <div class="col-md-12">
@@ -131,28 +132,45 @@
                   <td>{{$id}}</td>
                   <td>{{Carbon\Carbon::parse($tranfer->date)->format('d-m-Y')}}</td>
                   <td>{{$tranfer->ref_no}}</td>
-                  @if($tranfer->supplier_id !== 0)
                   @foreach($suppliers as $supplier)
                   @if($tranfer->supplier_id === $supplier->id)
                   <td>{{$supplier->supplier_name}}</td>
                   @endif
                   @endforeach
-                  @else
-                  @foreach($customers as $customer)
-                  @if($tranfer->customer_id === $customer->id)
-                  <td>{{$customer->name}}</td>
-                  @endif
-                  @endforeach
-                  @endif
-
                   <td>{{$tranfer->debit}}</td>
-                  <td>{{$tranfer->paid_amount}}</td>
+                  <td>0</td>
                   <td>{{$tranfer->balance}}</td>
             
                   </tr>
                   <?php $id++; ?>
                   @endforeach
                   @endif
+
+                  @if(count($tranfers) > 0)
+                  @foreach($tranfers as $tranfer)
+                  @foreach($sales_paid_details as $sales_paid_detail)
+                  @if($tranfer->bank_id == $sales_paid_detail->bank_id)
+                  <tr>
+                  <td>{{$id}}</td>
+                  <td>{{Carbon\Carbon::parse($sales_paid_detail->date)->format('d-m-Y')}}</td>
+                  <td>{{$sales_paid_detail->ref_no}}</td>
+                  @foreach($customers as $customer)
+                  @if($sales_paid_detail->customer_id === $customer->id)
+                  <td>{{$customer->name}}</td>
+                  @endif
+                  @endforeach
+                  <td>0</td>
+                  <td>{{$sales_paid_detail->credit}}</td>
+                  <td>{{$sales_paid_detail->balance}}</td>
+            
+                  </tr>
+                  <?php $id++; ?>
+                  @endif
+                  @endforeach
+                  @endforeach
+                  @endif
+
+
                 </tbody>
               </table>
             </div>

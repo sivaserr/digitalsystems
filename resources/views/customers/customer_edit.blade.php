@@ -23,6 +23,10 @@ $status = DB::table('customer')->select('customer.status')->get();
            {{ csrf_field() }}
            {{ method_field('PUT')}}
               <div class="modal-body">
+                      <div class="form-group">
+                        <label for="serial_no">Serial No</label>
+                        <input type="text" class="form-control" name="serial_no" id="serial_no" value="{{$customerss->serial_no}}" required>
+                      </div>
                     <div class="form-group">
                         <label for="name">Name</label>
                     <input type="text" class="form-control" name="name" value="{{$customerss->name}}" id="name" aria-describedby="name" placeholder="Enter name">
@@ -48,10 +52,6 @@ $status = DB::table('customer')->select('customer.status')->get();
                     <label for="opening_box">Opening Box</label>
                     <input type="text" class="form-control" name="opening_box" value="{{$customerss->opening_box}}" id="opening_box" placeholder="opening_box" >
                   </div>
-                      <div class="form-group">
-                        <label for="serial_no">Serial No</label>
-                        <input type="text" class="form-control" name="serial_no" id="serial_no" value="{{$customerss->serial_no}}" required>
-                      </div>
                   <div class="customer_status">
                       <label for="phone">Active</label>
                      <select name="status" id="status" class="form-control">

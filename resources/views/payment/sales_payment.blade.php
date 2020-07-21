@@ -172,17 +172,6 @@
                     <input type="text" class="form-control" name="note" id="note" aria-describedby="note"  required>
                 </div>
     </div>
-    <div class="col-sm-4">
-              <div class="form-group">
-                    <label for="payment">Bank</label>
-              <select id="bank" class="form-control" name="bank">
-              <option>Choose</option>
-              @foreach($bank_details as $bank_detail)
-              <option value="{{$bank_detail->id}}">{{$bank_detail->short_name}}-{{$bank_detail->ac_holder}}</option>
-              @endforeach
-              </select>
-              </div>
-    </div>
         <div class="col-sm-4">
               <div class="form-group">
                <label for="transfer_type"> Transfer Types</label>
@@ -193,6 +182,17 @@
               @endforeach
               </select>
                 </div>
+    </div>    
+    <div class="col-sm-4">
+              <div class="form-group">
+                    <label for="payment">Bank</label>
+              <select id="bank" class="form-control" name="bank">
+              <option>Choose</option>
+              @foreach($bank_details as $bank_detail)
+              <option value="{{$bank_detail->id}}">{{$bank_detail->short_name}}-{{$bank_detail->ac_holder}}</option>
+              @endforeach
+              </select>
+              </div>
     </div>
 
   </div>
@@ -224,17 +224,17 @@
     <div class="row">
       <div class="col-sm-6">
                 <div class="form-group">
-                    <label for="payment">Current Bill Box:</label>
+                    <label for="payment">Pending Box:</label>
                     <input type="text" class="box_detail" name="currentbillbox" id="currentbillbox" aria-describedby="currentbillbox"  readonly>
                 </div>
-                <div class="form-group">
+<!--                 <div class="form-group">
                     <label for="payment">Pre-Box:</label>
                     <input type="text" class="box_detail" name="prebox" id="prebox" aria-describedby="amount"   readonly>
                 </div>
                 <div class="form-group">
                     <label for="payment"> Overall box:</label>
                     <input type="text" class="box_detail" name="overallbox" id="overallbox" aria-describedby="amount"  readonly>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="payment">Paid Box:</label>
                     <input type="text" class="box_detail" name="paidbox" id="paidbox" aria-describedby="paidbox"  readonly>
@@ -247,17 +247,17 @@
          <div class="col-sm-6">
              <div class="amount_details">
                 <div class="form-group">
-                    <label for="payment">Current bill Rs: </label>
+                    <label for="payment">Pending Rs: </label>
                     <input type="text" class="amount_details" name="currentbillamount" id="currentbillamount" aria-describedby="amount"  readonly>
                 </div>
-                <div class="form-group">
+<!--                 <div class="form-group">
                     <label for="payment">Previouse Rs: </label>
                     <input type="text" class="amount_details" name="previousebalance" id="previousebalance" aria-describedby="previousebalance"  readonly>
                 </div>
                 <div class="form-group">
                     <label for="payment">overall Rs: </label>
                     <input type="text" class="amount_details" name="overallbalance" id="overallbalance" aria-describedby="overallbalance" readonly>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="payment">paid Rs: </label>
                     <input type="text" class="amount_details" name="paidamount" id="paidamount" aria-describedby="paidamount" readonly>
@@ -371,6 +371,7 @@ jQuery(document).ready(function ()
       </div>
       
       <div class="billviewproduct">
+        <div class="table-responsive">
             <table class="table table-striped">
                     <thead>
                       <tr>
@@ -412,6 +413,7 @@ jQuery(document).ready(function ()
                     </tbody>
                     
                   </table>
+                </div>
       </div>
 
 
@@ -449,7 +451,7 @@ jQuery(document).ready(function ()
                   <tbody>
                     <tr class="today_box">
                       <th class="text-center">Today Box</th>
-                      <td class="text-center">${data.total_box}</td>
+                      <td class="text-center">${data.today_box}</td>
                     </tr>
                     <tr class="balance_box">
                       <th class="text-center">Balance box</th>
@@ -459,10 +461,10 @@ jQuery(document).ready(function ()
                       <th class="text-center">Total box</th>
                       <td class="text-center">${data.total_box}</td>
                     </tr>
-                    <tr class="total_box">
+<!--                     <tr class="total_box">
                       <th class="text-center">Paid Pending box</th>
                       <td class="text-center">${data.box_pending}</td>
-                    </tr>
+                    </tr> -->
                   </tbody>
                 </table>
               </div>
@@ -498,7 +500,7 @@ jQuery(document).ready(function ()
               <table class="table table-bordered table-hover" id="tab_logic_total2">
                 <tbody>
                   <tr>
-                    <th class="text-center">Grass Amount</th>
+                    <th class="text-center">Gross Amount</th>
                     <td class="text-center">${data.grass_amount}</td>
                   </tr>
                   <tr>
@@ -525,10 +527,10 @@ jQuery(document).ready(function ()
                     <th class="text-center">Overall Balance</th>
                     <td class="text-center">${data.overall}</td>
                   </tr>
-                  <tr>
+<!--                   <tr>
                     <th class="text-center">Paid Pending Amount</th>
                     <td class="text-center">${data.amount_pending}</td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </div>
@@ -547,10 +549,11 @@ jQuery(document).ready(function ()
         let currentbillamount =document.getElementById("currentbillamount");
         let currentbox =document.getElementById("currentbillbox");
 
-        overallbalance.value = data.overall;
-        overallbox.value =data.total_box;
-        previousebalance.value = data.pre_balance;
-        previousebox.value =data.balance_box;
+        //overallbalance.value = data.overall;
+        //overallbox.value =data.total_box;
+        //previousebalance.value = data.pre_balance;
+        //previousebox.value =data.balance_box;
+
         currentbillamount.value = data.amount_pending;
         currentbox.value = data.box_pending;
 

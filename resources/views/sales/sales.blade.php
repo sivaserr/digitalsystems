@@ -136,8 +136,10 @@
         </div>
       </div>
 
+<div class="salesentry">
       <div class="row clearfix">
           <div class="col-md-12">
+            <div class="table-responsive">
             <table class="table table-bordered table-hover" id="tab_logic">
               <thead>
                 <tr class="headtext">
@@ -170,7 +172,7 @@
                     </td>
                   <td class="boxdata">
                         <input type="text"   class="form-control box" name="box" id="box" onchange="salescalculater(this)"  aria-describedby="box" placeholder="0" required>
-                        <span class="stock">Avl:</span><span class="stockbox">0 box</span>
+                        <span class="stock">Avl:</span><span class="stockbox">0</span>
                   </td>
                   <td>
                     <input type="text"   class="form-control loosekg" name="loosekg" onchange="" id="loosekg" aria-describedby="loosekg" placeholder="0 " required>
@@ -179,10 +181,11 @@
                     <input type="text"   class="form-control totalweight" name="totalweight" id="totalweight" oninput="salescalculater(this)" aria-describedby="" placeholder="0 " required>
                   </td>
                   <td>
-                      <input type="text"   class="form-control  loosebox" name="loosebox" oninput="calloosebox(this)" id="loosebox" aria-describedby="" placeholder="0 " required>
+                      <input type="text"   class="form-control  loosebox" name="loosebox" onchange="calloosebox(this)" id="loosebox" aria-describedby="" placeholder="0 " required>
                     </td>
                   <td class="loosekg">
                     <input type="text"   class="form-control salesloosekg" name="salesloosekg" id="salesloosekg" onKeyUp="callossekg(this)" aria-describedby="" placeholder="0 " required>
+                    <input type="hidden" class="stckloosekg"/>
                       <span class="stock">Avl:</span><span class="stockloosekg">0 kg</span>
                   </td>
                   <td>
@@ -213,7 +216,11 @@
               </tfoot>
             </table>
           </div>
+          </div>
         </div>
+     </div>
+
+
         <div class="row clearfix">
           <div class="col-md-12">
             <button id="add_row" class="btn btn-default pull-left">Add Row</button>

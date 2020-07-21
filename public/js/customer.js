@@ -223,15 +223,25 @@ let stockkg = stockloosekg.split('kg')[0];
 // 	console.log(event.target.parentNode.parentNode.id)
 	 
 // }
-let getstockloosekg = 0;
+
+//let getstockloosekg = 0;
 
 function calloosebox(lb){
 
     let parentnodes = lb.parentNode.parentNode.id;
     let input = document.getElementById(parentnodes);
 	let gettotalweight = input.getElementsByClassName('totalweight')[0].value;
-	let stockloosekg = input.getElementsByClassName("stockloosekg")[0];
-    stockloosekg.innerHTML = getstockloosekg-gettotalweight+"kg";
+	let stockkg = input.getElementsByClassName("stockloosekg")[0];
+	let stockloosekg = input.getElementsByClassName("stckloosekg")[0].value;
+   // stockloosekg.innerHTML = getstockloosekg-gettotalweight+"kg";
+    let spanbox = input.getElementsByClassName("stockbox")[0].innerHTML;    
+    let stockbox = spanbox.split('box')[0]; 
+    let kg = input.getElementsByClassName("loosekg")[0].value;    
+    let totalweight = input.getElementsByClassName('totalweight')[0].value;
+      stockkg.innerHTML = stockbox*kg+parseInt(stockloosekg)-totalweight + "kg";
+      console.log(stockloosekg);
+    
+
 }
 function callossekg(k){
 
@@ -348,11 +358,17 @@ function saleschangeprice(sel){
 	let loosekg = inputs.getElementsByClassName("loosekg")[0];
 
 	let stockbox = inputs.getElementsByClassName("stockbox")[0];
+	let stockloosekg = inputs.getElementsByClassName("stckloosekg")[0];
 
 	// let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'INR' });
 	// let formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' },{ maximumSignificantDigits: 3 });
-	let fixed = 0;
-	let unit = 0;
+	 
+	 let fixed = 0;
+
+
+	// let unit = 0;
+	// let unit = inputs.getElementsByClassName('loosekg')[0].value;
+	// let totalweight = inputs.getElementsByClassName('totalweight')[0].value;
 
     
      	$.ajax({
@@ -361,9 +377,10 @@ function saleschangeprice(sel){
 		dataType:'json',
 		success:function(data){
 			console.log(data);
-             stockbox.innerHTML = data.box +"box";
-             getstockloosekg = data.box*unit+data.loosekg;
-
+             stockbox.innerHTML = data.box + "box";
+             stockloosekg.value = data.loosekg;
+             //getstockloosekg = data.box*unit+data.loosekg;
+			
 
 		},
 		error:function(){
@@ -377,11 +394,11 @@ function saleschangeprice(sel){
 		dataType:'json',
 		success:function(data){
 			if(data.length>0){
-				data = data.filter(fix=>fix.product_id == idpro);
+					data = data.filter(fix=>fix.product_id == idpro);
 			}
 			if(data.length>0){
 				data.forEach((i,j)=>{
-					fixed = i.fixing_rate
+					fixed = i.fixed_rate
 				})
 			}
 		},
@@ -414,3 +431,125 @@ function saleschangeprice(sel){
 	 });
 
 }
+
+
+$(document).ready(function(){
+      var i=1;
+     $("#add_productrow").click(function(){
+         b=i-1;
+      	$('#addr'+i).html($('#addr'+b).html()).find('td:first-child').html(i+1);
+      	$('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+      	i++;
+  });
+     $("#delete_productrow").click(function(){
+    	 if(i>1){
+		 $("#addr"+(i-1)).html('');
+		 i--;
+		 }
+	 });
+
+});
+
+$('#customerratefixingproduct').on('submit',function(e){
+	e.preventDefault();
+
+	let ratefixingproduct = [];
+
+	$("#dynamic_ratefixingproduct_rows tr:not(:last-child)").each(function(index) {
+		ratefixingproduct.push({ 
+			"productname": $(this).find('.productname').val(),
+			"rate": $(this).find('.rate').val(),
+		});
+	});
+
+
+	let fixingData = {
+		'customer': $('#customer').val(),
+		'allproducts':ratefixingproduct
+	}
+	$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('[name="_token"]').val()
+        }
+});
+	$.ajax({
+		type:"post",
+		url:"/rate_fixing",
+		data:fixingData,
+		success:function(response){
+			response = JSON.parse(response);
+			//console.log(response);
+			//if saved
+			if(response.status == 'success'){
+				alert(response.message);
+				window.location.replace("/rate_fixing");
+			}else{
+				alert(response.message);
+			}
+		},
+		error:function(error){
+		   //  console.log(error)
+			alert("Data Not Saved");
+		}
+	});
+});
+
+
+
+$('#editcustomerratefixingproduct').on('submit',function(e){
+	e.preventDefault();
+
+	let editratefixingproduct = [];
+    let ratefixingproduct_id=$(this).find('.customerratefixing').val();
+
+	$("#editdynamic_ratefixingproduct_rows tr:not(:last-child)").each(function(index) {
+		editratefixingproduct.push({ 
+			"productname": $(this).find('.productname').val(),
+			"rate": $(this).find('.rate').val(),
+		});
+	});
+
+
+	let editfixingData = {
+		'customer': $('#customer').val(),
+		'editallproducts':editratefixingproduct
+	}
+
+	$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('[name="_token"]').val()
+        }
+});
+
+	$.ajax({
+		type:'PUT',
+		url:"/customerrateupdate/"+ratefixingproduct_id,
+		data:editfixingData,
+		success:function(response){
+			response = JSON.parse(response);
+			if(response.status == 'success'){
+				alert(response.message);
+				window.location.replace("/rate_fixing");
+			}else{
+				alert(response.message);
+			}
+		},
+		error:function(error){
+			alert("Data Not Saved");
+		}
+	});
+});
+
+
+$(document).ready(function() {
+    $("#transfer_type").change(function() {
+      let value = document.getElementById('transfer_type').value;
+        if(value == 2){
+           $('#bank').attr('disabled', true);
+           $('#ref_no').attr('disabled', true);
+        }else{
+           $('#bank').attr('disabled', false);
+           $('#ref_no').attr('disabled', false);
+        }
+    });
+});

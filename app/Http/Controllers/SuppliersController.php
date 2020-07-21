@@ -37,6 +37,7 @@ class SuppliersController extends Controller
     {
         $supplier = new Supplier();
 
+        $supplier->serial_no =$request->input('serialno');
         $supplier->supplier_name =$request->input('supplier_name');
         $supplier->short_name =$request->input('short_name');
         $supplier->city =$request->input('city');
@@ -59,7 +60,7 @@ class SuppliersController extends Controller
      */
     public function show()
     {
-        $suppliers = Supplier::all();
+        $suppliers = DB::table('suppliers')->select('suppliers.*')->orderBy("serial_no")->get();;
 
         return view('suppliers.supplier')->with('suppliers',$suppliers);
     }
@@ -88,7 +89,7 @@ class SuppliersController extends Controller
     public function update(Request $request, $id)
     {
         $supplier = Supplier::find($id);
-
+        $supplier->serial_no =$request->input('serialno');
         $supplier->supplier_name =$request->input('supplier_name');
         $supplier->short_name =$request->input('short_name');
         $supplier->city =$request->input('city');

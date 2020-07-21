@@ -185,30 +185,56 @@ class SalesController extends Controller
     }
     public function customerstockalert($id){
 
-            $purchasestocks = DB::table('purchases_products')
-                     ->where('purchases_products.product_id', '=', $id)
-                     ->select('purchases_products.product_id', DB::raw('SUM(box) as purchasetotal_box'),DB::raw('SUM(loose_kg) as purchaseloose_kg'))
+    $set_trip = DB::table('set_trip')->select('set_trip.set_trip')->first();
+    $products = DB::table('products')->select('products.*')->get();
+    $units = DB::table('units')
+             ->join('products','units.id','=','products.unit_id')
+             ->select('units.unit_name','products.unit_id','products.id')->groupBy('products.id')
+             ->get();
+
+
+     $purchasestocks = DB::table('purchases')
+                     ->join('purchases_products','purchases.id','=','purchases_products.bill_id')
+                     ->select('purchases.trip_id','purchases_products.product_id',DB::raw('SUM(box) as purchasetotal_box'),DB::raw('SUM(loose_kg) as purchaseloose_kg'))
+                     ->where(['purchases_products.product_id'=> $id,'purchases.trip_id'=>$set_trip->set_trip])
                      ->groupBy('product_id')
                      ->get()[0];
 
-            $salesstocks = DB::table('sales_products')
-                      ->where('sales_products.product_id', '=', $id)
-                     ->select('sales_products.product_id', DB::raw('SUM(box) as salestotal_box'),DB::raw('SUM(loose_kg) as salesloose_kg'))
+
+            $salesstocks = DB::table('sales')
+                     ->join('sales_products','sales.id','=','sales_products.sales_id')
+                     ->select('sales.trip_id','sales_products.product_id', DB::raw('SUM(box) as salestotal_box'), DB::raw('SUM(loose_box) as salesloose_box'),DB::raw('SUM(loose_kg) as salesloose_kg'))
+                     ->where(['sales_products.product_id'=> $id,'sales.trip_id'=>$set_trip->set_trip])
                      ->groupBy('product_id')
                      ->get();
 
- //var_dump($salesstocks);exit;
 
                     $stockalert = [];
                     
+
+                  foreach($units as $unit){
+                    if($unit->id === $purchasestocks->product_id){
+                      $unit_value =(int)$unit->unit_name;
+
                     if(count($salesstocks) && !empty($salesstocks)){
                         foreach ($salesstocks as $salesstock) {
                         if($purchasestocks->product_id  == $salesstock->product_id ){
 
-                        $stockbox = $purchasestocks->purchasetotal_box - $salesstock->salestotal_box;
-                        $stockloosekg = $purchasestocks->purchaseloose_kg - $salesstock->salesloose_kg;
+                        $purchases = $purchasestocks->purchasetotal_box*$unit_value + $purchasestocks->purchaseloose_kg;
 
-                        $stockalert = ['box' => $stockbox , 'loosekg'=>$stockloosekg];          
+                        $sales = $salesstock->salestotal_box*$unit_value + $salesstock->salesloose_kg;
+
+                        $total =($purchases - $sales)/$unit_value;
+
+                            $stocks = explode(".",$total);
+
+                            $stockbox = $stocks[0];
+                            $stockloosekg = 0 ."." .$stocks[1];
+                            $finalstockloosekg = round($stockloosekg*$unit_value);
+
+                      
+                        $stockalert = ['box' => $stockbox , 'loosekg'=>$finalstockloosekg];  
+                        //var_dump($stockalert) ;exit;      
                         }
                         // else{
                         //   $stockalert = ['box' => $purchasestocks->purchasetotal_box , 'loosekg'=> $purchasestocks->purchaseloose_kg];
@@ -225,7 +251,8 @@ class SalesController extends Controller
                     }
                     
                     
-
+    }
+}
 
 
 

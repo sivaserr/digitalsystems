@@ -82,12 +82,13 @@ Route::get('/customer/{id}','CustomerController@destroy');
 // Route::get('/customer/{id}','CustomerController@active');
 
 //Customer Rate Fixing CRUD
-Route::get('/customer_rate_fixing', 'CustomerRateFixingController@index');
-Route::post('/customer_rate_fixing', 'CustomerRateFixingController@store')->name('Addcustomerrate');
-Route::get('/customer_rate_fixing', 'CustomerRateFixingController@show');
-Route::get('/customer_rate_edit/{id}', 'CustomerRateFixingController@edit');
+Route::get('/rate_fixing', 'CustomerRateFixingController@index');
+Route::post('/rate_fixing', 'CustomerRateFixingController@store')->name('Addcustomerrate');
+Route::get('/rate_fixing', 'CustomerRateFixingController@show');
+Route::get('/rate_edit/{id}', 'CustomerRateFixingController@edit');
 Route::put('/customerrateupdate/{id}', 'CustomerRateFixingController@update');
-Route::get('/customer_rate_fixing/{id}', 'CustomerRateFixingController@destroy');
+Route::get('/rate_fixing/{id}', 'CustomerRateFixingController@destroy');
+Route::get('/customer_rate_fixingproduct/{id}', 'CustomerRateFixingController@productdestroy');
 
 //Suppliers CRUD
 
@@ -190,13 +191,30 @@ Route::post('/payment-for-purchase','Purchase_PaymentController@store');
 Route::get('payment-for-sales' , 'Sales_PaymentController@index');
 Route::post('/payment-for-sales','Sales_PaymentController@store');
 
+//Cash On Delivery
+Route::get('purchase_cod' , 'Purchase_PaymentController@purchasescodindex');
+Route::get('sales_cod' , 'Purchase_PaymentController@salescodindex');
+
 
 //Stock Details
-
 Route::get('stock_details','StockController@index');
 // Route::get('stock_details','StockController@allproduct');
 Route::get('stock_details','StockController@sumofpurchasstock');
 // Route::get('stock_details','StockController@sumofsalesstock');
+
+//Purchase payment report
+Route::get('purchasepayment_day_report','Purchasepaymentreport_Controller@index');
+Route::get('purchasepayment_month_report','Purchasepaymentreport_Controller@purchasepaymentmonthandweek');
+Route::post('purchasepayment_day_report','Purchasepaymentreport_Controller@filtered_purchasepaymentdayreport');
+Route::get('/purchasepayment/{id}','Purchasepaymentreport_Controller@purchasebillview');
+Route::post('/purchasepayment_month_report','Purchasepaymentreport_Controller@filtered_purchasepaymentmonthreport');
+
+//Sales payment report
+Route::get('salespayment_day_report','Salespaymentreport_Controller@index');
+Route::get('salespayment_month_report','Salespaymentreport_Controller@salespaymentmonthandweek');
+Route::post('salespayment_day_report','Salespaymentreport_Controller@filtered_salespaymentdayreport');
+Route::get('/salespayment/{id}','Salespaymentreport_Controller@salesbillview');
+Route::post('/salespayment_month_report','Salespaymentreport_Controller@filtered_salespaymentmonthreport');
 
 
 

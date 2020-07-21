@@ -105,9 +105,9 @@ Sales Day Report
             <td>{{$customer->name}}</td>
             @endif
             @endforeach
-            <td>{{$salesbill->date}}</td>
+            <td>{{Carbon\Carbon::parse($salesbill->date)->format('d-m-Y')}}</td>
             <td>{{$salesbill->total_box}}</td>
-            <td>{{$salesbill->current_balance}}</td>
+            <td>{{number_format($salesbill->current_balance)}}</td>
           <td><a href="salesbillviewedit/{{$salesbill->id}}" class="btn btn-sm btn-info">View</a>
           </td>
           </tr>

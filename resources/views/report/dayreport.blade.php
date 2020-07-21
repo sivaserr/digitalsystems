@@ -121,7 +121,7 @@ Purchase Day Report
 
 </div>
 
-
+<div class="table-responsive">
      <table class="table table-striped">
         <thead>
           <tr>
@@ -146,9 +146,9 @@ Purchase Day Report
             <td>{{$supplier->supplier_name}}</td>
             @endif
             @endforeach
-            <td>{{$Bill->date}}</td>
+            <td>{{Carbon\Carbon::parse($Bill->date)->format('d-m-Y')}}</td>
             <td>{{$Bill->total_box}}</td>
-            <td>{{$Bill->current_balance}}</td>
+            <td>{{number_format($Bill->current_balance)}}</td>
           <td><a href="billviewedit/{{$Bill->id}}" class="btn btn-sm btn-info">View</a>
           </td>
           </tr>
@@ -161,6 +161,7 @@ Purchase Day Report
 
         </tbody>
       </table>
+    </div>
 	</div>
 </div>
         </div>

@@ -106,8 +106,10 @@
         </div>
       </div>
 
+<div class="purchasesentry">
       <div class="row clearfix">
           <div class="col-md-12">
+           <div class="table-responsive">
             <table class="table table-bordered table-hover" id="tab_logic">
               <thead>
                 <tr class="headtext">
@@ -131,13 +133,15 @@
                       <select name="billproductname" id="billproductname" class="form-control productcategory billproductname" onchange="changeprice(this)">
                           <option value="0" disabled="true" selected="true">Choose</option>
                           @foreach ($products as $product) 
+                          @if($product->status === 1)
                           <option value="{{$product->id}}">{{$product->product_name}} </option>
+                          @endif
                          @endforeach
                       </select>
                     </td>
                   <td>
                         <input type="text"   class="form-control box" name="box" id="box" aria-describedby="box" placeholder="0" required>
-                    </div>
+
                   </td>
                   <td>
                     <input type="text"   class="form-control kg" name="kg" id="kg" aria-describedby="kg" placeholder="0 " required readonly>
@@ -190,6 +194,8 @@
             </table>
           </div>
         </div>
+        </div>
+      </div>
         <div class="row clearfix">
           <div class="col-md-12">
             <button id="add_row" class="btn btn-default pull-left">Add Row</button>

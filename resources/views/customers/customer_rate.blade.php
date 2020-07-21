@@ -28,7 +28,22 @@ $products =DB::table('products')->select('products.*')->get();
                   <a href="#" type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#form" ><span class="glyphicon glyphicon-plus"></span> CREATE</a>
               </div>
             </div>
-            
+@if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
+@if(session('error'))
+    <div class="alert alert-danger">{{session('error')}}</div>
+@endif
+
+@if($errors->any())
+@foreach($errors->all() as $error)
+<div class="alert alert-danger">
+<li>{{$error}}</li>
+</div>
+@endforeach
+@endif    
             <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -38,7 +53,7 @@ $products =DB::table('products')->select('products.*')->get();
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                <form action="{{route('Addcustomerrate')}}" method="POST">
+                <form id="customerratefixingproduct" action="{{route('Addcustomerrate')}}" method="POST">
                   {{ csrf_field()}} <!--security token-->
 
                   <div class="modal-body">
@@ -52,17 +67,48 @@ $products =DB::table('products')->select('products.*')->get();
                                 </select> 
                         </div>
                           <div class="form-group">
-                              <label for="product">Product</label>
+<!--                               <label for="product">Product</label>
                               <select name="product" id="product" class="form-control">
                                     <option>Choose</option>
                                   @foreach ($products as $product)
                                 <option value="{{$product->id}}"> {{$product->product_name}}</option>
                                   @endforeach
-                                </select>                             </div>
-                          <div class="form-group">
+                                </select>   --> 
+                         <label for="product">Product</label>
+                         <div class="table-responsive producttable">
+      <table class="table table-bordered table-hover" id="tab_logic">
+        <thead>
+          <tr>
+            <th class="text-center">S.No</th>
+            <th class="text-center">Product</th>
+            <th class="text-center">Rate</th>
+          </tr>
+        </thead>
+        <tbody id="dynamic_ratefixingproduct_rows">
+          <tr id='addr0'>
+            <td>1</td>
+            <td>
+                <select name="product" id="product" class="form-control productname">
+                 <option>Choose</option>
+                  @foreach ($products as $product)
+                 <option value="{{$product->id}}"> {{$product->product_name}}</option>
+                  @endforeach
+                </select>
+            </td>
+            <td>
+            <input type="text" name='rate' placeholder='rate' class="form-control rate"/>
+            </td>
+          </tr>
+            <tr id='addr1'></tr>
+        </tbody>
+      </table>
+                         </div>
+                         <div class="text-center producttablebtn"><a id="add_productrow" class="btn btn-default pull-left">Add Row</a><a id='delete_productrow' class="pull-right btn btn-default">Delete Row</a></div>
+                          </div>
+<!--                           <div class="form-group">
                               <label for="rate">Rate</label>
                               <input type="text" class="form-control" name="rate" id="rate" aria-describedby="rate" placeholder="Enter rate" required>
-                            </div>
+                            </div> -->
                     </div>
                     <div class="modal-footer border-top-0 d-flex justify-content-center">
                       <button type="submit" class="btn btn-success">Submit</button>
@@ -79,8 +125,6 @@ $products =DB::table('products')->select('products.*')->get();
                   <thead class=" text-primary">
                     <th>S.no</th>
                     <th>Customer</th>
-                    <th>Product</th>
-                    <th>Rate</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </thead>
@@ -95,14 +139,8 @@ $products =DB::table('products')->select('products.*')->get();
                     <td>{{$customer->name}}</td>
                     @endif
                    @endforeach
-                   @foreach($products as $product)
-                   @if($product->id === $customerratefixing->product_id)
-                   <td>{{$product->product_name}}</td>
-                   @endif
-                  @endforeach
-                    <td>{{$customerratefixing->fixing_rate}}</td>
-                    <td><a href="/customer_rate_edit/{{$customerratefixing->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
-                    <td><a href="/customer_rate_fixing/{{$customerratefixing->id}}" class="btn btn-sm btn-danger">Delete</a></td>
+                    <td><a href="/rate_edit/{{$customerratefixing->id}}" class="btn btn-sm btn-info">Edit <span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td><a href="/rate_fixing/{{$customerratefixing->id}}" class="btn btn-sm btn-danger">Delete</a></td>
                   </tr>
                     <?php $id++; ?>
                     @endforeach
