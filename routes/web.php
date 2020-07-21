@@ -216,7 +216,10 @@ Route::post('salespayment_day_report','Salespaymentreport_Controller@filtered_sa
 Route::get('/salespayment/{id}','Salespaymentreport_Controller@salesbillview');
 Route::post('/salespayment_month_report','Salespaymentreport_Controller@filtered_salespaymentmonthreport');
 
-
+//Profit Or Loss 
+Route::get('profit-or-loss','ProfitorLoss_Controller@index');
+Route::post('profit-or-loss','ProfitorLoss_Controller@store')->name('addprofit');
+Route::get('profit-or-loss','ProfitorLoss_Controller@show');
 
 
 //api

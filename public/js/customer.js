@@ -541,6 +541,20 @@ $('#editcustomerratefixingproduct').on('submit',function(e){
 });
 
 
+//Profit
+function profitorloss(){
+	let purchase_amount = document.getElementById('purchase').value;
+	let expense = document.getElementById('expense').value;
+	let sales_amount = document.getElementById('sales').value;
+	let profit = document.getElementById('profit');
+    
+    let purchase = purchase_amount.replace(',', '');
+    let sales = sales_amount.replace(',', '');
+
+    profit.value = parseInt(purchase)+parseInt(expense)-sales;
+
+}
+
 $(document).ready(function() {
     $("#transfer_type").change(function() {
       let value = document.getElementById('transfer_type').value;

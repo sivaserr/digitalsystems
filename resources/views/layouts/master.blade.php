@@ -356,6 +356,13 @@
               </ul>
                   </div>
           </li>
+
+          <li >
+            <a href="profit-or-loss">
+              <i class="fas fa-chart-pie"></i>
+              <p>Profit or Loss</p>
+            </a>
+          </li>
           {{-- <li class="active-pro">
             <a href="./upgrade.html">
               <i class="now-ui-icons arrows-1_cloud-download-93"></i>

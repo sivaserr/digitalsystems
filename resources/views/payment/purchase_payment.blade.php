@@ -256,7 +256,7 @@
                     <input type="text" class="amount_details" name="previousebalance" id="previousebalance" aria-describedby="previousebalance"  readonly>
                 </div> -->
                 <div class="form-group">
-                    <label for="payment">Panding Rs: </label>
+                    <label for="payment">Pending Rs: </label>
                     <input type="text" class="amount_details" name="currentbillamount" id="currentbillamount" aria-describedby="amount"  readonly>
                 </div>
                 <div class="form-group">

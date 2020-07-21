@@ -93,7 +93,7 @@ Sales Payment Day Report
             <th scope="col">Bill no</th>
             <th scope="col">Customers</th>
             <th scope="col">Date</th>
-            <th scope="col">Paid Amount</th>
+            <th scope="col">Received Amount</th>
             <th scope="col">Return Box</th>
           </tr>
         </thead>
