@@ -159,6 +159,8 @@ Route::get('sales_month_and_week_report','ReportController@customer_month_and_we
 Route::get('/salesbillviewedit/{id}','SalesController@salesbillview');
 
 Route::get('sales_consolidation','ReportController@salesconsolproduct');
+Route::get('trip-wise-report','CustomerController@customertripreport');
+Route::post('trip-wise-report','CustomerController@customertripwisereport');
 
 //Opening balances
 

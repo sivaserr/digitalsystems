@@ -15,6 +15,7 @@ class CreateProfitorLossesTable extends Migration
     {
         Schema::create('profitor_losses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('trip_id');
             $table->integer('purchase_amount');
             $table->integer('total_expense');
             $table->integer('sale_amount');

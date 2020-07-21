@@ -17,7 +17,11 @@ class CustomerController extends Controller
     {
         return view('customers.customer');
     }
-
+    public function customertripreport()
+    {
+        $data['customertripreports'] = [];
+        return view('customers.customer_trip_wise_report',$data);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -189,4 +193,17 @@ class CustomerController extends Controller
 
         return response()->json($customer);
     }
+
+    public function customertripwisereport(Request $request){
+
+        $customertripreports = DB::table("sales")->where([["customer_id",$request->customer]])->get();
+              
+        $data['customertripreports'] = $customertripreports;
+
+        return view('customers.customer_trip_wise_report',$data);
+
+    }
+
+
+
 }

@@ -52,6 +52,11 @@
         <img src="{{ asset('assets/images/ARS1.png') }}">
 
       </div>
+                        <div id="sidebar-btn">
+     <span></span>
+     <span></span>
+     <span></span>
+     </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
           <li>
@@ -83,6 +88,12 @@
                       <a href="/rate_fixing">
                           <i class="fas fa-users"></i>
                           <p>Customer Rate Fixing</p>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="/trip-wise-report">
+                          <i class="fas fa-users"></i>
+                          <p>Customer Trip wise report</p>
                       </a>
                   </li>
                 </ul>
@@ -356,9 +367,8 @@
               </ul>
                   </div>
           </li>
-
           <li >
-            <a href="profit-or-loss">
+            <a href="/profit-or-loss">
               <i class="fas fa-chart-pie"></i>
               <p>Profit or Loss</p>
             </a>
@@ -377,11 +387,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-                  <div id="sidebar-btn">
-     <span></span>
-     <span></span>
-     <span></span>
-     </div>
+
             <div class="navbar-toggle">
               <button type="button" class="navbar-toggler">
                 <span class="navbar-toggler-bar bar1"></span>

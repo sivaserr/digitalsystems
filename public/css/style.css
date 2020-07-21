@@ -254,7 +254,8 @@ a.navbar-brand {
   margin: 23px;
   position: absolute;
   top: 0px;
-left: 0px;
+/*left: 0px;*/
+right: -60px;
 
 }
 
@@ -272,11 +273,14 @@ left: 0px;
   width: 50%;
 }
 .sidebar.visible{
-  left: -190px;
+  left: -150px;
 transition:all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
 }
+.sidebar.visible .logo img{
+height: 65px;
+}
 .sidebar.visible .logo:after{
-right: 0px;
+right: 8px;
 }
 .sidebar.visible .simple-text.logo-mini{
   float: right;
@@ -286,13 +290,13 @@ right: 0px;
   position: relative;
 float: right;
 transition:all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1)!important;
-  left: 10px;
+  left: -25px;
 }
 
 #main-panel.bodycollapse{
   position: relative;
 transition:all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-width: calc(100%  - 70px)!important;
+width: calc(100%  - 110px)!important;
 
 }
 

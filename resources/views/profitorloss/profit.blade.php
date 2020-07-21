@@ -39,7 +39,7 @@
           {{ csrf_field()}} <!--security token-->
 
           <div class="modal-body">
-            <input type="hidden" name="trip" value="{{$purchases->trip_id}}">
+            <input type="hidden" name="trip" value="{{$set_trip->set_trip}}">
             <div class="row">
               <div class="col-sm-3">
                 <div class="form-group">
